@@ -21,6 +21,7 @@
 # client
 /client/node_modules
 /client/.env
+/client/.next
 
 # server
 /server/node_modules
