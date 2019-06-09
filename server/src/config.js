@@ -1,6 +1,9 @@
 require("dotenv").config({ path: ".env" });
 
 module.exports = {
+  FRONTEND_URL: process.env.FRONTEND_URL,
   PRISMA_ENDPOINT: process.env.PRISMA_ENDPOINT,
-  FRONTEND_URL: process.env.FRONTEND_URL
+  WUNDERLIST_AUTH_CALLBACK: process.env.WUNDERLIST_AUTH_CALLBACK,
+  WUDNERLIST_CLIENT_ID: process.env.WUDNERLIST_CLIENT_ID,
+  WUDNERLIST_CLIENT_SECRET: process.env.WUDNERLIST_CLIENT_SECRET
 };
