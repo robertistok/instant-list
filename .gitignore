@@ -25,7 +25,7 @@
 
 # server
 /server/node_modules
-/server/variables.env
+/server/.env
 
 
 npm-debug.log*
