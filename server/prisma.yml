@@ -1,0 +1,6 @@
+endpoint: https://eu1.prisma.sh/robertistok94-3a0a6e/instant-list/dev
+datamodel: datamodel.prisma
+
+generate:
+  - generator: graphql-schema
+    output: ./src/generated/prisma.graphql

@@ -1,0 +1,23 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon -e js,graphql -x node src/index.js",
+    "dev": "nodemon -e js,graphql -x node --inspect src/index.js",
+    "test": "jest",
+    "deploy": "prisma deploy --env-file variables.env"
+  },
+  "author": "robertistok",
+  "license": "ISC",
+  "dependencies": {
+    "cookie-parser": "^1.4.4",
+    "dotenv": "^8.0.0",
+    "graphql-yoga": "^1.17.4",
+    "prisma-binding": "^2.3.12"
+  },
+  "devDependencies": {
+    "jest": "^24.8.0"
+  }
+}
