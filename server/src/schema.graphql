@@ -6,4 +6,10 @@ type Query {
 
 type Mutation {
   createUser(data: UserCreateInput!): User!
+  upsertUser(
+    where: UserWhereUniqueInput!
+    create: UserCreateInput!
+    update: UserUpdateInput!
+  ): User!
+  authUserWithWunderlist(code: String): User
 }
