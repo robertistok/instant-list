@@ -47,8 +47,10 @@ type Subscription {
 
 type User {
   id: ID!
-  name: String!
-  tokenId: String
+  name: String
+  email: String
+  revision: Int
+  wunderlistAccessToken: String
 }
 
 type UserConnection {
@@ -59,8 +61,10 @@ type UserConnection {
 
 input UserCreateInput {
   id: ID
-  name: String!
-  tokenId: String
+  name: String
+  email: String
+  revision: Int
+  wunderlistAccessToken: String
 }
 
 type UserEdge {
@@ -73,14 +77,20 @@ enum UserOrderByInput {
   id_DESC
   name_ASC
   name_DESC
-  tokenId_ASC
-  tokenId_DESC
+  email_ASC
+  email_DESC
+  revision_ASC
+  revision_DESC
+  wunderlistAccessToken_ASC
+  wunderlistAccessToken_DESC
 }
 
 type UserPreviousValues {
   id: ID!
-  name: String!
-  tokenId: String
+  name: String
+  email: String
+  revision: Int
+  wunderlistAccessToken: String
 }
 
 type UserSubscriptionPayload {
@@ -103,12 +113,16 @@ input UserSubscriptionWhereInput {
 
 input UserUpdateInput {
   name: String
-  tokenId: String
+  email: String
+  revision: Int
+  wunderlistAccessToken: String
 }
 
 input UserUpdateManyMutationInput {
   name: String
-  tokenId: String
+  email: String
+  revision: Int
+  wunderlistAccessToken: String
 }
 
 input UserWhereInput {
@@ -140,20 +154,42 @@ input UserWhereInput {
   name_not_starts_with: String
   name_ends_with: String
   name_not_ends_with: String
-  tokenId: String
-  tokenId_not: String
-  tokenId_in: [String!]
-  tokenId_not_in: [String!]
-  tokenId_lt: String
-  tokenId_lte: String
-  tokenId_gt: String
-  tokenId_gte: String
-  tokenId_contains: String
-  tokenId_not_contains: String
-  tokenId_starts_with: String
-  tokenId_not_starts_with: String
-  tokenId_ends_with: String
-  tokenId_not_ends_with: String
+  email: String
+  email_not: String
+  email_in: [String!]
+  email_not_in: [String!]
+  email_lt: String
+  email_lte: String
+  email_gt: String
+  email_gte: String
+  email_contains: String
+  email_not_contains: String
+  email_starts_with: String
+  email_not_starts_with: String
+  email_ends_with: String
+  email_not_ends_with: String
+  revision: Int
+  revision_not: Int
+  revision_in: [Int!]
+  revision_not_in: [Int!]
+  revision_lt: Int
+  revision_lte: Int
+  revision_gt: Int
+  revision_gte: Int
+  wunderlistAccessToken: String
+  wunderlistAccessToken_not: String
+  wunderlistAccessToken_in: [String!]
+  wunderlistAccessToken_not_in: [String!]
+  wunderlistAccessToken_lt: String
+  wunderlistAccessToken_lte: String
+  wunderlistAccessToken_gt: String
+  wunderlistAccessToken_gte: String
+  wunderlistAccessToken_contains: String
+  wunderlistAccessToken_not_contains: String
+  wunderlistAccessToken_starts_with: String
+  wunderlistAccessToken_not_starts_with: String
+  wunderlistAccessToken_ends_with: String
+  wunderlistAccessToken_not_ends_with: String
   AND: [UserWhereInput!]
   OR: [UserWhereInput!]
   NOT: [UserWhereInput!]
@@ -161,4 +197,5 @@ input UserWhereInput {
 
 input UserWhereUniqueInput {
   id: ID
+  email: String
 }

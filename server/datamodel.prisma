@@ -1,5 +1,7 @@
 type User {
   id: ID! @id
-  name: String!
-  tokenId: String
+  name: String
+  email: String @unique
+  revision: Int
+  wunderlistAccessToken: String
 }
