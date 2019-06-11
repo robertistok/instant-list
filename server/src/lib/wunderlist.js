@@ -12,7 +12,7 @@ const WunderList = ({ clientId, clientSecret, ...rest }) => {
   const baseUrl = "https://a.wunderlist.com/api/v1";
   const headers = {
     "X-Client-ID": clientId,
-    "X-Access-Token": accessToken
+    ...(accessToken && { "X-Access-Token": accessToken })
   };
 
   const request = {
