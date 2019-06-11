@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { withRouter } from "next/router";
+import Router, { withRouter } from "next/router";
 import { useMutation } from "react-apollo-hooks";
 import gql from "graphql-tag";
 
@@ -16,6 +16,7 @@ const WunderlistAuth = ({ router }) => {
 
   useEffect(() => {
     authUserWithWunderlist({ variables: { code: router.query.code } });
+    Router.push("/");
   }, []);
 
   // co;
