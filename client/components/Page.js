@@ -27,6 +27,7 @@ const GlobalStyle = createGlobalStyle`
   html {
     box-sizing: border-box;
     font-size: 10px;
+    height: 100%;
   }
   *, *:before, *:after {
     box-sizing: inherit;
@@ -37,12 +38,16 @@ const GlobalStyle = createGlobalStyle`
     font-size: 1.5rem;
     line-height: 2;
     font-family: 'lato';
+    height: 100%;
   }
   a {
     text-decoration: none;
     color: ${theme.black};
   }
   button {  font-family: 'lato'; }
+  #__next {
+    height: 100%;
+  }
 `;
 
 const Page = ({ children }) => {
