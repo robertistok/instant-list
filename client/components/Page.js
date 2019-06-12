@@ -1,9 +1,11 @@
 import React from "react";
 import styled, { ThemeProvider, createGlobalStyle } from "styled-components";
+import "antd/dist/antd.css";
+
 import Meta from "./Meta";
 import Header from "./Header";
 
-const theme = {
+export const theme = {
   wunderlistRed: "#DB4C3F",
   wunderlistBlue: "#2B88D9",
   wunderlistGreen: "#65B01B",
@@ -73,6 +75,7 @@ const Inner = styled.div`
   max-width: ${props => props.theme.maxWidth};
   margin: 0 auto;
   padding: 2rem;
+  height: 100%;
 `;
 
 export default Page;
