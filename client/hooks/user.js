@@ -2,7 +2,7 @@
 import { useQuery } from "react-apollo-hooks";
 import gql from "graphql-tag";
 
-const CURRENT_USER_QUERY = gql`
+export const CURRENT_USER_QUERY = gql`
   query {
     me {
       id
@@ -12,7 +12,7 @@ const CURRENT_USER_QUERY = gql`
   }
 `;
 
-export const useUser = () => {
+export default () => {
   const data = useQuery(CURRENT_USER_QUERY);
 
   return data;
