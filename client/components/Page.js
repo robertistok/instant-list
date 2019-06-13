@@ -1,11 +1,11 @@
 import React from "react";
 import styled, { ThemeProvider, createGlobalStyle } from "styled-components";
-import "antd/dist/antd.css";
+import { Grommet } from "grommet";
 
 import Meta from "./Meta";
 import Header from "./Header";
 
-export const theme = {
+export const colors = {
   wunderlistRed: "#DB4C3F",
   wunderlistBlue: "#2B88D9",
   wunderlistGreen: "#65B01B",
@@ -15,8 +15,15 @@ export const theme = {
   wunderlistGray: "#5B5B5B",
   gray: "#737273",
   lightgray: "#A3A3A3",
-  white: "#FAFAFA",
+  white: "#FAFAFA"
+};
+
+export const styledComponentTheme = {
   maxWidth: "1000px"
+};
+
+const grommetTheme = {
+  global: { colors }
 };
 
 const GlobalStyle = createGlobalStyle`
@@ -44,7 +51,7 @@ const GlobalStyle = createGlobalStyle`
   }
   a {
     text-decoration: none;
-    color: ${theme.black};
+    color: ${colors.black};
   }
   button {  font-family: 'lato'; }
   #__next {
@@ -54,13 +61,15 @@ const GlobalStyle = createGlobalStyle`
 
 const Page = ({ children }) => {
   return (
-    <ThemeProvider theme={theme}>
-      <StyledPage>
-        <GlobalStyle />
-        <Meta />
-        <Header />
-        <Inner>{children}</Inner>
-      </StyledPage>
+    <ThemeProvider theme={styledComponentTheme}>
+      <Grommet theme={grommetTheme} full cssVars>
+        <StyledPage>
+          <GlobalStyle />
+          <Meta />
+          <Header />
+          <Inner>{children}</Inner>
+        </StyledPage>
+      </Grommet>
     </ThemeProvider>
   );
 };
