@@ -1,13 +1,13 @@
 const { forwardTo } = require("prisma-binding");
 
 const wunderlist = require("../lib/wunderlist");
-const { setToken } = require("../lib/jwt");
+const { setToken, removeToken } = require("../lib/jwt");
 
 const Mutation = {
   upsertUser: forwardTo("db"),
 
   // eslint-disable-next-line no-unused-vars
-  authUserWithWunderlist: async (parent, args, ctx, info) => {
+  authWithWunderlist: async (parent, args, ctx, info) => {
     const { code } = args;
 
     const { accessToken } = await wunderlist.request.post.oauth({ code });
@@ -31,6 +31,19 @@ const Mutation = {
     setToken({ data: { userId: user.id }, res: ctx.response });
 
     return user;
+  },
+
+  signOut: async (parent, args, ctx, info) => {
+    // remove access token from db
+    await ctx.db.mutation.updateUser({
+      where: args.where,
+      data: { wunderlistAccessToken: "" }
+    });
+
+    // clear the cookies
+    removeToken({ res: ctx.response, tokenName: "token" });
+
+    return { message: "Goodbye!" };
   }
 };
 

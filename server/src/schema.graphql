@@ -1,5 +1,9 @@
 # import * from './generated/prisma.graphql'
 
+type SuccessMessage {
+  message: String
+}
+
 type Query {
   me: User
 }
@@ -11,5 +15,6 @@ type Mutation {
     create: UserCreateInput!
     update: UserUpdateInput!
   ): User!
-  authUserWithWunderlist(code: String): User
+  authWithWunderlist(code: String): User
+  signOut(where: UserWhereUniqueInput!): SuccessMessage!
 }
