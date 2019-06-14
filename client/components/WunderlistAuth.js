@@ -7,6 +7,7 @@ const WunderlistAuth = () => {
   return (
     <div>
       <Button
+        color="wunderlistBlue"
         primary
         reverse
         label="Sign in with Wunderlist"
