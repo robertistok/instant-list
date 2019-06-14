@@ -3,6 +3,10 @@ import { useUser } from "../hooks/user";
 const Recipes = () => {
   const { data } = useUser();
 
+  if (!data.me) {
+    return null;
+  }
+
   return (
     <div>
       Hello,
