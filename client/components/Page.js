@@ -1,9 +1,12 @@
 import React from "react";
-import styled, { ThemeProvider, createGlobalStyle } from "styled-components";
+import styled, { createGlobalStyle } from "styled-components";
 import { Grommet } from "grommet";
 
 import Meta from "./Meta";
 import Header from "./Header";
+import Loader from "./Loader";
+
+import { useUser } from "../hooks/user";
 
 export const colors = {
   wunderlistRed: "#DB4C3F",
@@ -18,12 +21,8 @@ export const colors = {
   white: "#FAFAFA"
 };
 
-export const styledComponentTheme = {
-  maxWidth: "1000px"
-};
-
 const grommetTheme = {
-  global: { colors }
+  global: { colors, minHeaderHeight: "6rem", maxWidth: "1000px" }
 };
 
 const GlobalStyle = createGlobalStyle`
@@ -60,31 +59,35 @@ const GlobalStyle = createGlobalStyle`
 `;
 
 const Page = ({ children }) => {
+  const { loading } = useUser();
+
+  if (loading) {
+    return <Loader />;
+  }
+
   return (
-    <ThemeProvider theme={styledComponentTheme}>
-      <Grommet theme={grommetTheme} full cssVars>
-        <StyledPage>
-          <GlobalStyle />
-          <Meta />
-          <Header />
-          <Inner>{children}</Inner>
-        </StyledPage>
-      </Grommet>
-    </ThemeProvider>
+    <Grommet theme={grommetTheme} full cssVars>
+      <StyledPage>
+        <GlobalStyle />
+        <Meta />
+        <Header />
+        <Inner>{children}</Inner>
+      </StyledPage>
+    </Grommet>
   );
 };
 
 const StyledPage = styled.div`
   background: ${props => props.theme.white};
   color: ${props => props.theme.black};
-  height: 100%;
+  height: ${({ theme }) => `calc(100% - ${theme.global.minHeaderHeight}`} );
 `;
 
 const Inner = styled.div`
-  max-width: ${props => props.theme.maxWidth};
+  max-width: ${({ theme }) => theme.global.maxWidth};
   margin: 0 auto;
   padding: 2rem;
-  height: 100%;
+  height: ${({ theme }) => `calc(100% - ${theme.global.minHeaderHeight}`} );
 `;
 
 export default Page;

@@ -3,7 +3,7 @@ import styled from "styled-components";
 import WunderlistAuth from "./WunderlistAuth";
 import Loader from "./Loader";
 
-import useUser from "../hooks/user";
+import { useUser } from "../hooks/user";
 
 const PleaseSignIn = props => {
   const { data, loading } = useUser();
@@ -27,15 +27,13 @@ const PleaseSignIn = props => {
 };
 
 const Root = styled.div`
-  height: 50%;
+  height: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
 `;
 
-const SignInInstructions = styled.section`
-  margin-bottom: auto;
-`;
+const SignInInstructions = styled.p``;
 
 export default PleaseSignIn;
