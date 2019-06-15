@@ -1,3 +1,5 @@
+import NewRecipe from "./NewRecipe";
+
 import { useUser } from "../hooks/user";
 
 const Recipes = () => {
@@ -9,8 +11,7 @@ const Recipes = () => {
 
   return (
     <div>
-      Hello,
-      <span>{data.me.name}</span>
+      <NewRecipe />
     </div>
   );
 };
