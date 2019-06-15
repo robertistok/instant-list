@@ -1,7 +1,29 @@
+enum MEASUREMENT_UNIT {
+  grams
+  kilograms
+  liter
+  mililiter
+}
+
 type User {
   id: ID! @id
   name: String
   email: String @unique
   revision: Int
   wunderlistAccessToken: String
+}
+
+type Recipe {
+  id: ID! @id
+  title: String!
+  description: String!
+  ingredients: [Ingredient!]
+  servings: Int!
+}
+
+type Ingredient {
+  id: ID! @id
+  name: String
+  quantity: Float
+  measurementUnit: MEASUREMENT_UNIT
 }
