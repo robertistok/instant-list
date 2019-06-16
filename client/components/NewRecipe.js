@@ -1,20 +1,8 @@
 import { useReducer } from "react";
 
-import {
-  Box,
-  Button,
-  Form,
-  FormField,
-  Grid,
-  Heading,
-  ResponsiveContext,
-  Select,
-  TextInput,
-  TextArea
-} from "grommet";
-import { Trash } from "grommet-icons";
+import { Box, Button, Form, FormField, Grid, Heading, TextInput, TextArea } from "grommet";
 
-const MEASUREMENT_UNITS = ["grams", "kilograms", "liters", "mililiters"];
+import IngredientCard from "./IngredientCard";
 
 function reducer(state, { type, payload }) {
   const { option } = payload.event;
@@ -39,9 +27,9 @@ const NewRecipe = ({ recipe }) => {
   const initialState = {
     ...recipe,
     ...(!recipe && {
-      name: "",
+      title: "",
       description: "",
-      ingredients: [{ name: "", quantity: undefined, measurementUnit: undefined }]
+      ingredients: [{ name: "", quantity: "", measurementUnit: "" }]
     })
   };
 
@@ -74,10 +62,10 @@ const NewRecipe = ({ recipe }) => {
       >
         <FormField required>
           <TextInput
-            name="name"
+            name="title"
             onChange={handleInputChange()}
-            placeholder="Name"
-            value={state.name}
+            placeholder="Title"
+            value={state.title}
           />
         </FormField>
         <FormField required>
@@ -92,7 +80,7 @@ const NewRecipe = ({ recipe }) => {
         <Heading a11yTitle="Ingredients" level="3">
           Ingredients
         </Heading>
-        <Grid a11yTitle="Ingredients list" rows="auto" gap="medium" mrgin="medium">
+        <Grid a11yTitle="Ingredients list" gap="medium" mrgin="medium">
           {state.ingredients.map((ingredient, index) => {
             const handleIngredientInputChange = handleInputChange({
               type: "modifyIngredient",
@@ -100,49 +88,11 @@ const NewRecipe = ({ recipe }) => {
             });
 
             return (
-              <ResponsiveContext.Consumer>
-                {size => (
-                  <Grid
-                    a11yTitle={`Ingredient number ${index}`}
-                    columns={size === "small" ? "auto" : "small"}
-                    rows={size === "small" ? "xxsmall" : "xxsmall"}
-                    gap="small"
-                    key={ingredient.id || "new-ingredient"}
-                  >
-                    <FormField required>
-                      <TextInput
-                        a11yTitle="Enter the name of the ingredient"
-                        name="name"
-                        onChange={handleIngredientInputChange}
-                        placeholder="Name"
-                        value={ingredient.name}
-                      />
-                    </FormField>
-                    <FormField required>
-                      <TextInput
-                        a11yTitle="Enter the quantity"
-                        name="quantity"
-                        onChange={handleIngredientInputChange}
-                        placeholder="Quantity"
-                        type="number"
-                        value={ingredient.quantity}
-                      />
-                    </FormField>
-                    <FormField required>
-                      <Select
-                        a11yTitle="Select the measurement unit for this ingredient"
-                        name="measurementUnit"
-                        onChange={handleIngredientInputChange}
-                        options={MEASUREMENT_UNITS}
-                        placeholder="Measure"
-                        value={ingredient.measurementUnit}
-                      />
-                    </FormField>
-
-                    <Trash />
-                  </Grid>
-                )}
-              </ResponsiveContext.Consumer>
+              <IngredientCard
+                handleChange={handleIngredientInputChange}
+                index={index}
+                ingredient={ingredient}
+              />
             );
           })}
         </Grid>
