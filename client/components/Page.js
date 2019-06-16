@@ -17,12 +17,21 @@ export const colors = {
   darkGray: "#444444",
   wunderlistGray: "#5B5B5B",
   gray: "#737273",
-  lightgray: "#A3A3A3",
-  white: "#FAFAFA"
+  lightGray: "#A3A3A3",
+  white: "#FAFAFA",
+  lightBorder: `1px solid rgb(163, 163, 163, 0.3)`
 };
 
 const grommetTheme = {
-  global: { colors, minHeaderHeight: "6rem", maxWidth: "1000px" }
+  global: {
+    colors,
+    minHeaderHeight: "6rem",
+    maxWidth: "1000px",
+    breakpoints: {
+      medium: { value: 900 },
+      small: { value: 600 }
+    }
+  }
 };
 
 const GlobalStyle = createGlobalStyle`
@@ -78,13 +87,13 @@ const Page = ({ children }) => {
 };
 
 const StyledPage = styled.div`
-  background: ${props => props.theme.white};
-  color: ${props => props.theme.black};
+  background: var(--white);
+  color: var(--black);
   height: ${({ theme }) => `calc(100% - ${theme.global.minHeaderHeight}`} );
 `;
 
 const Inner = styled.div`
-  max-width: ${({ theme }) => theme.global.maxWidth};
+  max-width: var(--maxWidth);
   margin: 0 auto;
   padding: 2rem;
   height: ${({ theme }) => `calc(100% - ${theme.global.minHeaderHeight}`} );
