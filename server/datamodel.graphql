@@ -1,8 +1,8 @@
 enum MEASUREMENT_UNIT {
-  grams
-  kilograms
-  liter
-  mililiter
+  Grams
+  Kilograms
+  Liter
+  Mililiter
 }
 
 type User {
@@ -23,7 +23,7 @@ type Recipe {
 
 type Ingredient {
   id: ID! @id
-  name: String
+  name: String!
   quantity: Float
   measurementUnit: MEASUREMENT_UNIT
 }
