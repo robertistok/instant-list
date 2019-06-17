@@ -9,12 +9,13 @@ type Query {
 }
 
 type Mutation {
+  authWithWunderlist(code: String): User
+  createRecipe(data: RecipeCreateInput!): Recipe!
   createUser(data: UserCreateInput!): User!
+  signOut(where: UserWhereUniqueInput!): SuccessMessage!
   upsertUser(
     where: UserWhereUniqueInput!
     create: UserCreateInput!
     update: UserUpdateInput!
   ): User!
-  authWithWunderlist(code: String): User
-  signOut(where: UserWhereUniqueInput!): SuccessMessage!
 }

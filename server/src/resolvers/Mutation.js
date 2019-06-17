@@ -4,6 +4,7 @@ const wunderlist = require("../lib/wunderlist");
 const { setToken, removeToken } = require("../lib/jwt");
 
 const Mutation = {
+  createRecipe: forwardTo("db"),
   upsertUser: forwardTo("db"),
 
   // eslint-disable-next-line no-unused-vars

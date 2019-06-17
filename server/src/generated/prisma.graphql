@@ -1,3 +1,11 @@
+type AggregateIngredient {
+  count: Int!
+}
+
+type AggregateRecipe {
+  count: Int!
+}
+
 type AggregateUser {
   count: Int!
 }
@@ -6,17 +14,246 @@ type BatchPayload {
   count: Long!
 }
 
+type Ingredient {
+  id: ID!
+  name: String
+  quantity: Float
+  measurementUnit: MEASUREMENT_UNIT
+}
+
+type IngredientConnection {
+  pageInfo: PageInfo!
+  edges: [IngredientEdge]!
+  aggregate: AggregateIngredient!
+}
+
+input IngredientCreateInput {
+  id: ID
+  name: String
+  quantity: Float
+  measurementUnit: MEASUREMENT_UNIT
+}
+
+input IngredientCreateManyInput {
+  create: [IngredientCreateInput!]
+  connect: [IngredientWhereUniqueInput!]
+}
+
+type IngredientEdge {
+  node: Ingredient!
+  cursor: String!
+}
+
+enum IngredientOrderByInput {
+  id_ASC
+  id_DESC
+  name_ASC
+  name_DESC
+  quantity_ASC
+  quantity_DESC
+  measurementUnit_ASC
+  measurementUnit_DESC
+}
+
+type IngredientPreviousValues {
+  id: ID!
+  name: String
+  quantity: Float
+  measurementUnit: MEASUREMENT_UNIT
+}
+
+input IngredientScalarWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  name: String
+  name_not: String
+  name_in: [String!]
+  name_not_in: [String!]
+  name_lt: String
+  name_lte: String
+  name_gt: String
+  name_gte: String
+  name_contains: String
+  name_not_contains: String
+  name_starts_with: String
+  name_not_starts_with: String
+  name_ends_with: String
+  name_not_ends_with: String
+  quantity: Float
+  quantity_not: Float
+  quantity_in: [Float!]
+  quantity_not_in: [Float!]
+  quantity_lt: Float
+  quantity_lte: Float
+  quantity_gt: Float
+  quantity_gte: Float
+  measurementUnit: MEASUREMENT_UNIT
+  measurementUnit_not: MEASUREMENT_UNIT
+  measurementUnit_in: [MEASUREMENT_UNIT!]
+  measurementUnit_not_in: [MEASUREMENT_UNIT!]
+  AND: [IngredientScalarWhereInput!]
+  OR: [IngredientScalarWhereInput!]
+  NOT: [IngredientScalarWhereInput!]
+}
+
+type IngredientSubscriptionPayload {
+  mutation: MutationType!
+  node: Ingredient
+  updatedFields: [String!]
+  previousValues: IngredientPreviousValues
+}
+
+input IngredientSubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: IngredientWhereInput
+  AND: [IngredientSubscriptionWhereInput!]
+  OR: [IngredientSubscriptionWhereInput!]
+  NOT: [IngredientSubscriptionWhereInput!]
+}
+
+input IngredientUpdateDataInput {
+  name: String
+  quantity: Float
+  measurementUnit: MEASUREMENT_UNIT
+}
+
+input IngredientUpdateInput {
+  name: String
+  quantity: Float
+  measurementUnit: MEASUREMENT_UNIT
+}
+
+input IngredientUpdateManyDataInput {
+  name: String
+  quantity: Float
+  measurementUnit: MEASUREMENT_UNIT
+}
+
+input IngredientUpdateManyInput {
+  create: [IngredientCreateInput!]
+  update: [IngredientUpdateWithWhereUniqueNestedInput!]
+  upsert: [IngredientUpsertWithWhereUniqueNestedInput!]
+  delete: [IngredientWhereUniqueInput!]
+  connect: [IngredientWhereUniqueInput!]
+  set: [IngredientWhereUniqueInput!]
+  disconnect: [IngredientWhereUniqueInput!]
+  deleteMany: [IngredientScalarWhereInput!]
+  updateMany: [IngredientUpdateManyWithWhereNestedInput!]
+}
+
+input IngredientUpdateManyMutationInput {
+  name: String
+  quantity: Float
+  measurementUnit: MEASUREMENT_UNIT
+}
+
+input IngredientUpdateManyWithWhereNestedInput {
+  where: IngredientScalarWhereInput!
+  data: IngredientUpdateManyDataInput!
+}
+
+input IngredientUpdateWithWhereUniqueNestedInput {
+  where: IngredientWhereUniqueInput!
+  data: IngredientUpdateDataInput!
+}
+
+input IngredientUpsertWithWhereUniqueNestedInput {
+  where: IngredientWhereUniqueInput!
+  update: IngredientUpdateDataInput!
+  create: IngredientCreateInput!
+}
+
+input IngredientWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  name: String
+  name_not: String
+  name_in: [String!]
+  name_not_in: [String!]
+  name_lt: String
+  name_lte: String
+  name_gt: String
+  name_gte: String
+  name_contains: String
+  name_not_contains: String
+  name_starts_with: String
+  name_not_starts_with: String
+  name_ends_with: String
+  name_not_ends_with: String
+  quantity: Float
+  quantity_not: Float
+  quantity_in: [Float!]
+  quantity_not_in: [Float!]
+  quantity_lt: Float
+  quantity_lte: Float
+  quantity_gt: Float
+  quantity_gte: Float
+  measurementUnit: MEASUREMENT_UNIT
+  measurementUnit_not: MEASUREMENT_UNIT
+  measurementUnit_in: [MEASUREMENT_UNIT!]
+  measurementUnit_not_in: [MEASUREMENT_UNIT!]
+  AND: [IngredientWhereInput!]
+  OR: [IngredientWhereInput!]
+  NOT: [IngredientWhereInput!]
+}
+
+input IngredientWhereUniqueInput {
+  id: ID
+}
+
 scalar Long
 
+enum MEASUREMENT_UNIT {
+  Grams
+  Kilograms
+  Liter
+  Mililiter
+}
+
 type Mutation {
+  createIngredient(data: IngredientCreateInput!): Ingredient!
+  updateIngredient(data: IngredientUpdateInput!, where: IngredientWhereUniqueInput!): Ingredient
+  updateManyIngredients(data: IngredientUpdateManyMutationInput!, where: IngredientWhereInput): BatchPayload!
+  upsertIngredient(where: IngredientWhereUniqueInput!, create: IngredientCreateInput!, update: IngredientUpdateInput!): Ingredient!
+  deleteIngredient(where: IngredientWhereUniqueInput!): Ingredient
+  deleteManyIngredients(where: IngredientWhereInput): BatchPayload!
+  createRecipe(data: RecipeCreateInput!): Recipe!
+  updateRecipe(data: RecipeUpdateInput!, where: RecipeWhereUniqueInput!): Recipe
+  updateManyRecipes(data: RecipeUpdateManyMutationInput!, where: RecipeWhereInput): BatchPayload!
+  upsertRecipe(where: RecipeWhereUniqueInput!, create: RecipeCreateInput!, update: RecipeUpdateInput!): Recipe!
+  deleteRecipe(where: RecipeWhereUniqueInput!): Recipe
+  deleteManyRecipes(where: RecipeWhereInput): BatchPayload!
   createUser(data: UserCreateInput!): User!
   updateUser(data: UserUpdateInput!, where: UserWhereUniqueInput!): User
   updateManyUsers(data: UserUpdateManyMutationInput!, where: UserWhereInput): BatchPayload!
-  upsertUser(
-    where: UserWhereUniqueInput!
-    create: UserCreateInput!
-    update: UserUpdateInput!
-  ): User!
+  upsertUser(where: UserWhereUniqueInput!, create: UserCreateInput!, update: UserUpdateInput!): User!
   deleteUser(where: UserWhereUniqueInput!): User
   deleteManyUsers(where: UserWhereInput): BatchPayload!
 }
@@ -39,29 +276,160 @@ type PageInfo {
 }
 
 type Query {
+  ingredient(where: IngredientWhereUniqueInput!): Ingredient
+  ingredients(where: IngredientWhereInput, orderBy: IngredientOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Ingredient]!
+  ingredientsConnection(where: IngredientWhereInput, orderBy: IngredientOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): IngredientConnection!
+  recipe(where: RecipeWhereUniqueInput!): Recipe
+  recipes(where: RecipeWhereInput, orderBy: RecipeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Recipe]!
+  recipesConnection(where: RecipeWhereInput, orderBy: RecipeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): RecipeConnection!
   user(where: UserWhereUniqueInput!): User
-  users(
-    where: UserWhereInput
-    orderBy: UserOrderByInput
-    skip: Int
-    after: String
-    before: String
-    first: Int
-    last: Int
-  ): [User]!
-  usersConnection(
-    where: UserWhereInput
-    orderBy: UserOrderByInput
-    skip: Int
-    after: String
-    before: String
-    first: Int
-    last: Int
-  ): UserConnection!
+  users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User]!
+  usersConnection(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): UserConnection!
   node(id: ID!): Node
 }
 
+type Recipe {
+  id: ID!
+  title: String!
+  description: String!
+  ingredients(where: IngredientWhereInput, orderBy: IngredientOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Ingredient!]
+  servings: Int!
+}
+
+type RecipeConnection {
+  pageInfo: PageInfo!
+  edges: [RecipeEdge]!
+  aggregate: AggregateRecipe!
+}
+
+input RecipeCreateInput {
+  id: ID
+  title: String!
+  description: String!
+  ingredients: IngredientCreateManyInput
+  servings: Int!
+}
+
+type RecipeEdge {
+  node: Recipe!
+  cursor: String!
+}
+
+enum RecipeOrderByInput {
+  id_ASC
+  id_DESC
+  title_ASC
+  title_DESC
+  description_ASC
+  description_DESC
+  servings_ASC
+  servings_DESC
+}
+
+type RecipePreviousValues {
+  id: ID!
+  title: String!
+  description: String!
+  servings: Int!
+}
+
+type RecipeSubscriptionPayload {
+  mutation: MutationType!
+  node: Recipe
+  updatedFields: [String!]
+  previousValues: RecipePreviousValues
+}
+
+input RecipeSubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: RecipeWhereInput
+  AND: [RecipeSubscriptionWhereInput!]
+  OR: [RecipeSubscriptionWhereInput!]
+  NOT: [RecipeSubscriptionWhereInput!]
+}
+
+input RecipeUpdateInput {
+  title: String
+  description: String
+  ingredients: IngredientUpdateManyInput
+  servings: Int
+}
+
+input RecipeUpdateManyMutationInput {
+  title: String
+  description: String
+  servings: Int
+}
+
+input RecipeWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  title: String
+  title_not: String
+  title_in: [String!]
+  title_not_in: [String!]
+  title_lt: String
+  title_lte: String
+  title_gt: String
+  title_gte: String
+  title_contains: String
+  title_not_contains: String
+  title_starts_with: String
+  title_not_starts_with: String
+  title_ends_with: String
+  title_not_ends_with: String
+  description: String
+  description_not: String
+  description_in: [String!]
+  description_not_in: [String!]
+  description_lt: String
+  description_lte: String
+  description_gt: String
+  description_gte: String
+  description_contains: String
+  description_not_contains: String
+  description_starts_with: String
+  description_not_starts_with: String
+  description_ends_with: String
+  description_not_ends_with: String
+  ingredients_every: IngredientWhereInput
+  ingredients_some: IngredientWhereInput
+  ingredients_none: IngredientWhereInput
+  servings: Int
+  servings_not: Int
+  servings_in: [Int!]
+  servings_not_in: [Int!]
+  servings_lt: Int
+  servings_lte: Int
+  servings_gt: Int
+  servings_gte: Int
+  AND: [RecipeWhereInput!]
+  OR: [RecipeWhereInput!]
+  NOT: [RecipeWhereInput!]
+}
+
+input RecipeWhereUniqueInput {
+  id: ID
+}
+
 type Subscription {
+  ingredient(where: IngredientSubscriptionWhereInput): IngredientSubscriptionPayload
+  recipe(where: RecipeSubscriptionWhereInput): RecipeSubscriptionPayload
   user(where: UserSubscriptionWhereInput): UserSubscriptionPayload
 }
 
@@ -70,6 +438,7 @@ type User {
   name: String
   email: String
   revision: Int
+  wunderlistAccessToken: String
 }
 
 type UserConnection {
@@ -100,6 +469,8 @@ enum UserOrderByInput {
   email_DESC
   revision_ASC
   revision_DESC
+  wunderlistAccessToken_ASC
+  wunderlistAccessToken_DESC
 }
 
 type UserPreviousValues {
@@ -107,6 +478,7 @@ type UserPreviousValues {
   name: String
   email: String
   revision: Int
+  wunderlistAccessToken: String
 }
 
 type UserSubscriptionPayload {
