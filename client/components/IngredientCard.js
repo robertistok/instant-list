@@ -15,8 +15,16 @@ import { Add, Trash } from "grommet-icons";
 
 const MEASUREMENT_UNITS = ["grams", "kilograms", "liters", "mililiters"];
 
-const IngredientCard = ({ index, ingredient, handleChange }) => {
-  const ingredientNumber = 1;
+const IngredientCard = ({
+  addIngredient,
+  deleteIngredient,
+  index,
+  ingredient,
+  isFirstIngredient,
+  isLastIngredient,
+  handleChange
+}) => {
+  const ingredientNumber = index + 1;
   return (
     <ResponsiveContext.Consumer>
       {size => {
@@ -40,7 +48,7 @@ const IngredientCard = ({ index, ingredient, handleChange }) => {
                 value={ingredient.name}
               />
             </FormField>
-            <FormField className="quantity" required>
+            <FormField className="quantity">
               <TextInput
                 a11yTitle="Enter the quantity"
                 name="quantity"
@@ -50,7 +58,7 @@ const IngredientCard = ({ index, ingredient, handleChange }) => {
                 value={ingredient.quantity}
               />
             </FormField>
-            <FormField className="measurement" required>
+            <FormField className="measurement">
               <Select
                 a11yTitle="Select the measurement unit for this ingredient"
                 name="measurementUnit"
@@ -62,14 +70,29 @@ const IngredientCard = ({ index, ingredient, handleChange }) => {
             </FormField>
 
             <Box
+              a11yTitle="Delete/add new ingedient button"
               align="center"
               className="action-buttons"
               direction="row"
-              justify={isMedium ? "start" : "end"}
+              justify={isMedium ? "end" : "end"}
               gap="small"
             >
-              <Button label="New" icon={<Add />} />
-              <Button label="Delete" icon={<Trash />} />
+              {isLastIngredient && (
+                <Button
+                  a11yTitle="Add new ingedient button"
+                  label="New"
+                  icon={<Add />}
+                  onClick={addIngredient}
+                />
+              )}
+              {!isFirstIngredient && (
+                <Button
+                  a11yTitle={`Delete ingedient ${ingredientNumber} button`}
+                  label="Delete"
+                  icon={<Trash />}
+                  onClick={deleteIngredient}
+                />
+              )}
             </Box>
           </StyledGrid>
         );
