@@ -1,6 +1,6 @@
 enum MEASUREMENT_UNIT {
-  Grams
-  Kilograms
+  Gram
+  Kilogram
   Liter
   Mililiter
 }
@@ -18,7 +18,7 @@ type Recipe {
   title: String!
   description: String!
   ingredients: [Ingredient!]
-  servings: Int!
+  servings: Int
 }
 
 type Ingredient {

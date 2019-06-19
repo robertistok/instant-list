@@ -16,7 +16,7 @@ type BatchPayload {
 
 type Ingredient {
   id: ID!
-  name: String
+  name: String!
   quantity: Float
   measurementUnit: MEASUREMENT_UNIT
 }
@@ -29,7 +29,7 @@ type IngredientConnection {
 
 input IngredientCreateInput {
   id: ID
-  name: String
+  name: String!
   quantity: Float
   measurementUnit: MEASUREMENT_UNIT
 }
@@ -57,7 +57,7 @@ enum IngredientOrderByInput {
 
 type IngredientPreviousValues {
   id: ID!
-  name: String
+  name: String!
   quantity: Float
   measurementUnit: MEASUREMENT_UNIT
 }
@@ -231,8 +231,8 @@ input IngredientWhereUniqueInput {
 scalar Long
 
 enum MEASUREMENT_UNIT {
-  Grams
-  Kilograms
+  Gram
+  Kilogram
   Liter
   Mililiter
 }
@@ -293,7 +293,7 @@ type Recipe {
   title: String!
   description: String!
   ingredients(where: IngredientWhereInput, orderBy: IngredientOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Ingredient!]
-  servings: Int!
+  servings: Int
 }
 
 type RecipeConnection {
@@ -307,7 +307,7 @@ input RecipeCreateInput {
   title: String!
   description: String!
   ingredients: IngredientCreateManyInput
-  servings: Int!
+  servings: Int
 }
 
 type RecipeEdge {
@@ -330,7 +330,7 @@ type RecipePreviousValues {
   id: ID!
   title: String!
   description: String!
-  servings: Int!
+  servings: Int
 }
 
 type RecipeSubscriptionPayload {
