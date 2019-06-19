@@ -1,4 +1,3 @@
-import React from "react";
 import styled from "styled-components";
 
 import {
@@ -13,7 +12,7 @@ import {
 } from "grommet";
 import { Add, Trash } from "grommet-icons";
 
-const MEASUREMENT_UNITS = ["grams", "kilograms", "liters", "mililiters"];
+const MEASUREMENT_UNITS = ["Gram", "Kilogram", "Liter", "Mililiter"];
 
 const IngredientCard = ({
   addIngredient,
@@ -39,35 +38,39 @@ const IngredientCard = ({
             <Heading className="info" level="4" margin="small">
               {isMedium ? `Nr. ${ingredientNumber}` : `${ingredientNumber}.`}
             </Heading>
-            <FormField className="name" required>
-              <TextInput
-                a11yTitle="Enter the name of the ingredient"
-                name="name"
-                onChange={handleChange}
-                placeholder="Name"
-                value={ingredient.name}
-              />
-            </FormField>
-            <FormField className="quantity">
-              <TextInput
-                a11yTitle="Enter the quantity"
-                name="quantity"
-                onChange={handleChange}
-                placeholder="Quantity"
-                type="number"
-                value={ingredient.quantity}
-              />
-            </FormField>
-            <FormField className="measurement">
-              <Select
-                a11yTitle="Select the measurement unit for this ingredient"
-                name="measurementUnit"
-                onChange={handleChange}
-                options={MEASUREMENT_UNITS}
-                placeholder="Measure"
-                value={ingredient.measurementUnit}
-              />
-            </FormField>
+
+            <FormField
+              a11yTitle="Description for your new recipe"
+              className="name"
+              component={TextInput}
+              name={`name-${index}`}
+              onChange={handleChange}
+              placeholder="Name"
+              required
+              value={ingredient.name}
+            />
+
+            <FormField
+              a11yTitle="Enter the quantity"
+              className="quantity"
+              component={TextInput}
+              name={`quantity-${index}`}
+              onChange={handleChange}
+              placeholder="Quantity"
+              type="number"
+              value={ingredient.quantity}
+            />
+
+            <FormField
+              a11yTitle="Select the measurement unit for this ingredient"
+              className="measurement-unit"
+              component={Select}
+              name={`measurementUnit-${index}`}
+              onChange={handleChange}
+              options={MEASUREMENT_UNITS}
+              placeholder="Measure"
+              value={ingredient.measurementUnit}
+            />
 
             <Box
               a11yTitle="Delete/add new ingedient button"
@@ -128,7 +131,7 @@ const StyledGrid = styled(Grid)`
       grid-row-start: second-row;
     }
 
-    .measurement {
+    .measurement-unit {
       grid-column-start: middle;
       grid-column-end: end;
       grid-row-start: second-row;
