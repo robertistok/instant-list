@@ -17,13 +17,19 @@ type Recipe {
   id: ID! @id
   title: String!
   description: String!
-  ingredients: [Ingredient!]
+  ingredients: [RecipeIngredient!]
   servings: Int
+}
+
+type RecipeIngredient {
+  id: ID! @id
+  recipe: Recipe!
+  ingredient: Ingredient!
+  quantity: Float
+  measurementUnit: MEASUREMENT_UNIT
 }
 
 type Ingredient {
   id: ID! @id
   name: String!
-  quantity: Float
-  measurementUnit: MEASUREMENT_UNIT
 }
