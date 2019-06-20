@@ -1,7 +1,7 @@
 const { forwardTo } = require("prisma-binding");
 
 const Query = {
-  me: async (parent, args, ctx, info) => {
+  async me(parent, args, ctx, info) {
     const { userId } = ctx.request;
 
     if (!userId) {
@@ -9,6 +9,16 @@ const Query = {
     }
 
     return ctx.db.query.user({ where: { id: userId } });
+  },
+
+  async ownRecipes(parent, args, ctx, info) {
+    const { userId } = ctx.request;
+
+    if (!userId) {
+      throw new Error("You must be signed in!");
+    }
+
+    return ctx.db.query.recipes({ where: { id_eq: userId } });
   }
 };
 

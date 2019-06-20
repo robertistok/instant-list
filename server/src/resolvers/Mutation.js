@@ -4,11 +4,10 @@ const wunderlist = require("../lib/wunderlist");
 const { setToken, removeToken } = require("../lib/jwt");
 
 const Mutation = {
-  createRecipe: forwardTo("db"),
   upsertUser: forwardTo("db"),
 
   // eslint-disable-next-line no-unused-vars
-  authWithWunderlist: async (parent, args, ctx, info) => {
+  async authWithWunderlist(parent, args, ctx, info) {
     const { code } = args;
 
     const { accessToken } = await wunderlist.request.post.oauth({ code });
@@ -34,7 +33,19 @@ const Mutation = {
     return user;
   },
 
-  signOut: async (parent, args, ctx, info) => {
+  createRecipe(parent, args, ctx, info) {
+    const { userId } = ctx.request;
+
+    if (!userId) {
+      throw new Error("You must be signed in!");
+    }
+
+    return ctx.db.mutation.createRecipe({
+      data: { ...args.data, user: { connect: { id: userId } } }
+    });
+  },
+
+  async signOut(parent, args, ctx, info) {
     // remove access token from db
     await ctx.db.mutation.updateUser({
       where: args.where,
