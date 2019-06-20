@@ -1,16 +1,31 @@
 # import * from './generated/prisma.graphql'
 
+input RecipeCreateInputWithoutUser {
+  id: ID
+  title: String!
+  description: String!
+  ingredients: RecipeIngredientCreateManyWithoutRecipeInput
+  servings: Int
+}
+
 type SuccessMessage {
   message: String
 }
 
 type Query {
   me: User
+  ownRecipes(
+    where: RecipeWhereInput
+    orderBy: RecipeOrderByInput
+    skip: Int
+    first: Int
+    last: Int
+  ): [Recipe]!
 }
 
 type Mutation {
   authWithWunderlist(code: String): User
-  createRecipe(data: RecipeCreateInput!): Recipe!
+  createRecipe(data: RecipeCreateInputWithoutUser!): Recipe!
   createUser(data: UserCreateInput!): User!
   signOut(where: UserWhereUniqueInput!): SuccessMessage!
   upsertUser(
