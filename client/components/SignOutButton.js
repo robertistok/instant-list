@@ -1,8 +1,10 @@
 import gql from "graphql-tag";
 import { Button } from "grommet";
 import { FormNextLink } from "grommet-icons";
-import { queries } from "../hooks/user";
 
+import NavButton from "./common/NavButton";
+
+import { queries } from "../hooks/user";
 import { useMutation } from "../hooks/apolloHooksWrappers";
 import useLoader from "../hooks/loader";
 
@@ -14,7 +16,7 @@ const SIGN_OUT_MUTATION = gql`
   }
 `;
 
-const SignOutButton = ({ userId }) => {
+const SignOutButton = ({ className, userId }) => {
   const [signOut, { loading }] = useMutation(SIGN_OUT_MUTATION);
   useLoader({ loading });
 
@@ -26,14 +28,12 @@ const SignOutButton = ({ userId }) => {
   };
 
   return (
-    <Button
-      color="white"
+    <NavButton
+      className={className}
       icon={<FormNextLink color="white" />}
       label="Sign out"
       margin="xsmall"
       onClick={handleSignOut}
-      plain
-      reverse
     />
   );
 };
