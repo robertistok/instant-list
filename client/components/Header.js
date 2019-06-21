@@ -1,7 +1,9 @@
 import NProgress from "nprogress";
 import Router from "next/router";
+import Link from "next/link";
 import styled from "styled-components";
 
+import NavButton from "./common/NavButton";
 import SignOutButton from "./SignOutButton";
 
 import { useUser } from "../hooks/user";
@@ -20,15 +22,29 @@ Router.onRouteChangeError = () => {
 const Header = () => {
   const { data } = useUser();
 
-  return <StyledHeader>{data.me && <SignOutButton userId={data.me.id} />}</StyledHeader>;
+  return (
+    <StyledHeader>
+      <Link href="/">
+        <NavButton label="Home" />
+      </Link>
+
+      <Link href="/new-recipe">
+        <NavButton label="New Recipe" />
+      </Link>
+
+      {data.me && <SignOutButton className="left-align" userId={data.me.id} />}
+    </StyledHeader>
+  );
 };
 
 const StyledHeader = styled.header`
   display: flex;
-  justify-content: flex-end;
   background-color: ${({ theme }) => theme.global.colors.wunderlistBlue};
-  padding: 1rem;
   min-height: ${({ theme }) => theme.global.minHeaderHeight};
+
+  .left-align {
+    margin-left: auto;
+  }
 `;
 
 export default Header;
