@@ -18,7 +18,7 @@ const Query = {
       throw new Error("You must be signed in!");
     }
 
-    return ctx.db.query.recipes({ where: { id_eq: userId } });
+    return ctx.db.query.recipes({ where: { user: { id: userId } } });
   }
 };
 

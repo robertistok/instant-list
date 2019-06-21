@@ -15,6 +15,7 @@ type User {
 
 type Recipe {
   id: ID! @id
+  user: User!
   title: String!
   description: String!
   ingredients: [RecipeIngredient!]
