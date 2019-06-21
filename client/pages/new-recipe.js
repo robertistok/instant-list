@@ -1,12 +1,12 @@
 import NewRecipe from "../components/NewRecipe";
 import PleaseSignIn from "../components/PleaseSignIn";
 
-const Home = () => {
+const NewRecipePage = () => {
   return (
     <PleaseSignIn>
-      <NewRecipe />
+      <NewRecipePage />
     </PleaseSignIn>
   );
 };
 
-export default Home;
+export default NewRecipe;
