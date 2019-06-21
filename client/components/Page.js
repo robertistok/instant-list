@@ -18,7 +18,10 @@ export const colors = {
   wunderlistGray: "#5B5B5B",
   gray: "#737273",
   lightGray: "#A3A3A3",
+  ultralightGray: "#F5F5F5",
   white: "#FAFAFA",
+
+  maxWidth: "1240px",
   lightBorder: `1px solid rgb(163, 163, 163, 0.3)`
 };
 
@@ -89,7 +92,7 @@ const Page = ({ children }) => {
 const StyledPage = styled.div`
   background: var(--white);
   color: var(--black);
-  height: ${({ theme }) => `calc(100% - ${theme.global.minHeaderHeight}`} );
+  height: 100%;
 `;
 
 const Inner = styled.div`
