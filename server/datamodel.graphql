@@ -18,6 +18,7 @@ type Recipe {
   user: User!
   title: String!
   description: String!
+  steps: [String!] @scalarList(strategy: RELATION)
   ingredients: [RecipeIngredient!]
   servings: Int
 }

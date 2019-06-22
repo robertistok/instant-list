@@ -4,6 +4,7 @@ input RecipeCreateInputWithoutUser {
   id: ID
   title: String!
   description: String!
+  steps: RecipeCreatestepsInput
   ingredients: RecipeIngredientCreateManyWithoutRecipeInput
   servings: Int
 }

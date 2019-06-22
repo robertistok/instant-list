@@ -210,6 +210,7 @@ type Recipe {
   user: User!
   title: String!
   description: String!
+  steps: [String!]!
   ingredients(where: RecipeIngredientWhereInput, orderBy: RecipeIngredientOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [RecipeIngredient!]
   servings: Int
 }
@@ -225,6 +226,7 @@ input RecipeCreateInput {
   user: UserCreateOneInput!
   title: String!
   description: String!
+  steps: RecipeCreatestepsInput
   ingredients: RecipeIngredientCreateManyWithoutRecipeInput
   servings: Int
 }
@@ -234,11 +236,16 @@ input RecipeCreateOneWithoutIngredientsInput {
   connect: RecipeWhereUniqueInput
 }
 
+input RecipeCreatestepsInput {
+  set: [String!]
+}
+
 input RecipeCreateWithoutIngredientsInput {
   id: ID
   user: UserCreateOneInput!
   title: String!
   description: String!
+  steps: RecipeCreatestepsInput
   servings: Int
 }
 
@@ -455,6 +462,7 @@ type RecipePreviousValues {
   id: ID!
   title: String!
   description: String!
+  steps: [String!]!
   servings: Int
 }
 
@@ -480,6 +488,7 @@ input RecipeUpdateInput {
   user: UserUpdateOneRequiredInput
   title: String
   description: String
+  steps: RecipeUpdatestepsInput
   ingredients: RecipeIngredientUpdateManyWithoutRecipeInput
   servings: Int
 }
@@ -487,6 +496,7 @@ input RecipeUpdateInput {
 input RecipeUpdateManyMutationInput {
   title: String
   description: String
+  steps: RecipeUpdatestepsInput
   servings: Int
 }
 
@@ -497,10 +507,15 @@ input RecipeUpdateOneRequiredWithoutIngredientsInput {
   connect: RecipeWhereUniqueInput
 }
 
+input RecipeUpdatestepsInput {
+  set: [String!]
+}
+
 input RecipeUpdateWithoutIngredientsDataInput {
   user: UserUpdateOneRequiredInput
   title: String
   description: String
+  steps: RecipeUpdatestepsInput
   servings: Int
 }
 
