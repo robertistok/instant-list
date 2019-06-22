@@ -11,6 +11,7 @@ export const useUpsertRecipeState = props => {
     title: "",
     description: "",
     servings: undefined,
+    steps: [""],
     ingredients: [{ id: new Date().getTime(), ...defaultIngredientState }]
   };
 
@@ -36,6 +37,15 @@ export const useUpsertRecipeState = props => {
           )
         };
       }
+      case "modifyStep": {
+        const { target } = payload.event;
+        return {
+          ...state,
+          steps: state.steps.map((ingredient, index) =>
+            index === payload.listElementId ? target.value : ingredient
+          )
+        };
+      }
       case "addIngredient": {
         return {
           ...state,
@@ -51,6 +61,18 @@ export const useUpsertRecipeState = props => {
           ingredients: state.ingredients.filter(
             ingredient => ingredient.id !== payload.listElementId
           )
+        };
+      }
+      case "addStep": {
+        return {
+          ...state,
+          steps: [...state.steps, ""]
+        };
+      }
+      case "deleteStep": {
+        return {
+          ...state,
+          steps: state.steps.filter((ingredient, index) => index !== payload.listElementId)
         };
       }
       default:
