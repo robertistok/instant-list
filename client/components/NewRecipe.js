@@ -1,6 +1,6 @@
 import gql from "graphql-tag";
 
-import EditRecipe from "./EditRecipe";
+import EditRecipe from "./EditRecipe/EditRecipe";
 
 import { useMutation } from "../hooks/apolloHooksWrappers";
 import { useUpsertRecipeState } from "../state/recipe";
@@ -25,6 +25,14 @@ const NewRecipe = ({ recipe }) => {
     dispatch({ type: "deleteIngredient", payload: { listElementId } });
   };
 
+  const addStep = () => {
+    dispatch({ type: "addStep" });
+  };
+
+  const deleteStep = listElementId => () => {
+    dispatch({ type: "deleteStep", payload: { listElementId } });
+  };
+
   const handleInputChange = (fnProps = {}) => event => {
     const { type = "textInput", listElementId } = fnProps;
 
@@ -39,7 +47,8 @@ const NewRecipe = ({ recipe }) => {
     createRecipe({
       variables: {
         data: {
-          ...{ ...state, ingredients: undefined },
+          ...state,
+          steps: { set: state.steps },
           ingredients: {
             create: state.ingredients.map(({ id, ...ingredient }) => ({
               ...{ ...ingredient, name: undefined },
@@ -59,7 +68,9 @@ const NewRecipe = ({ recipe }) => {
   return (
     <EditRecipe
       addIngredient={addIngredient}
+      addStep={addStep}
       deleteIngredient={deleteIngredient}
+      deleteStep={deleteStep}
       handleInputChange={handleInputChange}
       handleSave={handleSave}
       {...state}
