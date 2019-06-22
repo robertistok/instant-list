@@ -24,7 +24,7 @@ const Recipes = () => {
       <Heading a11yTitle="Recipes" level="2">
         Recipes
       </Heading>
-      <Grid columns="400px">
+      <Grid columns="400px" gap="medium">
         {ownRecipes.map(recipe => (
           <RecipeCard key={recipe.id} {...recipe} />
         ))}
