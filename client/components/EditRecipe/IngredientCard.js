@@ -18,10 +18,12 @@ const IngredientCard = ({
   addIngredient,
   deleteIngredient,
   index,
-  ingredient,
   isFirstIngredient,
   isLastIngredient,
-  handleChange
+  handleInputChange,
+  measurementUnit,
+  name,
+  quantity
 }) => {
   const ingredientNumber = index + 1;
   return (
@@ -33,7 +35,6 @@ const IngredientCard = ({
           <StyledGrid
             a11yTitle={`Ingredient number ${ingredientNumber}`}
             gap={isMedium ? "xsmall" : "medium"}
-            key={ingredient.id || "new-ingredient"}
           >
             <Heading className="info" level="4" margin="small">
               {isMedium ? `Nr. ${ingredientNumber}` : `${ingredientNumber}.`}
@@ -44,10 +45,10 @@ const IngredientCard = ({
               className="name"
               component={TextInput}
               name={`name-${index}`}
-              onChange={handleChange}
+              onChange={handleInputChange}
               placeholder="Name"
               required
-              value={ingredient.name}
+              value={name}
             />
 
             <FormField
@@ -55,10 +56,10 @@ const IngredientCard = ({
               className="quantity"
               component={TextInput}
               name={`quantity-${index}`}
-              onChange={handleChange}
+              onChange={handleInputChange}
               placeholder="Quantity"
               type="number"
-              value={ingredient.quantity}
+              value={quantity}
             />
 
             <FormField
@@ -66,10 +67,10 @@ const IngredientCard = ({
               className="measurement-unit"
               component={Select}
               name={`measurementUnit-${index}`}
-              onChange={handleChange}
+              onChange={handleInputChange}
               options={MEASUREMENT_UNITS}
               placeholder="Measure"
-              value={ingredient.measurementUnit}
+              value={measurementUnit}
             />
 
             <Box
