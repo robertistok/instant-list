@@ -92,7 +92,7 @@ const Page = ({ children }) => {
 const StyledPage = styled.div`
   background: var(--white);
   color: var(--black);
-  height: 100%;
+  min-height: 100%;
 `;
 
 const Inner = styled.div`
