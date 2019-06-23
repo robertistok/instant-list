@@ -12,7 +12,7 @@ import {
 } from "grommet";
 import { Add, Trash } from "grommet-icons";
 
-const MEASUREMENT_UNITS = ["Gram", "Kilogram", "Liter", "Mililiter"];
+const MEASUREMENT_UNITS = ["Gram", "Kilogram", "Liter", "Mililiter", "Teaspoon", "Tablespoon"];
 
 const IngredientCard = ({
   addIngredient,
