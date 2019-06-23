@@ -3,6 +3,8 @@ enum MEASUREMENT_UNIT {
   Kilogram
   Liter
   Mililiter
+  Teaspoon
+  Tablespoon
 }
 
 type User {
@@ -11,6 +13,8 @@ type User {
   email: String @unique
   revision: Int
   wunderlistAccessToken: String
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
 }
 
 type Recipe {
@@ -21,6 +25,8 @@ type Recipe {
   steps: [String!] @scalarList(strategy: RELATION)
   ingredients: [RecipeIngredient!]
   servings: Int
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
 }
 
 type RecipeIngredient {
@@ -29,9 +35,13 @@ type RecipeIngredient {
   ingredient: Ingredient!
   quantity: Float
   measurementUnit: MEASUREMENT_UNIT
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
 }
 
 type Ingredient {
   id: ID! @id
   name: String!
+  createdAt: DateTime! @createdAt
+  updatedAt: DateTime! @updatedAt
 }

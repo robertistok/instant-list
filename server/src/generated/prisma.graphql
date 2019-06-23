@@ -18,9 +18,13 @@ type BatchPayload {
   count: Long!
 }
 
+scalar DateTime
+
 type Ingredient {
   id: ID!
   name: String!
+  createdAt: DateTime!
+  updatedAt: DateTime!
 }
 
 type IngredientConnection {
@@ -49,11 +53,17 @@ enum IngredientOrderByInput {
   id_DESC
   name_ASC
   name_DESC
+  createdAt_ASC
+  createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
 }
 
 type IngredientPreviousValues {
   id: ID!
   name: String!
+  createdAt: DateTime!
+  updatedAt: DateTime!
 }
 
 type IngredientSubscriptionPayload {
@@ -127,6 +137,22 @@ input IngredientWhereInput {
   name_not_starts_with: String
   name_ends_with: String
   name_not_ends_with: String
+  createdAt: DateTime
+  createdAt_not: DateTime
+  createdAt_in: [DateTime!]
+  createdAt_not_in: [DateTime!]
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+  updatedAt_not: DateTime
+  updatedAt_in: [DateTime!]
+  updatedAt_not_in: [DateTime!]
+  updatedAt_lt: DateTime
+  updatedAt_lte: DateTime
+  updatedAt_gt: DateTime
+  updatedAt_gte: DateTime
   AND: [IngredientWhereInput!]
   OR: [IngredientWhereInput!]
   NOT: [IngredientWhereInput!]
@@ -143,6 +169,8 @@ enum MEASUREMENT_UNIT {
   Kilogram
   Liter
   Mililiter
+  Teaspoon
+  Tablespoon
 }
 
 type Mutation {
@@ -213,6 +241,8 @@ type Recipe {
   steps: [String!]!
   ingredients(where: RecipeIngredientWhereInput, orderBy: RecipeIngredientOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [RecipeIngredient!]
   servings: Int
+  createdAt: DateTime!
+  updatedAt: DateTime!
 }
 
 type RecipeConnection {
@@ -260,6 +290,8 @@ type RecipeIngredient {
   ingredient: Ingredient!
   quantity: Float
   measurementUnit: MEASUREMENT_UNIT
+  createdAt: DateTime!
+  updatedAt: DateTime!
 }
 
 type RecipeIngredientConnection {
@@ -300,12 +332,18 @@ enum RecipeIngredientOrderByInput {
   quantity_DESC
   measurementUnit_ASC
   measurementUnit_DESC
+  createdAt_ASC
+  createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
 }
 
 type RecipeIngredientPreviousValues {
   id: ID!
   quantity: Float
   measurementUnit: MEASUREMENT_UNIT
+  createdAt: DateTime!
+  updatedAt: DateTime!
 }
 
 input RecipeIngredientScalarWhereInput {
@@ -335,6 +373,22 @@ input RecipeIngredientScalarWhereInput {
   measurementUnit_not: MEASUREMENT_UNIT
   measurementUnit_in: [MEASUREMENT_UNIT!]
   measurementUnit_not_in: [MEASUREMENT_UNIT!]
+  createdAt: DateTime
+  createdAt_not: DateTime
+  createdAt_in: [DateTime!]
+  createdAt_not_in: [DateTime!]
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+  updatedAt_not: DateTime
+  updatedAt_in: [DateTime!]
+  updatedAt_not_in: [DateTime!]
+  updatedAt_lt: DateTime
+  updatedAt_lte: DateTime
+  updatedAt_gt: DateTime
+  updatedAt_gte: DateTime
   AND: [RecipeIngredientScalarWhereInput!]
   OR: [RecipeIngredientScalarWhereInput!]
   NOT: [RecipeIngredientScalarWhereInput!]
@@ -438,6 +492,22 @@ input RecipeIngredientWhereInput {
   measurementUnit_not: MEASUREMENT_UNIT
   measurementUnit_in: [MEASUREMENT_UNIT!]
   measurementUnit_not_in: [MEASUREMENT_UNIT!]
+  createdAt: DateTime
+  createdAt_not: DateTime
+  createdAt_in: [DateTime!]
+  createdAt_not_in: [DateTime!]
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+  updatedAt_not: DateTime
+  updatedAt_in: [DateTime!]
+  updatedAt_not_in: [DateTime!]
+  updatedAt_lt: DateTime
+  updatedAt_lte: DateTime
+  updatedAt_gt: DateTime
+  updatedAt_gte: DateTime
   AND: [RecipeIngredientWhereInput!]
   OR: [RecipeIngredientWhereInput!]
   NOT: [RecipeIngredientWhereInput!]
@@ -456,6 +526,10 @@ enum RecipeOrderByInput {
   description_DESC
   servings_ASC
   servings_DESC
+  createdAt_ASC
+  createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
 }
 
 type RecipePreviousValues {
@@ -464,6 +538,8 @@ type RecipePreviousValues {
   description: String!
   steps: [String!]!
   servings: Int
+  createdAt: DateTime!
+  updatedAt: DateTime!
 }
 
 type RecipeSubscriptionPayload {
@@ -579,6 +655,22 @@ input RecipeWhereInput {
   servings_lte: Int
   servings_gt: Int
   servings_gte: Int
+  createdAt: DateTime
+  createdAt_not: DateTime
+  createdAt_in: [DateTime!]
+  createdAt_not_in: [DateTime!]
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+  updatedAt_not: DateTime
+  updatedAt_in: [DateTime!]
+  updatedAt_not_in: [DateTime!]
+  updatedAt_lt: DateTime
+  updatedAt_lte: DateTime
+  updatedAt_gt: DateTime
+  updatedAt_gte: DateTime
   AND: [RecipeWhereInput!]
   OR: [RecipeWhereInput!]
   NOT: [RecipeWhereInput!]
@@ -601,6 +693,8 @@ type User {
   email: String
   revision: Int
   wunderlistAccessToken: String
+  createdAt: DateTime!
+  updatedAt: DateTime!
 }
 
 type UserConnection {
@@ -638,6 +732,10 @@ enum UserOrderByInput {
   revision_DESC
   wunderlistAccessToken_ASC
   wunderlistAccessToken_DESC
+  createdAt_ASC
+  createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
 }
 
 type UserPreviousValues {
@@ -646,6 +744,8 @@ type UserPreviousValues {
   email: String
   revision: Int
   wunderlistAccessToken: String
+  createdAt: DateTime!
+  updatedAt: DateTime!
 }
 
 type UserSubscriptionPayload {
@@ -764,6 +864,22 @@ input UserWhereInput {
   wunderlistAccessToken_not_starts_with: String
   wunderlistAccessToken_ends_with: String
   wunderlistAccessToken_not_ends_with: String
+  createdAt: DateTime
+  createdAt_not: DateTime
+  createdAt_in: [DateTime!]
+  createdAt_not_in: [DateTime!]
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+  updatedAt_not: DateTime
+  updatedAt_in: [DateTime!]
+  updatedAt_not_in: [DateTime!]
+  updatedAt_lt: DateTime
+  updatedAt_lte: DateTime
+  updatedAt_gt: DateTime
+  updatedAt_gte: DateTime
   AND: [UserWhereInput!]
   OR: [UserWhereInput!]
   NOT: [UserWhereInput!]
