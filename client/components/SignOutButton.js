@@ -1,12 +1,11 @@
 import gql from "graphql-tag";
-import { Button } from "grommet";
 import { FormNextLink } from "grommet-icons";
 
 import NavButton from "./common/NavButton";
+import Loader from "./common/Loader";
 
 import { queries } from "../hooks/user";
 import { useMutation } from "../hooks/apolloHooksWrappers";
-import useLoader from "../hooks/loader";
 
 const SIGN_OUT_MUTATION = gql`
   mutation SIGN_OUT_MUTATION($where: UserWhereUniqueInput!) {
@@ -18,7 +17,6 @@ const SIGN_OUT_MUTATION = gql`
 
 const SignOutButton = ({ className, userId }) => {
   const [signOut, { loading }] = useMutation(SIGN_OUT_MUTATION);
-  useLoader({ loading });
 
   const handleSignOut = () => {
     signOut({
@@ -26,6 +24,10 @@ const SignOutButton = ({ className, userId }) => {
       refetchQueries: [{ query: queries.CURRENT_USER_QUERY }]
     });
   };
+
+  if (loading) {
+    return <Loader />;
+  }
 
   return (
     <NavButton

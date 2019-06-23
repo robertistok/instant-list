@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 import WunderlistAuth from "./WunderlistAuth";
-import Loader from "./Loader";
+import Loader from "./common/Loader";
 
 import { useUser } from "../hooks/user";
 

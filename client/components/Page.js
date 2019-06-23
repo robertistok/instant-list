@@ -4,7 +4,7 @@ import { Grommet } from "grommet";
 
 import Meta from "./Meta";
 import Header from "./Header";
-import Loader from "./Loader";
+import Loader from "./common/Loader";
 
 import { useUser } from "../hooks/user";
 
