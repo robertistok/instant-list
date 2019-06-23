@@ -15,6 +15,7 @@ type SuccessMessage {
 
 type Query {
   me: User
+  recipe(where: RecipeWhereUniqueInput!): Recipe
   ownRecipes(
     where: RecipeWhereInput
     orderBy: RecipeOrderByInput
