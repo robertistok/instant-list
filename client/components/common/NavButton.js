@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { Button } from "grommet";
 
-const NavButton = ({ as, className, handleSignOut, label, icon, ...rest }) => {
+const NavButton = ({ as, className, onClick, label, icon, ...rest }) => {
   return (
     <StyledButton
       as={as}
@@ -10,7 +10,7 @@ const NavButton = ({ as, className, handleSignOut, label, icon, ...rest }) => {
       icon={icon}
       label={label}
       margin="xsmall"
-      onClick={handleSignOut}
+      onClick={onClick}
       pad="medium"
       plain
       reverse

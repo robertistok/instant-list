@@ -1,5 +1,5 @@
 import gql from "graphql-tag";
-import { FormNextLink } from "grommet-icons";
+import { Logout } from "grommet-icons";
 
 import NavButton from "./common/NavButton";
 import Loader from "./common/Loader";
@@ -32,7 +32,7 @@ const SignOutButton = ({ className, userId }) => {
   return (
     <NavButton
       className={className}
-      icon={<FormNextLink color="white" />}
+      icon={<Logout color="white" />}
       label="Sign out"
       margin="xsmall"
       onClick={handleSignOut}
