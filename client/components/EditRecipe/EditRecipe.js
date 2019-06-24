@@ -40,7 +40,7 @@ const EditRecipe = ({
               a11yTitle="Create new recipe form section"
               as={Form}
               animation={{
-                type: "slideUp",
+                type: "slideDown",
                 delay: 0,
                 duration: 1000,
                 size: "small"
