@@ -2,6 +2,7 @@ import NProgress from "nprogress";
 import Router from "next/router";
 import Link from "next/link";
 import styled from "styled-components";
+import { LinkPrevious } from "grommet-icons";
 
 import NavButton from "./common/NavButton";
 import SignOutButton from "./SignOutButton";
@@ -24,6 +25,7 @@ const Header = () => {
 
   return (
     <StyledHeader>
+      <NavButton icon={<LinkPrevious color="white" />} onClick={() => Router.back()} />
       <Link href="/">
         <NavButton label="Home" />
       </Link>
@@ -38,6 +40,7 @@ const Header = () => {
 };
 
 const StyledHeader = styled.header`
+  padding: 0px 20px;
   display: flex;
   background-color: ${({ theme }) => theme.global.colors.wunderlistBlue};
   min-height: ${({ theme }) => theme.global.minHeaderHeight};
