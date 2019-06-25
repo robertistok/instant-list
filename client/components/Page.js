@@ -11,6 +11,7 @@ import { useUser } from "../hooks/user";
 export const colors = {
   wunderlistRed: "#DB4C3F",
   wunderlistBlue: "#2B88D9",
+  brand: "#2B88D9",
   wunderlistGreen: "#65B01B",
   wunderlistYellow: "#E6B035",
   black: "#393939",

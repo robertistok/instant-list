@@ -135,7 +135,6 @@ const EditRecipe = ({
               <Button
                 a11yTitle="Save recipe"
                 alignSelf="start"
-                color="wunderlistBlue"
                 label="Save"
                 primary
                 type="submit"

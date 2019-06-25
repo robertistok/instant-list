@@ -33,7 +33,6 @@ const SignOutButton = ({ className, userId }) => {
     <NavButton
       className={className}
       icon={<Logout color="white" />}
-      label="Sign out"
       margin="xsmall"
       onClick={handleSignOut}
     />
