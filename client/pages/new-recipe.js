@@ -4,9 +4,9 @@ import PleaseSignIn from "../components/PleaseSignIn";
 const NewRecipePage = () => {
   return (
     <PleaseSignIn>
-      <NewRecipePage />
+      <NewRecipe />
     </PleaseSignIn>
   );
 };
 
-export default NewRecipe;
+export default NewRecipePage;
