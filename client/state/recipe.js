@@ -2,6 +2,8 @@
 
 import { useReducer } from "react";
 
+const getIngredientId = () => `new-${new Date().getTime()}`;
+
 export const useUpsertRecipeState = props => {
   const recipe = props;
 
@@ -12,7 +14,7 @@ export const useUpsertRecipeState = props => {
     description: "",
     servings: undefined,
     steps: [""],
-    ingredients: [{ id: new Date().getTime(), ...defaultIngredientState }]
+    ingredients: [{ id: getIngredientId(), ...defaultIngredientState }]
   };
 
   const reducer = (state, { type, payload }) => {
@@ -49,10 +51,7 @@ export const useUpsertRecipeState = props => {
       case "addIngredient": {
         return {
           ...state,
-          ingredients: [
-            ...state.ingredients,
-            { id: new Date().getTime(), ...defaultIngredientState }
-          ]
+          ingredients: [...state.ingredients, { id: getIngredientId(), ...defaultIngredientState }]
         };
       }
       case "deleteIngredient": {
