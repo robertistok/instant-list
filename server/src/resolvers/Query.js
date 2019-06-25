@@ -1,4 +1,4 @@
-const { forwardTo } = require("prisma-binding");
+// const { forwardTo } = require("prisma-binding");
 
 const Query = {
   async me(parent, args, ctx, info) {
@@ -12,12 +12,6 @@ const Query = {
   },
 
   async recipe(parent, args, ctx, info) {
-    const { userId } = ctx.request;
-
-    if (!userId) {
-      throw new Error("You must be signed in!");
-    }
-
     const recipe = await ctx.db.query.recipe(args, info);
 
     const ownsRecipe = recipe.user.id === ctx.request.userId;
@@ -30,13 +24,7 @@ const Query = {
   },
 
   async ownRecipes(parent, args, ctx, info) {
-    const { userId } = ctx.request;
-
-    if (!userId) {
-      throw new Error("You must be signed in!");
-    }
-
-    return ctx.db.query.recipes({ where: { user: { id: userId } } }, info);
+    return ctx.db.query.recipes({ where: { user: { id: ctx.request.userId } } }, info);
   }
 };
 
