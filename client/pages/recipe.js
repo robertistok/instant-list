@@ -1,12 +1,14 @@
+import { withRouter } from "next/router";
+
 import Recipe from "../components/Recipe";
 import PleaseSignIn from "../components/PleaseSignIn";
 
-const RecipePage = () => {
+const RecipePage = ({ router }) => {
   return (
     <PleaseSignIn>
-      <Recipe />
+      <Recipe router={router} />
     </PleaseSignIn>
   );
 };
 
-export default RecipePage;
+export default withRouter(RecipePage);
