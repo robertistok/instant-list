@@ -75,7 +75,7 @@ const Page = ({ children }) => {
   const { loading } = useUser();
 
   if (loading) {
-    return <Loader />;
+    return <Loader showMessage={false} />;
   }
 
   return (

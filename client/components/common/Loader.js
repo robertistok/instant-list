@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import NProgress from "nprogress";
 
-const Loader = () => {
+const Loader = ({ showMessage = true }) => {
   useEffect(() => {
     NProgress.start();
     return () => {
@@ -9,7 +9,7 @@ const Loader = () => {
     };
   }, []);
 
-  return null;
+  return showMessage ? <span>Loading...</span> : null;
 };
 
-module.exports = Loader;
+export default Loader;
