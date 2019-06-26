@@ -4,9 +4,7 @@ import { useReducer } from "react";
 
 const getIngredientId = () => `new-${new Date().getTime()}`;
 
-export const useUpsertRecipeState = props => {
-  const recipe = props;
-
+export const useUpsertRecipeState = recipe => {
   const defaultIngredientState = { name: "", quantity: undefined, measurementUnit: undefined };
 
   const initialState = {
@@ -81,7 +79,8 @@ export const useUpsertRecipeState = props => {
 
   const [state, dispatch] = useReducer(reducer, {
     ...recipe,
-    ...(!recipe && initialState)
+    ...(!recipe && initialState),
+    user: undefined
   });
 
   return [state, dispatch];
