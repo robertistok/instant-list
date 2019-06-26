@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 const express = require("express");
 const next = require("next");
 
@@ -12,6 +13,10 @@ app
 
     server.get("/recipe/:id", (req, res) => {
       return app.render(req, res, "/recipe", { id: req.params.id });
+    });
+
+    server.get("/edit-recipe/:id", (req, res) => {
+      return app.render(req, res, "/edit-recipe", { id: req.params.id });
     });
 
     server.get("*", (req, res) => {

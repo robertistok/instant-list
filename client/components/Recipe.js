@@ -6,10 +6,11 @@ import { Box, Button, Heading, Text } from "grommet";
 import { Add } from "grommet-icons";
 
 import Loader from "./common/Loader";
+import RecipeLink from "./links/RecipeLink";
 
 import { useListAnimation } from "../hooks/animations";
 
-const RECIPE_QUERY = gql`
+export const RECIPE_QUERY = gql`
   query RECIPE_QUERY($where: RecipeWhereUniqueInput!) {
     recipe(where: $where) {
       id
@@ -20,9 +21,7 @@ const RECIPE_QUERY = gql`
         id
         quantity
         measurementUnit
-        ingredient {
-          name
-        }
+        name
       }
       user {
         id
@@ -32,11 +31,12 @@ const RECIPE_QUERY = gql`
 `;
 
 const Recipe = ({ router }) => {
+  const { id: recipeId } = router.query;
   const {
     data: { recipe },
     loading
   } = useQuery(RECIPE_QUERY, {
-    variables: { where: { id: router.query.id } }
+    variables: { where: { id: recipeId } }
   });
 
   const ingredientsTrail = useListAnimation(recipe && recipe.ingredients.length);
@@ -48,8 +48,6 @@ const Recipe = ({ router }) => {
 
   const handleDelete = () => {
     const confirmedResponse = window.confirm("Are you sure you want to delete this recipe?");
-
-    console.log(confirmedResponse);
   };
 
   return (
@@ -86,14 +84,14 @@ const Recipe = ({ router }) => {
       <Heading level="3">Ingredients</Heading>
       <Box a11yTitle="Ingredients container" gap="medium">
         {ingredientsTrail.map((props, index) => {
-          const { id, ingredient, measurementUnit, quantity } = recipe.ingredients[index];
+          const { id, name, measurementUnit, quantity } = recipe.ingredients[index];
 
           return (
             <AnimatedBox align="center" as="li" direction="row" gap="small" style={props} key={id}>
               <Button hoverIndicator icon={<Add />} plain />
               <Text key={id}>
                 {`${quantity || ""} ${(measurementUnit && measurementUnit.toLowerCase()) || ""}
-                    ${ingredient.name}`}
+                    ${name}`}
               </Text>
             </AnimatedBox>
           );
@@ -101,7 +99,9 @@ const Recipe = ({ router }) => {
       </Box>
 
       <Box a11yTitle="Recipe action buttons" direction="row" gap="medium" margin="40px 0px">
-        <Button label="Edit" primary />
+        <RecipeLink id={recipeId} path="/edit-recipe">
+          <Button label="Edit" primary />
+        </RecipeLink>
         <Button color="wunderlistRed" label="Delete" onClick={handleDelete} primary />
       </Box>
     </div>
