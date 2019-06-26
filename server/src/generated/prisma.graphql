@@ -6,10 +6,6 @@ type AggregateRecipe {
   count: Int!
 }
 
-type AggregateRecipeIngredient {
-  count: Int!
-}
-
 type AggregateUser {
   count: Int!
 }
@@ -22,7 +18,10 @@ scalar DateTime
 
 type Ingredient {
   id: ID!
+  recipe: Recipe!
   name: String!
+  quantity: Float
+  measurementUnit: MEASUREMENT_UNIT
   createdAt: DateTime!
   updatedAt: DateTime!
 }
@@ -35,12 +34,22 @@ type IngredientConnection {
 
 input IngredientCreateInput {
   id: ID
+  recipe: RecipeCreateOneWithoutIngredientsInput!
   name: String!
+  quantity: Float
+  measurementUnit: MEASUREMENT_UNIT
 }
 
-input IngredientCreateOneInput {
-  create: IngredientCreateInput
-  connect: IngredientWhereUniqueInput
+input IngredientCreateManyWithoutRecipeInput {
+  create: [IngredientCreateWithoutRecipeInput!]
+  connect: [IngredientWhereUniqueInput!]
+}
+
+input IngredientCreateWithoutRecipeInput {
+  id: ID
+  name: String!
+  quantity: Float
+  measurementUnit: MEASUREMENT_UNIT
 }
 
 type IngredientEdge {
@@ -53,6 +62,10 @@ enum IngredientOrderByInput {
   id_DESC
   name_ASC
   name_DESC
+  quantity_ASC
+  quantity_DESC
+  measurementUnit_ASC
+  measurementUnit_DESC
   createdAt_ASC
   createdAt_DESC
   updatedAt_ASC
@@ -62,53 +75,13 @@ enum IngredientOrderByInput {
 type IngredientPreviousValues {
   id: ID!
   name: String!
+  quantity: Float
+  measurementUnit: MEASUREMENT_UNIT
   createdAt: DateTime!
   updatedAt: DateTime!
 }
 
-type IngredientSubscriptionPayload {
-  mutation: MutationType!
-  node: Ingredient
-  updatedFields: [String!]
-  previousValues: IngredientPreviousValues
-}
-
-input IngredientSubscriptionWhereInput {
-  mutation_in: [MutationType!]
-  updatedFields_contains: String
-  updatedFields_contains_every: [String!]
-  updatedFields_contains_some: [String!]
-  node: IngredientWhereInput
-  AND: [IngredientSubscriptionWhereInput!]
-  OR: [IngredientSubscriptionWhereInput!]
-  NOT: [IngredientSubscriptionWhereInput!]
-}
-
-input IngredientUpdateDataInput {
-  name: String
-}
-
-input IngredientUpdateInput {
-  name: String
-}
-
-input IngredientUpdateManyMutationInput {
-  name: String
-}
-
-input IngredientUpdateOneRequiredInput {
-  create: IngredientCreateInput
-  update: IngredientUpdateDataInput
-  upsert: IngredientUpsertNestedInput
-  connect: IngredientWhereUniqueInput
-}
-
-input IngredientUpsertNestedInput {
-  update: IngredientUpdateDataInput!
-  create: IngredientCreateInput!
-}
-
-input IngredientWhereInput {
+input IngredientScalarWhereInput {
   id: ID
   id_not: ID
   id_in: [ID!]
@@ -137,6 +110,152 @@ input IngredientWhereInput {
   name_not_starts_with: String
   name_ends_with: String
   name_not_ends_with: String
+  quantity: Float
+  quantity_not: Float
+  quantity_in: [Float!]
+  quantity_not_in: [Float!]
+  quantity_lt: Float
+  quantity_lte: Float
+  quantity_gt: Float
+  quantity_gte: Float
+  measurementUnit: MEASUREMENT_UNIT
+  measurementUnit_not: MEASUREMENT_UNIT
+  measurementUnit_in: [MEASUREMENT_UNIT!]
+  measurementUnit_not_in: [MEASUREMENT_UNIT!]
+  createdAt: DateTime
+  createdAt_not: DateTime
+  createdAt_in: [DateTime!]
+  createdAt_not_in: [DateTime!]
+  createdAt_lt: DateTime
+  createdAt_lte: DateTime
+  createdAt_gt: DateTime
+  createdAt_gte: DateTime
+  updatedAt: DateTime
+  updatedAt_not: DateTime
+  updatedAt_in: [DateTime!]
+  updatedAt_not_in: [DateTime!]
+  updatedAt_lt: DateTime
+  updatedAt_lte: DateTime
+  updatedAt_gt: DateTime
+  updatedAt_gte: DateTime
+  AND: [IngredientScalarWhereInput!]
+  OR: [IngredientScalarWhereInput!]
+  NOT: [IngredientScalarWhereInput!]
+}
+
+type IngredientSubscriptionPayload {
+  mutation: MutationType!
+  node: Ingredient
+  updatedFields: [String!]
+  previousValues: IngredientPreviousValues
+}
+
+input IngredientSubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: IngredientWhereInput
+  AND: [IngredientSubscriptionWhereInput!]
+  OR: [IngredientSubscriptionWhereInput!]
+  NOT: [IngredientSubscriptionWhereInput!]
+}
+
+input IngredientUpdateInput {
+  recipe: RecipeUpdateOneRequiredWithoutIngredientsInput
+  name: String
+  quantity: Float
+  measurementUnit: MEASUREMENT_UNIT
+}
+
+input IngredientUpdateManyDataInput {
+  name: String
+  quantity: Float
+  measurementUnit: MEASUREMENT_UNIT
+}
+
+input IngredientUpdateManyMutationInput {
+  name: String
+  quantity: Float
+  measurementUnit: MEASUREMENT_UNIT
+}
+
+input IngredientUpdateManyWithoutRecipeInput {
+  create: [IngredientCreateWithoutRecipeInput!]
+  delete: [IngredientWhereUniqueInput!]
+  connect: [IngredientWhereUniqueInput!]
+  set: [IngredientWhereUniqueInput!]
+  disconnect: [IngredientWhereUniqueInput!]
+  update: [IngredientUpdateWithWhereUniqueWithoutRecipeInput!]
+  upsert: [IngredientUpsertWithWhereUniqueWithoutRecipeInput!]
+  deleteMany: [IngredientScalarWhereInput!]
+  updateMany: [IngredientUpdateManyWithWhereNestedInput!]
+}
+
+input IngredientUpdateManyWithWhereNestedInput {
+  where: IngredientScalarWhereInput!
+  data: IngredientUpdateManyDataInput!
+}
+
+input IngredientUpdateWithoutRecipeDataInput {
+  name: String
+  quantity: Float
+  measurementUnit: MEASUREMENT_UNIT
+}
+
+input IngredientUpdateWithWhereUniqueWithoutRecipeInput {
+  where: IngredientWhereUniqueInput!
+  data: IngredientUpdateWithoutRecipeDataInput!
+}
+
+input IngredientUpsertWithWhereUniqueWithoutRecipeInput {
+  where: IngredientWhereUniqueInput!
+  update: IngredientUpdateWithoutRecipeDataInput!
+  create: IngredientCreateWithoutRecipeInput!
+}
+
+input IngredientWhereInput {
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  recipe: RecipeWhereInput
+  name: String
+  name_not: String
+  name_in: [String!]
+  name_not_in: [String!]
+  name_lt: String
+  name_lte: String
+  name_gt: String
+  name_gte: String
+  name_contains: String
+  name_not_contains: String
+  name_starts_with: String
+  name_not_starts_with: String
+  name_ends_with: String
+  name_not_ends_with: String
+  quantity: Float
+  quantity_not: Float
+  quantity_in: [Float!]
+  quantity_not_in: [Float!]
+  quantity_lt: Float
+  quantity_lte: Float
+  quantity_gt: Float
+  quantity_gte: Float
+  measurementUnit: MEASUREMENT_UNIT
+  measurementUnit_not: MEASUREMENT_UNIT
+  measurementUnit_in: [MEASUREMENT_UNIT!]
+  measurementUnit_not_in: [MEASUREMENT_UNIT!]
   createdAt: DateTime
   createdAt_not: DateTime
   createdAt_in: [DateTime!]
@@ -186,12 +305,6 @@ type Mutation {
   upsertRecipe(where: RecipeWhereUniqueInput!, create: RecipeCreateInput!, update: RecipeUpdateInput!): Recipe!
   deleteRecipe(where: RecipeWhereUniqueInput!): Recipe
   deleteManyRecipes(where: RecipeWhereInput): BatchPayload!
-  createRecipeIngredient(data: RecipeIngredientCreateInput!): RecipeIngredient!
-  updateRecipeIngredient(data: RecipeIngredientUpdateInput!, where: RecipeIngredientWhereUniqueInput!): RecipeIngredient
-  updateManyRecipeIngredients(data: RecipeIngredientUpdateManyMutationInput!, where: RecipeIngredientWhereInput): BatchPayload!
-  upsertRecipeIngredient(where: RecipeIngredientWhereUniqueInput!, create: RecipeIngredientCreateInput!, update: RecipeIngredientUpdateInput!): RecipeIngredient!
-  deleteRecipeIngredient(where: RecipeIngredientWhereUniqueInput!): RecipeIngredient
-  deleteManyRecipeIngredients(where: RecipeIngredientWhereInput): BatchPayload!
   createUser(data: UserCreateInput!): User!
   updateUser(data: UserUpdateInput!, where: UserWhereUniqueInput!): User
   updateManyUsers(data: UserUpdateManyMutationInput!, where: UserWhereInput): BatchPayload!
@@ -224,9 +337,6 @@ type Query {
   recipe(where: RecipeWhereUniqueInput!): Recipe
   recipes(where: RecipeWhereInput, orderBy: RecipeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Recipe]!
   recipesConnection(where: RecipeWhereInput, orderBy: RecipeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): RecipeConnection!
-  recipeIngredient(where: RecipeIngredientWhereUniqueInput!): RecipeIngredient
-  recipeIngredients(where: RecipeIngredientWhereInput, orderBy: RecipeIngredientOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [RecipeIngredient]!
-  recipeIngredientsConnection(where: RecipeIngredientWhereInput, orderBy: RecipeIngredientOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): RecipeIngredientConnection!
   user(where: UserWhereUniqueInput!): User
   users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User]!
   usersConnection(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): UserConnection!
@@ -239,7 +349,7 @@ type Recipe {
   title: String!
   description: String!
   steps: [String!]!
-  ingredients(where: RecipeIngredientWhereInput, orderBy: RecipeIngredientOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [RecipeIngredient!]
+  ingredients(where: IngredientWhereInput, orderBy: IngredientOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Ingredient!]
   servings: Int
   createdAt: DateTime!
   updatedAt: DateTime!
@@ -257,7 +367,7 @@ input RecipeCreateInput {
   title: String!
   description: String!
   steps: RecipeCreatestepsInput
-  ingredients: RecipeIngredientCreateManyWithoutRecipeInput
+  ingredients: IngredientCreateManyWithoutRecipeInput
   servings: Int
 }
 
@@ -282,239 +392,6 @@ input RecipeCreateWithoutIngredientsInput {
 type RecipeEdge {
   node: Recipe!
   cursor: String!
-}
-
-type RecipeIngredient {
-  id: ID!
-  recipe: Recipe!
-  ingredient: Ingredient!
-  quantity: Float
-  measurementUnit: MEASUREMENT_UNIT
-  createdAt: DateTime!
-  updatedAt: DateTime!
-}
-
-type RecipeIngredientConnection {
-  pageInfo: PageInfo!
-  edges: [RecipeIngredientEdge]!
-  aggregate: AggregateRecipeIngredient!
-}
-
-input RecipeIngredientCreateInput {
-  id: ID
-  recipe: RecipeCreateOneWithoutIngredientsInput!
-  ingredient: IngredientCreateOneInput!
-  quantity: Float
-  measurementUnit: MEASUREMENT_UNIT
-}
-
-input RecipeIngredientCreateManyWithoutRecipeInput {
-  create: [RecipeIngredientCreateWithoutRecipeInput!]
-  connect: [RecipeIngredientWhereUniqueInput!]
-}
-
-input RecipeIngredientCreateWithoutRecipeInput {
-  id: ID
-  ingredient: IngredientCreateOneInput!
-  quantity: Float
-  measurementUnit: MEASUREMENT_UNIT
-}
-
-type RecipeIngredientEdge {
-  node: RecipeIngredient!
-  cursor: String!
-}
-
-enum RecipeIngredientOrderByInput {
-  id_ASC
-  id_DESC
-  quantity_ASC
-  quantity_DESC
-  measurementUnit_ASC
-  measurementUnit_DESC
-  createdAt_ASC
-  createdAt_DESC
-  updatedAt_ASC
-  updatedAt_DESC
-}
-
-type RecipeIngredientPreviousValues {
-  id: ID!
-  quantity: Float
-  measurementUnit: MEASUREMENT_UNIT
-  createdAt: DateTime!
-  updatedAt: DateTime!
-}
-
-input RecipeIngredientScalarWhereInput {
-  id: ID
-  id_not: ID
-  id_in: [ID!]
-  id_not_in: [ID!]
-  id_lt: ID
-  id_lte: ID
-  id_gt: ID
-  id_gte: ID
-  id_contains: ID
-  id_not_contains: ID
-  id_starts_with: ID
-  id_not_starts_with: ID
-  id_ends_with: ID
-  id_not_ends_with: ID
-  quantity: Float
-  quantity_not: Float
-  quantity_in: [Float!]
-  quantity_not_in: [Float!]
-  quantity_lt: Float
-  quantity_lte: Float
-  quantity_gt: Float
-  quantity_gte: Float
-  measurementUnit: MEASUREMENT_UNIT
-  measurementUnit_not: MEASUREMENT_UNIT
-  measurementUnit_in: [MEASUREMENT_UNIT!]
-  measurementUnit_not_in: [MEASUREMENT_UNIT!]
-  createdAt: DateTime
-  createdAt_not: DateTime
-  createdAt_in: [DateTime!]
-  createdAt_not_in: [DateTime!]
-  createdAt_lt: DateTime
-  createdAt_lte: DateTime
-  createdAt_gt: DateTime
-  createdAt_gte: DateTime
-  updatedAt: DateTime
-  updatedAt_not: DateTime
-  updatedAt_in: [DateTime!]
-  updatedAt_not_in: [DateTime!]
-  updatedAt_lt: DateTime
-  updatedAt_lte: DateTime
-  updatedAt_gt: DateTime
-  updatedAt_gte: DateTime
-  AND: [RecipeIngredientScalarWhereInput!]
-  OR: [RecipeIngredientScalarWhereInput!]
-  NOT: [RecipeIngredientScalarWhereInput!]
-}
-
-type RecipeIngredientSubscriptionPayload {
-  mutation: MutationType!
-  node: RecipeIngredient
-  updatedFields: [String!]
-  previousValues: RecipeIngredientPreviousValues
-}
-
-input RecipeIngredientSubscriptionWhereInput {
-  mutation_in: [MutationType!]
-  updatedFields_contains: String
-  updatedFields_contains_every: [String!]
-  updatedFields_contains_some: [String!]
-  node: RecipeIngredientWhereInput
-  AND: [RecipeIngredientSubscriptionWhereInput!]
-  OR: [RecipeIngredientSubscriptionWhereInput!]
-  NOT: [RecipeIngredientSubscriptionWhereInput!]
-}
-
-input RecipeIngredientUpdateInput {
-  recipe: RecipeUpdateOneRequiredWithoutIngredientsInput
-  ingredient: IngredientUpdateOneRequiredInput
-  quantity: Float
-  measurementUnit: MEASUREMENT_UNIT
-}
-
-input RecipeIngredientUpdateManyDataInput {
-  quantity: Float
-  measurementUnit: MEASUREMENT_UNIT
-}
-
-input RecipeIngredientUpdateManyMutationInput {
-  quantity: Float
-  measurementUnit: MEASUREMENT_UNIT
-}
-
-input RecipeIngredientUpdateManyWithoutRecipeInput {
-  create: [RecipeIngredientCreateWithoutRecipeInput!]
-  delete: [RecipeIngredientWhereUniqueInput!]
-  connect: [RecipeIngredientWhereUniqueInput!]
-  set: [RecipeIngredientWhereUniqueInput!]
-  disconnect: [RecipeIngredientWhereUniqueInput!]
-  update: [RecipeIngredientUpdateWithWhereUniqueWithoutRecipeInput!]
-  upsert: [RecipeIngredientUpsertWithWhereUniqueWithoutRecipeInput!]
-  deleteMany: [RecipeIngredientScalarWhereInput!]
-  updateMany: [RecipeIngredientUpdateManyWithWhereNestedInput!]
-}
-
-input RecipeIngredientUpdateManyWithWhereNestedInput {
-  where: RecipeIngredientScalarWhereInput!
-  data: RecipeIngredientUpdateManyDataInput!
-}
-
-input RecipeIngredientUpdateWithoutRecipeDataInput {
-  ingredient: IngredientUpdateOneRequiredInput
-  quantity: Float
-  measurementUnit: MEASUREMENT_UNIT
-}
-
-input RecipeIngredientUpdateWithWhereUniqueWithoutRecipeInput {
-  where: RecipeIngredientWhereUniqueInput!
-  data: RecipeIngredientUpdateWithoutRecipeDataInput!
-}
-
-input RecipeIngredientUpsertWithWhereUniqueWithoutRecipeInput {
-  where: RecipeIngredientWhereUniqueInput!
-  update: RecipeIngredientUpdateWithoutRecipeDataInput!
-  create: RecipeIngredientCreateWithoutRecipeInput!
-}
-
-input RecipeIngredientWhereInput {
-  id: ID
-  id_not: ID
-  id_in: [ID!]
-  id_not_in: [ID!]
-  id_lt: ID
-  id_lte: ID
-  id_gt: ID
-  id_gte: ID
-  id_contains: ID
-  id_not_contains: ID
-  id_starts_with: ID
-  id_not_starts_with: ID
-  id_ends_with: ID
-  id_not_ends_with: ID
-  recipe: RecipeWhereInput
-  ingredient: IngredientWhereInput
-  quantity: Float
-  quantity_not: Float
-  quantity_in: [Float!]
-  quantity_not_in: [Float!]
-  quantity_lt: Float
-  quantity_lte: Float
-  quantity_gt: Float
-  quantity_gte: Float
-  measurementUnit: MEASUREMENT_UNIT
-  measurementUnit_not: MEASUREMENT_UNIT
-  measurementUnit_in: [MEASUREMENT_UNIT!]
-  measurementUnit_not_in: [MEASUREMENT_UNIT!]
-  createdAt: DateTime
-  createdAt_not: DateTime
-  createdAt_in: [DateTime!]
-  createdAt_not_in: [DateTime!]
-  createdAt_lt: DateTime
-  createdAt_lte: DateTime
-  createdAt_gt: DateTime
-  createdAt_gte: DateTime
-  updatedAt: DateTime
-  updatedAt_not: DateTime
-  updatedAt_in: [DateTime!]
-  updatedAt_not_in: [DateTime!]
-  updatedAt_lt: DateTime
-  updatedAt_lte: DateTime
-  updatedAt_gt: DateTime
-  updatedAt_gte: DateTime
-  AND: [RecipeIngredientWhereInput!]
-  OR: [RecipeIngredientWhereInput!]
-  NOT: [RecipeIngredientWhereInput!]
-}
-
-input RecipeIngredientWhereUniqueInput {
-  id: ID
 }
 
 enum RecipeOrderByInput {
@@ -565,7 +442,7 @@ input RecipeUpdateInput {
   title: String
   description: String
   steps: RecipeUpdatestepsInput
-  ingredients: RecipeIngredientUpdateManyWithoutRecipeInput
+  ingredients: IngredientUpdateManyWithoutRecipeInput
   servings: Int
 }
 
@@ -644,9 +521,9 @@ input RecipeWhereInput {
   description_not_starts_with: String
   description_ends_with: String
   description_not_ends_with: String
-  ingredients_every: RecipeIngredientWhereInput
-  ingredients_some: RecipeIngredientWhereInput
-  ingredients_none: RecipeIngredientWhereInput
+  ingredients_every: IngredientWhereInput
+  ingredients_some: IngredientWhereInput
+  ingredients_none: IngredientWhereInput
   servings: Int
   servings_not: Int
   servings_in: [Int!]
@@ -683,7 +560,6 @@ input RecipeWhereUniqueInput {
 type Subscription {
   ingredient(where: IngredientSubscriptionWhereInput): IngredientSubscriptionPayload
   recipe(where: RecipeSubscriptionWhereInput): RecipeSubscriptionPayload
-  recipeIngredient(where: RecipeIngredientSubscriptionWhereInput): RecipeIngredientSubscriptionPayload
   user(where: UserSubscriptionWhereInput): UserSubscriptionPayload
 }
 

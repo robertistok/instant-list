@@ -23,25 +23,18 @@ type Recipe {
   title: String!
   description: String!
   steps: [String!] @scalarList(strategy: RELATION)
-  ingredients: [RecipeIngredient!]
+  ingredients: [Ingredient!]
   servings: Int
-  createdAt: DateTime! @createdAt
-  updatedAt: DateTime! @updatedAt
-}
-
-type RecipeIngredient {
-  id: ID! @id
-  recipe: Recipe!
-  ingredient: Ingredient!
-  quantity: Float
-  measurementUnit: MEASUREMENT_UNIT
   createdAt: DateTime! @createdAt
   updatedAt: DateTime! @updatedAt
 }
 
 type Ingredient {
   id: ID! @id
+  recipe: Recipe!
   name: String!
+  quantity: Float
+  measurementUnit: MEASUREMENT_UNIT
   createdAt: DateTime! @createdAt
   updatedAt: DateTime! @updatedAt
 }

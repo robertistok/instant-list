@@ -7,7 +7,7 @@ input RecipeCreateInputWithoutUser {
   title: String!
   description: String!
   steps: RecipeCreatestepsInput
-  ingredients: RecipeIngredientCreateManyWithoutRecipeInput
+  ingredients: IngredientCreateManyWithoutRecipeInput!
   servings: Int
 }
 
