@@ -94,6 +94,7 @@ const EditRecipe = ({
                     <StepCard
                       addStep={addStep}
                       deleteStep={deleteStep(index)}
+                      description={step}
                       handleInputChange={handleStepInputChange}
                       index={index}
                       isFirstStep={index === 0}
