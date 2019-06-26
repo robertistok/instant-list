@@ -4,6 +4,8 @@ import { Box, Grid, Heading, ResponsiveContext } from "grommet";
 
 import RecipeCard from "./RecipeCard";
 
+import Loader from "./common/Loader";
+
 const OWN_RECIPES_QUERY = gql`
   query OWN_RECIPES_QUERY {
     ownRecipes {
@@ -16,8 +18,13 @@ const OWN_RECIPES_QUERY = gql`
 
 const Recipes = () => {
   const {
-    data: { ownRecipes = [] }
+    data: { ownRecipes = [] },
+    loading
   } = useQuery(OWN_RECIPES_QUERY);
+
+  if (loading) {
+    return <Loader />;
+  }
 
   return (
     <ResponsiveContext.Consumer>
