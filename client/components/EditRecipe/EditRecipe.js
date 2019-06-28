@@ -22,7 +22,7 @@ const EditRecipe = ({
   handleInputChange,
   handleSave,
   ingredients,
-  servings,
+  servings = "",
   steps,
   title
 }) => {

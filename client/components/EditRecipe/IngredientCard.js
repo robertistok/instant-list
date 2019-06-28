@@ -21,9 +21,9 @@ const IngredientCard = ({
   isFirstIngredient,
   isLastIngredient,
   handleInputChange,
-  measurementUnit,
+  measurementUnit = "",
   name,
-  quantity
+  quantity = ""
 }) => {
   const ingredientNumber = index + 1;
   return (
