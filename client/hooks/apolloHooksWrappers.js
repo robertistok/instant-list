@@ -2,6 +2,7 @@
 import { useState } from "react";
 import { useMutation as useHookMutation } from "react-apollo-hooks";
 
+// rewrite with TS to gain advantage of autoomeplete
 export const useMutation = (mutation, { onCompleted, onError, ...options } = {}) => {
   const [loading, setLoading] = useState(false);
   const [called, setCalled] = useState(false);
