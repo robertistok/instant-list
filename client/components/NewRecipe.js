@@ -1,13 +1,19 @@
 import gql from "graphql-tag";
+import { useState } from "react";
+import { useMutation } from "react-apollo-hooks";
 
 import EditRecipe from "./EditRecipe/EditRecipe";
 
-import { useMutation } from "../hooks/apolloHooksWrappers";
 import { useUpsertRecipeState } from "../state/recipe";
+import { RECIPE_QUERY } from "./Recipe";
 
-const CREATE_RECIPE_MUTATION = gql`
-  mutation CREATE_RECIPE_MUTATION($data: RecipeCreateInputWithoutUser!) {
-    createRecipe(data: $data) {
+const UPSERT_RECIPE_MUTATION = gql`
+  mutation UPSERT_RECIPE_MUTATION(
+    $where: RecipeWhereUniqueInput!
+    $create: RecipeCreateInputWithoutUser!
+    $update: RecipeUpdateInputWithoutUser!
+  ) {
+    upsertRecipe(where: $where, create: $create, update: $update) {
       id
     }
   }
@@ -15,13 +21,19 @@ const CREATE_RECIPE_MUTATION = gql`
 
 const NewRecipe = ({ recipe }) => {
   const [state, dispatch] = useUpsertRecipeState(recipe);
-  const [createRecipe] = useMutation(CREATE_RECIPE_MUTATION);
+  const [ingredientsToDelete, setIngredientsToDelete] = useState([]);
+  const upsertRecipe = useMutation(UPSERT_RECIPE_MUTATION, {
+    refetchQueries: ({ data }) => [
+      { query: RECIPE_QUERY, variables: { where: { id: data.upsertRecipe.id } } }
+    ]
+  });
 
   const addIngredient = () => {
     dispatch({ type: "addIngredient" });
   };
 
   const deleteIngredient = listElementId => () => {
+    setIngredientsToDelete([...ingredientsToDelete, listElementId]);
     dispatch({ type: "deleteIngredient", payload: { listElementId } });
   };
 
@@ -44,21 +56,42 @@ const NewRecipe = ({ recipe }) => {
   };
 
   const handleSave = () => {
-    createRecipe({
+    // clean up this function
+    upsertRecipe({
       variables: {
-        data: {
+        where: {
+          // if no recipe, we need to pass in a random id for the mutation to not break
+          id: recipe ? recipe.id : new Date().getTime()
+        },
+        create: {
           ...state,
+          id: undefined,
+          __typename: undefined,
           steps: { set: state.steps },
           ingredients: {
             create: state.ingredients.map(({ id, ...ingredient }) => ({
-              ...{ ...ingredient, name: undefined },
-              ingredient: {
-                create: {
-                  name: ingredient.name
-                }
-              },
-              id: typeof id === "number" ? undefined : id // remove the id if it's a new recipe
+              ...ingredient,
+              __typename: undefined,
+              id: id.includes("new") ? undefined : id // remove the id if it's a new recipe
             }))
+          }
+        },
+        update: {
+          ...state,
+          id: undefined,
+          __typename: undefined,
+          steps: { set: state.steps },
+          ingredients: {
+            create: state.ingredients
+              .filter(({ id }) => id.includes("new"))
+              .map(ingredient => ({ ...ingredient, id: undefined })),
+            deleteMany: ingredientsToDelete.filter(id => !id.includes("new")).map(id => ({ id })),
+            updateMany: state.ingredients
+              .filter(({ id }) => !id.includes("new"))
+              .map(ingredient => ({
+                where: { id: ingredient.id },
+                data: { ...ingredient, id: undefined, __typename: undefined }
+              }))
           }
         }
       }
