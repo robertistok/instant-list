@@ -17,6 +17,7 @@ export const RECIPE_QUERY = gql`
       description
       title
       steps
+      servings
       ingredients {
         id
         quantity
