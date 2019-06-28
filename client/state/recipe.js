@@ -5,12 +5,12 @@ import { useReducer } from "react";
 const getIngredientId = () => `new-${new Date().getTime()}`;
 
 export const useUpsertRecipeState = recipe => {
-  const defaultIngredientState = { name: "", quantity: undefined, measurementUnit: undefined };
+  const defaultIngredientState = { name: "", quantity: null, measurementUnit: null };
 
   const initialState = {
     title: "",
     description: "",
-    servings: undefined,
+    servings: null,
     steps: [""],
     ingredients: [{ id: getIngredientId(), ...defaultIngredientState }]
   };
@@ -19,7 +19,11 @@ export const useUpsertRecipeState = recipe => {
     switch (type) {
       case "textInput": {
         const { name, value } = payload.event.target;
-        return { ...state, [name]: (!Number.isNaN(value) && Number(value)) || value };
+
+        return {
+          ...state,
+          [name]: (!Number.isNaN(value) && Number(value)) || (Boolean(value) && value) || null
+        };
       }
       case "modifyIngredient": {
         const { option, target } = payload.event;
