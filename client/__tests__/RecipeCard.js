@@ -12,8 +12,6 @@ describe("<RecipeCard />", () => {
 
     const Description = wrapper.find(`Text`);
     expect(Description.children().text()).toBe(mockedRecipe.description);
-
-    console.log(wrapper.debug());
   });
 
   it("renders the <RecipeLink /> component with the proper id", () => {
