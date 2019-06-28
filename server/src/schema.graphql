@@ -3,11 +3,19 @@
 directive @authenticated on FIELD | FIELD_DEFINITION
 
 input RecipeCreateInputWithoutUser {
-  id: ID
   title: String!
   description: String!
   steps: RecipeCreatestepsInput
   ingredients: IngredientCreateManyWithoutRecipeInput!
+  servings: Int
+}
+
+input RecipeUpdateInputWithoutUser {
+  id: ID
+  title: String
+  description: String
+  steps: RecipeUpdatestepsInput
+  ingredients: IngredientUpdateManyWithoutRecipeInput
   servings: Int
 }
 
@@ -29,7 +37,11 @@ type Query {
 
 type Mutation {
   authWithWunderlist(code: String): User
-  createRecipe(data: RecipeCreateInputWithoutUser!): Recipe! @authenticated
+  upsertRecipe(
+    where: RecipeWhereUniqueInput!
+    create: RecipeCreateInputWithoutUser!
+    update: RecipeUpdateInputWithoutUser!
+  ): Recipe! @authenticated
   createUser(data: UserCreateInput!): User!
   signOut(where: UserWhereUniqueInput!): SuccessMessage! @authenticated
   upsertUser(

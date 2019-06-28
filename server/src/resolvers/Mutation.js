@@ -35,12 +35,15 @@ const Mutation = {
     return user;
   },
 
-  createRecipe(parent, args, ctx, info) {
+  upsertRecipe(parent, args, ctx, info) {
     const { userId } = ctx.request;
+    const { where, create, update } = args;
 
-    return ctx.db.mutation.createRecipe(
+    return ctx.db.mutation.upsertRecipe(
       {
-        data: { ...args.data, user: { connect: { id: userId } } }
+        where,
+        create: { ...create, user: { connect: { id: userId } } },
+        update: { ...update, user: { connect: { id: userId } } }
       },
       info
     );
