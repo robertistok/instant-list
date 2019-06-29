@@ -20,7 +20,18 @@ const UPSERT_RECIPE_MUTATION = gql`
 `;
 
 const UpsertRecipeContainer = ({ recipe, type }) => {
-  const [state, dispatch] = useUpsertRecipeState(recipe);
+  const [
+    state,
+    {
+      addIngredient,
+      addStep,
+      deleteIngredient,
+      deleteStep,
+      updateState,
+      updateIngredient,
+      updateStep
+    }
+  ] = useUpsertRecipeState(recipe);
   const [ingredientsToDelete, setIngredientsToDelete] = useState([]);
   const upsertRecipe = useMutation(UPSERT_RECIPE_MUTATION, {
     refetchQueries: ({ data }) => [
@@ -28,31 +39,36 @@ const UpsertRecipeContainer = ({ recipe, type }) => {
     ]
   });
 
-  const addIngredient = () => {
-    dispatch({ type: "addIngredient" });
-  };
+  const handleAddIngredient = () => addIngredient();
 
-  const deleteIngredient = listElementId => () => {
+  const handleDeleteIngredient = listElementId => () => {
     setIngredientsToDelete([...ingredientsToDelete, listElementId]);
-    dispatch({ type: "deleteIngredient", payload: { listElementId } });
+    deleteIngredient({ listElementId });
   };
 
-  const addStep = () => {
-    dispatch({ type: "addStep" });
+  const handleAddStep = () => addStep();
+
+  const handleDeleteStep = listElementId => () => deleteStep({ listElementId });
+
+  const handleUpdateState = event => {
+    const { name, value } = event.target;
+
+    updateState({
+      name,
+      value: (!Number.isNaN(value) && Number(value)) || (Boolean(value) && value) || null
+    });
   };
 
-  const deleteStep = listElementId => () => {
-    dispatch({ type: "deleteStep", payload: { listElementId } });
-  };
+  const handleUpdateStep = listElementId => event =>
+    updateStep({ listElementId, value: event.target.value });
 
-  const handleInputChange = (fnProps = {}) => event => {
-    const { listElementId } = fnProps;
+  const handleUpdateIngredient = listElementId => event => {
+    const { option, target } = event;
+    const nameWithoutIndex = target.name.split("-")[0];
 
-    if (!event.option) {
-      event.persist();
-    }
+    const value = option || (!Number.isNaN(target.value) && Number(target.value)) || target.value;
 
-    dispatch({ type: fnProps.type || "textInput", payload: { event, listElementId } });
+    updateIngredient({ listElementId, name: nameWithoutIndex, value });
   };
 
   const handleSave = () => {
@@ -100,11 +116,13 @@ const UpsertRecipeContainer = ({ recipe, type }) => {
 
   return (
     <UpsertRecipe
-      addIngredient={addIngredient}
-      addStep={addStep}
-      deleteIngredient={deleteIngredient}
-      deleteStep={deleteStep}
-      handleInputChange={handleInputChange}
+      addIngredient={handleAddIngredient}
+      addStep={handleAddStep}
+      deleteIngredient={handleDeleteIngredient}
+      deleteStep={handleDeleteStep}
+      handleUpdateState={handleUpdateState}
+      handleUpdateStep={handleUpdateStep}
+      handleUpdateIngredient={handleUpdateIngredient}
       handleSave={handleSave}
       recipe={state}
       type={type}

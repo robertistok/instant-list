@@ -21,7 +21,9 @@ const UpsertRecipe = ({
   deleteIngredient,
   deleteStep,
   description,
-  handleInputChange,
+  handleUpdateState,
+  handleUpdateStep,
+  handleUpdateIngredient,
   handleSave,
   recipe,
   type
@@ -29,7 +31,8 @@ const UpsertRecipe = ({
   const { ingredients, servings = "", steps } = recipe;
   const isEditComponent = type === UPSERT_COMPONENT_TYPES.EDIT;
   const componentTitle = isEditComponent ? "Edit your recipe" : "Create new recipe";
-  const submitButtonLabel = isEditComponent ? "Save" : "Create";
+
+  console.log(recipe);
 
   return (
     <ResponsiveContext.Consumer>
@@ -58,7 +61,7 @@ const UpsertRecipe = ({
                   a11yTitle="Title for your new recipe"
                   component={TextInput}
                   name="title"
-                  onChange={handleInputChange()}
+                  onChange={handleUpdateState}
                   placeholder="Title"
                   required
                   value={recipe.title}
@@ -68,7 +71,7 @@ const UpsertRecipe = ({
                   a11yTitle="Number of servings"
                   component={TextInput}
                   name="servings"
-                  onChange={handleInputChange()}
+                  onChange={handleUpdateState}
                   placeholder="Servings"
                   type="number"
                   value={servings}
@@ -79,7 +82,7 @@ const UpsertRecipe = ({
                 a11yTitle="Description for your new recipe"
                 component={TextArea}
                 name="description"
-                onChange={handleInputChange()}
+                onChange={handleUpdateState}
                 placeholder="Description"
                 required
                 value={description}
@@ -90,22 +93,17 @@ const UpsertRecipe = ({
               </Heading>
               <Grid a11yTitle="Steps list" gap="medium" mrgin="medium">
                 {steps.map((step, index) => {
-                  const handleStepInputChange = handleInputChange({
-                    type: "modifyStep",
-                    listElementId: index
-                  });
-
                   return (
                     <StepCard
                       addStep={addStep}
                       deleteStep={deleteStep(index)}
                       description={step}
-                      handleInputChange={handleStepInputChange}
+                      handleInputChange={handleUpdateStep(index)}
                       index={index}
                       isFirstStep={index === 0}
                       isLastStep={index + 1 === steps.length}
                       // eslint-disable-next-line react/no-array-index-key
-                      key={index}
+                      key={`new-step-${index}`}
                     />
                   );
                 })}
@@ -116,16 +114,11 @@ const UpsertRecipe = ({
               </Heading>
               <Grid a11yTitle="Ingredients list" gap="medium" mrgin="medium">
                 {ingredients.map((ingredient, index) => {
-                  const handleIngredientInputChange = handleInputChange({
-                    type: "modifyIngredient",
-                    listElementId: ingredient.id
-                  });
-
                   return (
                     <IngredientCard
                       addIngredient={addIngredient}
                       deleteIngredient={deleteIngredient(ingredient.id)}
-                      handleInputChange={handleIngredientInputChange}
+                      handleInputChange={handleUpdateIngredient(ingredient.id)}
                       index={index}
                       isFirstIngredient={index === 0}
                       isLastIngredient={index + 1 === ingredients.length}

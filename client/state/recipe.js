@@ -17,37 +17,24 @@ export const useUpsertRecipeState = recipe => {
 
   const reducer = (state, { type, payload }) => {
     switch (type) {
-      case "textInput": {
-        const { name, value } = payload.event.target;
-
-        return {
-          ...state,
-          [name]: (!Number.isNaN(value) && Number(value)) || (Boolean(value) && value) || null
-        };
+      case "updateState": {
+        const { name, value } = payload;
+        return { ...state, [name]: value };
       }
-      case "modifyIngredient": {
-        const { option, target } = payload.event;
-        const nameWithoutIndex = target.name.split("-")[0];
+      case "updateIngredient": {
+        const { value, listElementId, name } = payload;
         return {
           ...state,
           ingredients: state.ingredients.map(ingredient =>
-            ingredient.id === payload.listElementId
-              ? {
-                  ...ingredient,
-                  [nameWithoutIndex]:
-                    option || (!Number.isNaN(target.value) && Number(target.value)) || target.value
-                }
-              : ingredient
+            ingredient.id === listElementId ? { ...ingredient, [name]: value } : ingredient
           )
         };
       }
-      case "modifyStep": {
-        const { target } = payload.event;
+      case "updateStep": {
+        const { value, listElementId } = payload;
         return {
           ...state,
-          steps: state.steps.map((ingredient, index) =>
-            index === payload.listElementId ? target.value : ingredient
-          )
+          steps: state.steps.map((step, index) => (index === listElementId ? value : step))
         };
       }
       case "addIngredient": {
@@ -87,5 +74,45 @@ export const useUpsertRecipeState = recipe => {
     user: undefined
   });
 
-  return [state, dispatch];
+  const addIngredient = () => {
+    dispatch({ type: "addIngredient" });
+  };
+
+  const deleteIngredient = payload => {
+    dispatch({ type: "deleteIngredient", payload });
+  };
+
+  const addStep = () => {
+    dispatch({ type: "addStep" });
+  };
+
+  const deleteStep = payload => {
+    dispatch({ type: "deleteStep", payload });
+  };
+
+  const updateState = payload => {
+    dispatch({ type: "updateState", payload });
+  };
+
+  const updateIngredient = payload => {
+    dispatch({ type: "updateIngredient", payload });
+  };
+
+  const updateStep = payload => {
+    dispatch({ type: "updateStep", payload });
+  };
+
+  return [
+    state,
+    {
+      addIngredient,
+      addStep,
+      deleteIngredient,
+      deleteStep,
+      updateState,
+      updateIngredient,
+      updateStep,
+      dispatch
+    }
+  ];
 };
