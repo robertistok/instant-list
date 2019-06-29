@@ -13,7 +13,9 @@ import {
 import IngredientCard from "./IngredientCard";
 import StepCard from "./StepCard";
 
-const EditRecipe = ({
+import { UPSERT_COMPONENT_TYPES } from "../../lib/constants";
+
+const UpsertRecipe = ({
   addIngredient,
   addStep,
   deleteIngredient,
@@ -21,11 +23,14 @@ const EditRecipe = ({
   description,
   handleInputChange,
   handleSave,
-  ingredients,
-  servings = "",
-  steps,
-  title
+  recipe,
+  type
 }) => {
+  const { ingredients, servings = "", steps } = recipe;
+  const isEditComponent = type === UPSERT_COMPONENT_TYPES.EDIT;
+  const componentTitle = isEditComponent ? "Edit your recipe" : "Create new recipe";
+  const submitButtonLabel = isEditComponent ? "Save" : "Create";
+
   return (
     <ResponsiveContext.Consumer>
       {size => {
@@ -33,8 +38,8 @@ const EditRecipe = ({
 
         return (
           <>
-            <Heading a11yTitle="Create new recipe" level="2">
-              Create new recipe
+            <Heading a11yTitle={componentTitle} level="2">
+              {componentTitle}
             </Heading>
             <Box
               a11yTitle="Create new recipe form section"
@@ -56,7 +61,7 @@ const EditRecipe = ({
                   onChange={handleInputChange()}
                   placeholder="Title"
                   required
-                  value={title}
+                  value={recipe.title}
                 />
 
                 <FormField
@@ -134,9 +139,9 @@ const EditRecipe = ({
               </Grid>
 
               <Button
-                a11yTitle="Save recipe"
+                a11yTitle={isEditComponent ? "Save recipe" : "Create recipe"}
                 alignSelf="start"
-                label="Save"
+                label={isEditComponent ? "Save" : "Create"}
                 primary
                 type="submit"
               />
@@ -148,4 +153,4 @@ const EditRecipe = ({
   );
 };
 
-export default EditRecipe;
+export default UpsertRecipe;

@@ -1,14 +1,13 @@
 /* eslint-disable no-alert */
 import { useQuery } from "react-apollo-hooks";
-import gql from "graphql-tag";
-import { Box, Button, Heading, Text } from "grommet";
-import { Add } from "grommet-icons";
 
-import NewRecipe from "./NewRecipe";
+import UpsertRecipe from "./UpsertRecipe/UpsertRecipeContainer";
 import Loader from "./common/Loader";
 import ForOhFor from "./common/ForOhFor";
 
 import { RECIPE_QUERY } from "./Recipe";
+
+import { UPSERT_COMPONENT_TYPES } from "../lib/constants";
 
 const Recipe = ({ router }) => {
   const {
@@ -26,11 +25,7 @@ const Recipe = ({ router }) => {
     return <ForOhFor />;
   }
 
-  return (
-    <div>
-      <NewRecipe recipe={recipe} />
-    </div>
-  );
+  return <UpsertRecipe recipe={recipe} type={UPSERT_COMPONENT_TYPES.EDIT} />;
 };
 
 export default Recipe;
