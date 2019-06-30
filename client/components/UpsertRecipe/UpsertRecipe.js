@@ -32,8 +32,6 @@ const UpsertRecipe = ({
   const isEditComponent = type === UPSERT_COMPONENT_TYPES.EDIT;
   const componentTitle = isEditComponent ? "Edit your recipe" : "Create new recipe";
 
-  console.log(recipe);
-
   return (
     <ResponsiveContext.Consumer>
       {size => {
@@ -92,21 +90,21 @@ const UpsertRecipe = ({
                 Steps
               </Heading>
               <Grid a11yTitle="Steps list" gap="medium" mrgin="medium">
-                {steps.map((step, index) => {
-                  return (
-                    <StepCard
-                      addStep={addStep}
-                      deleteStep={deleteStep(index)}
-                      description={step}
-                      handleInputChange={handleUpdateStep(index)}
-                      index={index}
-                      isFirstStep={index === 0}
-                      isLastStep={index + 1 === steps.length}
-                      // eslint-disable-next-line react/no-array-index-key
-                      key={`new-step-${index}`}
-                    />
-                  );
-                })}
+                {steps.map((step, index) => (
+                  <StepCard
+                    addStep={addStep}
+                    deleteStep={deleteStep(index)}
+                    description={step}
+                    handleInputChange={handleUpdateStep(index)}
+                    index={index}
+                    isFirstStep={index === 0}
+                    isLastStep={index + 1 === steps.length}
+                    // eslint-disable-next-line react/no-array-index-key
+                    key={`new-step-${index}`}
+                    stepNumber={index + 1}
+                    totalSteps={steps.length}
+                  />
+                ))}
               </Grid>
 
               <Heading a11yTitle="Ingredients" level="3">
@@ -121,11 +119,10 @@ const UpsertRecipe = ({
                       handleInputChange={handleUpdateIngredient(ingredient.id)}
                       index={index}
                       isFirstIngredient={index === 0}
+                      ingredientNumber={index + 1}
                       isLastIngredient={index + 1 === ingredients.length}
                       key={ingredient.id}
-                      name={ingredient.name}
-                      measurementUnit={ingredient.measurementUnit}
-                      quantity={ingredient.quantity}
+                      {...ingredient}
                     />
                   );
                 })}
