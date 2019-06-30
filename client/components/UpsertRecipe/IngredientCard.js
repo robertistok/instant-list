@@ -17,15 +17,15 @@ const MEASUREMENT_UNITS = ["Gram", "Kilogram", "Liter", "Mililiter", "Teaspoon",
 const IngredientCard = ({
   addIngredient,
   deleteIngredient,
-  index,
+  ingredientNumber,
   isFirstIngredient,
   isLastIngredient,
   handleInputChange,
   measurementUnit = "",
   name,
-  quantity = ""
+  quantity = "",
+  id
 }) => {
-  const ingredientNumber = index + 1;
   return (
     <ResponsiveContext.Consumer>
       {size => {
@@ -44,7 +44,7 @@ const IngredientCard = ({
               a11yTitle="Description for your new recipe"
               className="name"
               component={TextInput}
-              name={`name-${index}`}
+              name={`name-${id}`}
               onChange={handleInputChange}
               placeholder="Name"
               required
@@ -55,7 +55,7 @@ const IngredientCard = ({
               a11yTitle="Enter the quantity"
               className="quantity"
               component={TextInput}
-              name={`quantity-${index}`}
+              name={`quantity-${id}`}
               onChange={handleInputChange}
               placeholder="Quantity"
               type="number"
@@ -66,7 +66,7 @@ const IngredientCard = ({
               a11yTitle="Select the measurement unit for this ingredient"
               className="measurement-unit"
               component={Select}
-              name={`measurementUnit-${index}`}
+              name={`measurementUnit-${id}`}
               onChange={handleInputChange}
               options={MEASUREMENT_UNITS}
               placeholder="Measure"
