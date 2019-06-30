@@ -1,8 +1,7 @@
 /* eslint-disable import/prefer-default-export */
 
 import { useReducer } from "react";
-
-const getIngredientId = () => `new-${new Date().getTime()}`;
+import nanoid from "nanoid";
 
 export const useUpsertRecipeState = recipe => {
   const defaultIngredientState = { name: "", quantity: null, measurementUnit: null };
@@ -12,7 +11,7 @@ export const useUpsertRecipeState = recipe => {
     description: "",
     servings: null,
     steps: [""],
-    ingredients: [{ id: getIngredientId(), ...defaultIngredientState }]
+    ingredients: [{ id: nanoid(), ...defaultIngredientState }]
   };
 
   const reducer = (state, { type, payload }) => {
@@ -40,7 +39,7 @@ export const useUpsertRecipeState = recipe => {
       case "addIngredient": {
         return {
           ...state,
-          ingredients: [...state.ingredients, { id: getIngredientId(), ...defaultIngredientState }]
+          ingredients: [...state.ingredients, { id: nanoid(), ...defaultIngredientState }]
         };
       }
       case "deleteIngredient": {
@@ -58,6 +57,7 @@ export const useUpsertRecipeState = recipe => {
         };
       }
       case "deleteStep": {
+        console.log(payload);
         return {
           ...state,
           steps: state.steps.filter((ingredient, index) => index !== payload.listElementId)
