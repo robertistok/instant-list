@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-import WunderlistAuth from "./WunderlistAuth";
+import TodoistAuth from "./TodoistAuth";
 import Loader from "./common/Loader";
 
 import { useUser } from "../hooks/user";
@@ -16,10 +16,10 @@ const PleaseSignIn = props => {
     return (
       <Root>
         <SignInInstructions>
-          Please sign in with your Wunderlist account to continue
+          Please sign in with your Todoist account to continue
         </SignInInstructions>
 
-        <WunderlistAuth />
+        <TodoistAuth />
       </Root>
     );
   }
