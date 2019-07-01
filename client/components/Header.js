@@ -25,14 +25,19 @@ const Header = () => {
 
   return (
     <StyledHeader>
-      <NavButton icon={<LinkPrevious color="white" />} onClick={() => Router.back()} />
-      <Link href="/">
-        <NavButton label="Home" />
-      </Link>
+      {data.me && <NavButton icon={<LinkPrevious color="white" />} onClick={() => Router.back()} />}
 
-      <Link href="/new-recipe">
-        <NavButton label="New Recipe" />
-      </Link>
+      {data.me && (
+        <Link href="/">
+          <NavButton label="Home" />
+        </Link>
+      )}
+
+      {data.me && (
+        <Link href="/new-recipe">
+          <NavButton label="New Recipe" />
+        </Link>
+      )}
 
       {data.me && <SignOutButton className="left-align" userId={data.me.id} />}
     </StyledHeader>
