@@ -1,6 +1,8 @@
 const { forwardTo } = require("prisma-binding");
 
 const wunderlist = require("../lib/wunderlist");
+const todoist = require("../lib/todoist");
+
 const { setToken, removeToken } = require("../lib/jwt");
 
 const Mutation = {
@@ -33,6 +35,41 @@ const Mutation = {
     setToken({ data: { userId: user.id }, res: ctx.response });
 
     return user;
+  },
+
+  async authWithTodoist(parent, args, ctx, info) {
+    const { code, state } = args;
+
+    try {
+      const { accessToken } = await todoist.request.post.oauth({ code, state });
+
+      console.log(accessToken);
+    } catch (err) {
+      console.log(err);
+    }
+    // const { data: currentUser } = await wunderlist.request.get.user();
+
+    // const user = await ctx.db.mutation.upsertUser(
+    //   {
+    //     where: { email: currentUser.email },
+    //     create: {
+    //       email: currentUser.email,
+    //       wunderlistAccessToken: accessToken,
+    //       revision: currentUser.revision,
+    //       name: currentUser.name
+    //     },
+    //     update: {
+    //       wunderlistAccessToken: accessToken,
+    //       revision: currentUser.revision,
+    //       name: currentUser.name
+    //     }
+    //   },
+    //   info
+    // );
+
+    // setToken({ data: { userId: user.id }, res: ctx.response });
+
+    return null;
   },
 
   upsertRecipe(parent, args, ctx, info) {
