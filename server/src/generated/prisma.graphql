@@ -569,6 +569,7 @@ type User {
   email: String
   revision: Int
   wunderlistAccessToken: String
+  todoistAccessToken: String
   createdAt: DateTime!
   updatedAt: DateTime!
 }
@@ -585,6 +586,7 @@ input UserCreateInput {
   email: String
   revision: Int
   wunderlistAccessToken: String
+  todoistAccessToken: String
 }
 
 input UserCreateOneInput {
@@ -608,6 +610,8 @@ enum UserOrderByInput {
   revision_DESC
   wunderlistAccessToken_ASC
   wunderlistAccessToken_DESC
+  todoistAccessToken_ASC
+  todoistAccessToken_DESC
   createdAt_ASC
   createdAt_DESC
   updatedAt_ASC
@@ -620,6 +624,7 @@ type UserPreviousValues {
   email: String
   revision: Int
   wunderlistAccessToken: String
+  todoistAccessToken: String
   createdAt: DateTime!
   updatedAt: DateTime!
 }
@@ -647,6 +652,7 @@ input UserUpdateDataInput {
   email: String
   revision: Int
   wunderlistAccessToken: String
+  todoistAccessToken: String
 }
 
 input UserUpdateInput {
@@ -654,6 +660,7 @@ input UserUpdateInput {
   email: String
   revision: Int
   wunderlistAccessToken: String
+  todoistAccessToken: String
 }
 
 input UserUpdateManyMutationInput {
@@ -661,6 +668,7 @@ input UserUpdateManyMutationInput {
   email: String
   revision: Int
   wunderlistAccessToken: String
+  todoistAccessToken: String
 }
 
 input UserUpdateOneRequiredInput {
@@ -740,6 +748,20 @@ input UserWhereInput {
   wunderlistAccessToken_not_starts_with: String
   wunderlistAccessToken_ends_with: String
   wunderlistAccessToken_not_ends_with: String
+  todoistAccessToken: String
+  todoistAccessToken_not: String
+  todoistAccessToken_in: [String!]
+  todoistAccessToken_not_in: [String!]
+  todoistAccessToken_lt: String
+  todoistAccessToken_lte: String
+  todoistAccessToken_gt: String
+  todoistAccessToken_gte: String
+  todoistAccessToken_contains: String
+  todoistAccessToken_not_contains: String
+  todoistAccessToken_starts_with: String
+  todoistAccessToken_not_starts_with: String
+  todoistAccessToken_ends_with: String
+  todoistAccessToken_not_ends_with: String
   createdAt: DateTime
   createdAt_not: DateTime
   createdAt_in: [DateTime!]
