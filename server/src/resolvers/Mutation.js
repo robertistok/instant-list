@@ -1,6 +1,5 @@
 const { forwardTo } = require("prisma-binding");
 
-const wunderlist = require("../lib/wunderlist");
 const todoist = require("../lib/todoist");
 
 const { setToken, removeToken } = require("../lib/jwt");
@@ -8,26 +7,26 @@ const { setToken, removeToken } = require("../lib/jwt");
 const Mutation = {
   upsertUser: forwardTo("db"),
 
-  async authWithWunderlist(parent, args, ctx, info) {
-    const { code } = args;
+  async authWithTodoist(parent, args, ctx, info) {
+    const { code, state } = args;
 
-    const { accessToken } = await wunderlist.request.post.oauth({ code });
-    const { data: currentUser } = await wunderlist.request.get.user();
+    const { accessToken } = await todoist.request.post.oauth({ code, state });
+
+    const { user: todoistUser } = await todoist.request.post.sync({ resource_types: ["user"] });
+    const userProps = {
+      email: todoistUser.email,
+      todoistAccessToken: accessToken,
+      avatar_small: todoistUser.avatar_small,
+      avatar_medium: todoistUser.avatar_medium,
+      avatar_big: todoistUser.avatar_big,
+      name: todoistUser.full_name
+    };
 
     const user = await ctx.db.mutation.upsertUser(
       {
-        where: { email: currentUser.email },
-        create: {
-          email: currentUser.email,
-          wunderlistAccessToken: accessToken,
-          revision: currentUser.revision,
-          name: currentUser.name
-        },
-        update: {
-          wunderlistAccessToken: accessToken,
-          revision: currentUser.revision,
-          name: currentUser.name
-        }
+        where: { todoistId: todoistUser.id },
+        create: userProps,
+        update: userProps
       },
       info
     );
@@ -35,41 +34,6 @@ const Mutation = {
     setToken({ data: { userId: user.id }, res: ctx.response });
 
     return user;
-  },
-
-  async authWithTodoist(parent, args, ctx, info) {
-    const { code, state } = args;
-
-    try {
-      const { accessToken } = await todoist.request.post.oauth({ code, state });
-
-      console.log(accessToken);
-    } catch (err) {
-      console.log(err);
-    }
-    // const { data: currentUser } = await wunderlist.request.get.user();
-
-    // const user = await ctx.db.mutation.upsertUser(
-    //   {
-    //     where: { email: currentUser.email },
-    //     create: {
-    //       email: currentUser.email,
-    //       wunderlistAccessToken: accessToken,
-    //       revision: currentUser.revision,
-    //       name: currentUser.name
-    //     },
-    //     update: {
-    //       wunderlistAccessToken: accessToken,
-    //       revision: currentUser.revision,
-    //       name: currentUser.name
-    //     }
-    //   },
-    //   info
-    // );
-
-    // setToken({ data: { userId: user.id }, res: ctx.response });
-
-    return null;
   },
 
   upsertRecipe(parent, args, ctx, info) {
@@ -98,7 +62,7 @@ const Mutation = {
     await ctx.db.mutation.updateUser(
       {
         where: { id: args.where.id },
-        data: { wunderlistAccessToken: "" }
+        data: { todoistAccessToken: "" }
       },
       info
     );

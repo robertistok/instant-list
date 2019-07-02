@@ -22,18 +22,21 @@ const Todoist = ({ clientId, clientSecret, ...rest }) => {
             client_id: clientId,
             client_secret: clientSecret
           }
-        });
+        }).catch(console.log);
 
         accessToken = data.access_token;
 
         return { accessToken: data.access_token };
       },
 
-      sync: async () => {
+      sync: async ({ resource_types = ["all"], sync_token = "*" }) => {
         const { data } = await axios({
           method: "post",
-          url: `${BASE_URL}/sync`
-        });
+          url: `${BASE_URL}/sync`,
+          data: { token: accessToken, resource_types, sync_token }
+        }).catch(console.log);
+
+        return data;
       }
     },
 
