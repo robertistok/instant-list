@@ -565,11 +565,13 @@ type Subscription {
 
 type User {
   id: ID!
+  todoistId: Int!
+  todoistAccessToken: String
   name: String
   email: String
-  revision: Int
-  wunderlistAccessToken: String
-  todoistAccessToken: String
+  avatar_small: String
+  avatar_medium: String
+  avatar_big: String
   createdAt: DateTime!
   updatedAt: DateTime!
 }
@@ -582,11 +584,13 @@ type UserConnection {
 
 input UserCreateInput {
   id: ID
+  todoistId: Int!
+  todoistAccessToken: String
   name: String
   email: String
-  revision: Int
-  wunderlistAccessToken: String
-  todoistAccessToken: String
+  avatar_small: String
+  avatar_medium: String
+  avatar_big: String
 }
 
 input UserCreateOneInput {
@@ -602,16 +606,20 @@ type UserEdge {
 enum UserOrderByInput {
   id_ASC
   id_DESC
+  todoistId_ASC
+  todoistId_DESC
+  todoistAccessToken_ASC
+  todoistAccessToken_DESC
   name_ASC
   name_DESC
   email_ASC
   email_DESC
-  revision_ASC
-  revision_DESC
-  wunderlistAccessToken_ASC
-  wunderlistAccessToken_DESC
-  todoistAccessToken_ASC
-  todoistAccessToken_DESC
+  avatar_small_ASC
+  avatar_small_DESC
+  avatar_medium_ASC
+  avatar_medium_DESC
+  avatar_big_ASC
+  avatar_big_DESC
   createdAt_ASC
   createdAt_DESC
   updatedAt_ASC
@@ -620,11 +628,13 @@ enum UserOrderByInput {
 
 type UserPreviousValues {
   id: ID!
+  todoistId: Int!
+  todoistAccessToken: String
   name: String
   email: String
-  revision: Int
-  wunderlistAccessToken: String
-  todoistAccessToken: String
+  avatar_small: String
+  avatar_medium: String
+  avatar_big: String
   createdAt: DateTime!
   updatedAt: DateTime!
 }
@@ -648,27 +658,33 @@ input UserSubscriptionWhereInput {
 }
 
 input UserUpdateDataInput {
+  todoistId: Int
+  todoistAccessToken: String
   name: String
   email: String
-  revision: Int
-  wunderlistAccessToken: String
-  todoistAccessToken: String
+  avatar_small: String
+  avatar_medium: String
+  avatar_big: String
 }
 
 input UserUpdateInput {
+  todoistId: Int
+  todoistAccessToken: String
   name: String
   email: String
-  revision: Int
-  wunderlistAccessToken: String
-  todoistAccessToken: String
+  avatar_small: String
+  avatar_medium: String
+  avatar_big: String
 }
 
 input UserUpdateManyMutationInput {
+  todoistId: Int
+  todoistAccessToken: String
   name: String
   email: String
-  revision: Int
-  wunderlistAccessToken: String
-  todoistAccessToken: String
+  avatar_small: String
+  avatar_medium: String
+  avatar_big: String
 }
 
 input UserUpdateOneRequiredInput {
@@ -698,6 +714,28 @@ input UserWhereInput {
   id_not_starts_with: ID
   id_ends_with: ID
   id_not_ends_with: ID
+  todoistId: Int
+  todoistId_not: Int
+  todoistId_in: [Int!]
+  todoistId_not_in: [Int!]
+  todoistId_lt: Int
+  todoistId_lte: Int
+  todoistId_gt: Int
+  todoistId_gte: Int
+  todoistAccessToken: String
+  todoistAccessToken_not: String
+  todoistAccessToken_in: [String!]
+  todoistAccessToken_not_in: [String!]
+  todoistAccessToken_lt: String
+  todoistAccessToken_lte: String
+  todoistAccessToken_gt: String
+  todoistAccessToken_gte: String
+  todoistAccessToken_contains: String
+  todoistAccessToken_not_contains: String
+  todoistAccessToken_starts_with: String
+  todoistAccessToken_not_starts_with: String
+  todoistAccessToken_ends_with: String
+  todoistAccessToken_not_ends_with: String
   name: String
   name_not: String
   name_in: [String!]
@@ -726,42 +764,48 @@ input UserWhereInput {
   email_not_starts_with: String
   email_ends_with: String
   email_not_ends_with: String
-  revision: Int
-  revision_not: Int
-  revision_in: [Int!]
-  revision_not_in: [Int!]
-  revision_lt: Int
-  revision_lte: Int
-  revision_gt: Int
-  revision_gte: Int
-  wunderlistAccessToken: String
-  wunderlistAccessToken_not: String
-  wunderlistAccessToken_in: [String!]
-  wunderlistAccessToken_not_in: [String!]
-  wunderlistAccessToken_lt: String
-  wunderlistAccessToken_lte: String
-  wunderlistAccessToken_gt: String
-  wunderlistAccessToken_gte: String
-  wunderlistAccessToken_contains: String
-  wunderlistAccessToken_not_contains: String
-  wunderlistAccessToken_starts_with: String
-  wunderlistAccessToken_not_starts_with: String
-  wunderlistAccessToken_ends_with: String
-  wunderlistAccessToken_not_ends_with: String
-  todoistAccessToken: String
-  todoistAccessToken_not: String
-  todoistAccessToken_in: [String!]
-  todoistAccessToken_not_in: [String!]
-  todoistAccessToken_lt: String
-  todoistAccessToken_lte: String
-  todoistAccessToken_gt: String
-  todoistAccessToken_gte: String
-  todoistAccessToken_contains: String
-  todoistAccessToken_not_contains: String
-  todoistAccessToken_starts_with: String
-  todoistAccessToken_not_starts_with: String
-  todoistAccessToken_ends_with: String
-  todoistAccessToken_not_ends_with: String
+  avatar_small: String
+  avatar_small_not: String
+  avatar_small_in: [String!]
+  avatar_small_not_in: [String!]
+  avatar_small_lt: String
+  avatar_small_lte: String
+  avatar_small_gt: String
+  avatar_small_gte: String
+  avatar_small_contains: String
+  avatar_small_not_contains: String
+  avatar_small_starts_with: String
+  avatar_small_not_starts_with: String
+  avatar_small_ends_with: String
+  avatar_small_not_ends_with: String
+  avatar_medium: String
+  avatar_medium_not: String
+  avatar_medium_in: [String!]
+  avatar_medium_not_in: [String!]
+  avatar_medium_lt: String
+  avatar_medium_lte: String
+  avatar_medium_gt: String
+  avatar_medium_gte: String
+  avatar_medium_contains: String
+  avatar_medium_not_contains: String
+  avatar_medium_starts_with: String
+  avatar_medium_not_starts_with: String
+  avatar_medium_ends_with: String
+  avatar_medium_not_ends_with: String
+  avatar_big: String
+  avatar_big_not: String
+  avatar_big_in: [String!]
+  avatar_big_not_in: [String!]
+  avatar_big_lt: String
+  avatar_big_lte: String
+  avatar_big_gt: String
+  avatar_big_gte: String
+  avatar_big_contains: String
+  avatar_big_not_contains: String
+  avatar_big_starts_with: String
+  avatar_big_not_starts_with: String
+  avatar_big_ends_with: String
+  avatar_big_not_ends_with: String
   createdAt: DateTime
   createdAt_not: DateTime
   createdAt_in: [DateTime!]
@@ -785,5 +829,6 @@ input UserWhereInput {
 
 input UserWhereUniqueInput {
   id: ID
+  todoistId: Int
   email: String
 }

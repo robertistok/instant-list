@@ -36,7 +36,6 @@ type Query {
 }
 
 type Mutation {
-  authWithWunderlist(code: String): User
   authWithTodoist(code: String!, state: String!): User
   upsertRecipe(
     where: RecipeWhereUniqueInput!

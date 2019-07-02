@@ -9,11 +9,13 @@ enum MEASUREMENT_UNIT {
 
 type User {
   id: ID! @id
+  todoistId: Int! @unique
+  todoistAccessToken: String
   name: String
   email: String @unique
-  revision: Int
-  wunderlistAccessToken: String
-  todoistAccessToken: String
+  avatar_small: String
+  avatar_medium: String
+  avatar_big: String
   createdAt: DateTime! @createdAt
   updatedAt: DateTime! @updatedAt
 }
