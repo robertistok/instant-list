@@ -1,21 +1,28 @@
 import styled from "styled-components";
 import { Button } from "grommet";
 
-const NavButton = ({ as, className, onClick, label, icon, ...rest }) => {
+import Tooltip from "./Tooltip";
+
+const NavButton = ({ as, className, onClick, label, icon, tooltipLabel, ...rest }) => {
   return (
-    <StyledButton
-      as={as}
-      className={className}
-      color="white"
-      icon={icon}
-      label={label}
-      margin="xsmall"
-      onClick={onClick}
-      pad="medium"
-      plain
-      reverse
-      {...rest}
-    />
+    <Tooltip label={tooltipLabel}>
+      {tooltipProps => (
+        <StyledButton
+          as={as}
+          className={className}
+          color="white"
+          icon={icon}
+          label={label}
+          margin="xsmall"
+          onClick={onClick}
+          pad="medium"
+          plain
+          reverse
+          {...rest}
+          {...tooltipProps}
+        />
+      )}
+    </Tooltip>
   );
 };
 

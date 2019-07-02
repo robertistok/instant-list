@@ -1,8 +1,9 @@
+import React from "react";
 import NProgress from "nprogress";
 import Router from "next/router";
 import Link from "next/link";
 import styled from "styled-components";
-import { LinkPrevious } from "grommet-icons";
+import { LinkPrevious, Configure, Home, ChapterAdd } from "grommet-icons";
 
 import NavButton from "./common/NavButton";
 import SignOutButton from "./SignOutButton";
@@ -27,19 +28,26 @@ const Header = () => {
     <StyledHeader>
       {data.me && <NavButton icon={<LinkPrevious color="white" />} onClick={() => Router.back()} />}
 
-      {data.me && (
-        <Link href="/">
-          <NavButton label="Home" />
-        </Link>
-      )}
+      <Link href="/">
+        <NavButton icon={<Home color="white" />} tooltipLabel="Home" />
+      </Link>
 
       {data.me && (
         <Link href="/new-recipe">
-          <NavButton label="New Recipe" />
+          <NavButton icon={<ChapterAdd color="white" />} tooltipLabel="New recipe" />
         </Link>
       )}
 
-      {data.me && <SignOutButton className="left-align" userId={data.me.id} />}
+      {data.me && (
+        <Link href="/settings">
+          <NavButton
+            className="left-align"
+            icon={<Configure color="white" />}
+            tooltipLabel="Settings"
+          />
+        </Link>
+      )}
+      {data.me && <SignOutButton userId={data.me.id} tooltipLabel="Sign out" />}
     </StyledHeader>
   );
 };

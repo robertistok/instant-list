@@ -15,7 +15,7 @@ const SIGN_OUT_MUTATION = gql`
   }
 `;
 
-const SignOutButton = ({ className, userId }) => {
+const SignOutButton = ({ userId, ...rest }) => {
   const [signOut, { loading }] = useMutation(SIGN_OUT_MUTATION);
 
   const handleSignOut = () => {
@@ -30,12 +30,7 @@ const SignOutButton = ({ className, userId }) => {
   }
 
   return (
-    <NavButton
-      className={className}
-      icon={<Logout color="white" />}
-      margin="xsmall"
-      onClick={handleSignOut}
-    />
+    <NavButton icon={<Logout color="white" />} margin="xsmall" onClick={handleSignOut} {...rest} />
   );
 };
 
