@@ -47,6 +47,7 @@ const Recipe = ({ router }) => {
     return <Loader />;
   }
 
+  // TODO
   const handleDelete = () => {
     const confirmedResponse = window.confirm("Are you sure you want to delete this recipe?");
   };
