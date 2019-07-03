@@ -7,15 +7,30 @@ enum MEASUREMENT_UNIT {
   Tablespoon
 }
 
+type TodoistProject {
+  localId: ID! @id
+  id: Float!
+  name: String!
+  color: Int!
+  parentId: Int
+  childOrder: Int
+  collapsed: Int!
+  shared: Boolean
+  isDeleted: Int!
+  isArchived: Int!
+  isFavorite: Int!
+}
+
 type User {
   id: ID! @id
   todoistId: Int! @unique
   todoistAccessToken: String
   name: String
   email: String @unique
-  avatar_small: String
-  avatar_medium: String
-  avatar_big: String
+  shoppingList: TodoistProject
+  avatarSmall: String
+  avatarMedium: String
+  avatarBig: String
   createdAt: DateTime! @createdAt
   updatedAt: DateTime! @updatedAt
 }

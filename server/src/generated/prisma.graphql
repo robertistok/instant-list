@@ -6,6 +6,10 @@ type AggregateRecipe {
   count: Int!
 }
 
+type AggregateTodoistProject {
+  count: Int!
+}
+
 type AggregateUser {
   count: Int!
 }
@@ -305,6 +309,12 @@ type Mutation {
   upsertRecipe(where: RecipeWhereUniqueInput!, create: RecipeCreateInput!, update: RecipeUpdateInput!): Recipe!
   deleteRecipe(where: RecipeWhereUniqueInput!): Recipe
   deleteManyRecipes(where: RecipeWhereInput): BatchPayload!
+  createTodoistProject(data: TodoistProjectCreateInput!): TodoistProject!
+  updateTodoistProject(data: TodoistProjectUpdateInput!, where: TodoistProjectWhereUniqueInput!): TodoistProject
+  updateManyTodoistProjects(data: TodoistProjectUpdateManyMutationInput!, where: TodoistProjectWhereInput): BatchPayload!
+  upsertTodoistProject(where: TodoistProjectWhereUniqueInput!, create: TodoistProjectCreateInput!, update: TodoistProjectUpdateInput!): TodoistProject!
+  deleteTodoistProject(where: TodoistProjectWhereUniqueInput!): TodoistProject
+  deleteManyTodoistProjects(where: TodoistProjectWhereInput): BatchPayload!
   createUser(data: UserCreateInput!): User!
   updateUser(data: UserUpdateInput!, where: UserWhereUniqueInput!): User
   updateManyUsers(data: UserUpdateManyMutationInput!, where: UserWhereInput): BatchPayload!
@@ -337,6 +347,9 @@ type Query {
   recipe(where: RecipeWhereUniqueInput!): Recipe
   recipes(where: RecipeWhereInput, orderBy: RecipeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Recipe]!
   recipesConnection(where: RecipeWhereInput, orderBy: RecipeOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): RecipeConnection!
+  todoistProject(where: TodoistProjectWhereUniqueInput!): TodoistProject
+  todoistProjects(where: TodoistProjectWhereInput, orderBy: TodoistProjectOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [TodoistProject]!
+  todoistProjectsConnection(where: TodoistProjectWhereInput, orderBy: TodoistProjectOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): TodoistProjectConnection!
   user(where: UserWhereUniqueInput!): User
   users(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [User]!
   usersConnection(where: UserWhereInput, orderBy: UserOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): UserConnection!
@@ -560,7 +573,263 @@ input RecipeWhereUniqueInput {
 type Subscription {
   ingredient(where: IngredientSubscriptionWhereInput): IngredientSubscriptionPayload
   recipe(where: RecipeSubscriptionWhereInput): RecipeSubscriptionPayload
+  todoistProject(where: TodoistProjectSubscriptionWhereInput): TodoistProjectSubscriptionPayload
   user(where: UserSubscriptionWhereInput): UserSubscriptionPayload
+}
+
+type TodoistProject {
+  localId: ID!
+  id: Float!
+  name: String!
+  color: Int!
+  parentId: Int
+  childOrder: Int
+  collapsed: Int!
+  shared: Boolean
+  isDeleted: Int!
+  isArchived: Int!
+  isFavorite: Int!
+}
+
+type TodoistProjectConnection {
+  pageInfo: PageInfo!
+  edges: [TodoistProjectEdge]!
+  aggregate: AggregateTodoistProject!
+}
+
+input TodoistProjectCreateInput {
+  localId: ID
+  name: String!
+  color: Int!
+  parentId: Int
+  childOrder: Int
+  collapsed: Int!
+  shared: Boolean
+  isDeleted: Int!
+  isArchived: Int!
+  isFavorite: Int!
+}
+
+input TodoistProjectCreateOneInput {
+  create: TodoistProjectCreateInput
+  connect: TodoistProjectWhereUniqueInput
+}
+
+type TodoistProjectEdge {
+  node: TodoistProject!
+  cursor: String!
+}
+
+enum TodoistProjectOrderByInput {
+  localId_ASC
+  localId_DESC
+  id_ASC
+  id_DESC
+  name_ASC
+  name_DESC
+  color_ASC
+  color_DESC
+  parentId_ASC
+  parentId_DESC
+  childOrder_ASC
+  childOrder_DESC
+  collapsed_ASC
+  collapsed_DESC
+  shared_ASC
+  shared_DESC
+  isDeleted_ASC
+  isDeleted_DESC
+  isArchived_ASC
+  isArchived_DESC
+  isFavorite_ASC
+  isFavorite_DESC
+}
+
+type TodoistProjectPreviousValues {
+  localId: ID!
+  id: Float!
+  name: String!
+  color: Int!
+  parentId: Int
+  childOrder: Int
+  collapsed: Int!
+  shared: Boolean
+  isDeleted: Int!
+  isArchived: Int!
+  isFavorite: Int!
+}
+
+type TodoistProjectSubscriptionPayload {
+  mutation: MutationType!
+  node: TodoistProject
+  updatedFields: [String!]
+  previousValues: TodoistProjectPreviousValues
+}
+
+input TodoistProjectSubscriptionWhereInput {
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: TodoistProjectWhereInput
+  AND: [TodoistProjectSubscriptionWhereInput!]
+  OR: [TodoistProjectSubscriptionWhereInput!]
+  NOT: [TodoistProjectSubscriptionWhereInput!]
+}
+
+input TodoistProjectUpdateDataInput {
+  name: String
+  color: Int
+  parentId: Int
+  childOrder: Int
+  collapsed: Int
+  shared: Boolean
+  isDeleted: Int
+  isArchived: Int
+  isFavorite: Int
+}
+
+input TodoistProjectUpdateInput {
+  name: String
+  color: Int
+  parentId: Int
+  childOrder: Int
+  collapsed: Int
+  shared: Boolean
+  isDeleted: Int
+  isArchived: Int
+  isFavorite: Int
+}
+
+input TodoistProjectUpdateManyMutationInput {
+  name: String
+  color: Int
+  parentId: Int
+  childOrder: Int
+  collapsed: Int
+  shared: Boolean
+  isDeleted: Int
+  isArchived: Int
+  isFavorite: Int
+}
+
+input TodoistProjectUpdateOneInput {
+  create: TodoistProjectCreateInput
+  update: TodoistProjectUpdateDataInput
+  upsert: TodoistProjectUpsertNestedInput
+  delete: Boolean
+  disconnect: Boolean
+  connect: TodoistProjectWhereUniqueInput
+}
+
+input TodoistProjectUpsertNestedInput {
+  update: TodoistProjectUpdateDataInput!
+  create: TodoistProjectCreateInput!
+}
+
+input TodoistProjectWhereInput {
+  localId: ID
+  localId_not: ID
+  localId_in: [ID!]
+  localId_not_in: [ID!]
+  localId_lt: ID
+  localId_lte: ID
+  localId_gt: ID
+  localId_gte: ID
+  localId_contains: ID
+  localId_not_contains: ID
+  localId_starts_with: ID
+  localId_not_starts_with: ID
+  localId_ends_with: ID
+  localId_not_ends_with: ID
+  id: Float
+  id_not: Float
+  id_in: [Float!]
+  id_not_in: [Float!]
+  id_lt: Float
+  id_lte: Float
+  id_gt: Float
+  id_gte: Float
+  name: String
+  name_not: String
+  name_in: [String!]
+  name_not_in: [String!]
+  name_lt: String
+  name_lte: String
+  name_gt: String
+  name_gte: String
+  name_contains: String
+  name_not_contains: String
+  name_starts_with: String
+  name_not_starts_with: String
+  name_ends_with: String
+  name_not_ends_with: String
+  color: Int
+  color_not: Int
+  color_in: [Int!]
+  color_not_in: [Int!]
+  color_lt: Int
+  color_lte: Int
+  color_gt: Int
+  color_gte: Int
+  parentId: Int
+  parentId_not: Int
+  parentId_in: [Int!]
+  parentId_not_in: [Int!]
+  parentId_lt: Int
+  parentId_lte: Int
+  parentId_gt: Int
+  parentId_gte: Int
+  childOrder: Int
+  childOrder_not: Int
+  childOrder_in: [Int!]
+  childOrder_not_in: [Int!]
+  childOrder_lt: Int
+  childOrder_lte: Int
+  childOrder_gt: Int
+  childOrder_gte: Int
+  collapsed: Int
+  collapsed_not: Int
+  collapsed_in: [Int!]
+  collapsed_not_in: [Int!]
+  collapsed_lt: Int
+  collapsed_lte: Int
+  collapsed_gt: Int
+  collapsed_gte: Int
+  shared: Boolean
+  shared_not: Boolean
+  isDeleted: Int
+  isDeleted_not: Int
+  isDeleted_in: [Int!]
+  isDeleted_not_in: [Int!]
+  isDeleted_lt: Int
+  isDeleted_lte: Int
+  isDeleted_gt: Int
+  isDeleted_gte: Int
+  isArchived: Int
+  isArchived_not: Int
+  isArchived_in: [Int!]
+  isArchived_not_in: [Int!]
+  isArchived_lt: Int
+  isArchived_lte: Int
+  isArchived_gt: Int
+  isArchived_gte: Int
+  isFavorite: Int
+  isFavorite_not: Int
+  isFavorite_in: [Int!]
+  isFavorite_not_in: [Int!]
+  isFavorite_lt: Int
+  isFavorite_lte: Int
+  isFavorite_gt: Int
+  isFavorite_gte: Int
+  AND: [TodoistProjectWhereInput!]
+  OR: [TodoistProjectWhereInput!]
+  NOT: [TodoistProjectWhereInput!]
+}
+
+input TodoistProjectWhereUniqueInput {
+  localId: ID
+  id: Float
 }
 
 type User {
@@ -569,9 +838,10 @@ type User {
   todoistAccessToken: String
   name: String
   email: String
-  avatar_small: String
-  avatar_medium: String
-  avatar_big: String
+  shoppingList: TodoistProject
+  avatarSmall: String
+  avatarMedium: String
+  avatarBig: String
   createdAt: DateTime!
   updatedAt: DateTime!
 }
@@ -588,9 +858,10 @@ input UserCreateInput {
   todoistAccessToken: String
   name: String
   email: String
-  avatar_small: String
-  avatar_medium: String
-  avatar_big: String
+  shoppingList: TodoistProjectCreateOneInput
+  avatarSmall: String
+  avatarMedium: String
+  avatarBig: String
 }
 
 input UserCreateOneInput {
@@ -614,12 +885,12 @@ enum UserOrderByInput {
   name_DESC
   email_ASC
   email_DESC
-  avatar_small_ASC
-  avatar_small_DESC
-  avatar_medium_ASC
-  avatar_medium_DESC
-  avatar_big_ASC
-  avatar_big_DESC
+  avatarSmall_ASC
+  avatarSmall_DESC
+  avatarMedium_ASC
+  avatarMedium_DESC
+  avatarBig_ASC
+  avatarBig_DESC
   createdAt_ASC
   createdAt_DESC
   updatedAt_ASC
@@ -632,9 +903,9 @@ type UserPreviousValues {
   todoistAccessToken: String
   name: String
   email: String
-  avatar_small: String
-  avatar_medium: String
-  avatar_big: String
+  avatarSmall: String
+  avatarMedium: String
+  avatarBig: String
   createdAt: DateTime!
   updatedAt: DateTime!
 }
@@ -662,9 +933,10 @@ input UserUpdateDataInput {
   todoistAccessToken: String
   name: String
   email: String
-  avatar_small: String
-  avatar_medium: String
-  avatar_big: String
+  shoppingList: TodoistProjectUpdateOneInput
+  avatarSmall: String
+  avatarMedium: String
+  avatarBig: String
 }
 
 input UserUpdateInput {
@@ -672,9 +944,10 @@ input UserUpdateInput {
   todoistAccessToken: String
   name: String
   email: String
-  avatar_small: String
-  avatar_medium: String
-  avatar_big: String
+  shoppingList: TodoistProjectUpdateOneInput
+  avatarSmall: String
+  avatarMedium: String
+  avatarBig: String
 }
 
 input UserUpdateManyMutationInput {
@@ -682,9 +955,9 @@ input UserUpdateManyMutationInput {
   todoistAccessToken: String
   name: String
   email: String
-  avatar_small: String
-  avatar_medium: String
-  avatar_big: String
+  avatarSmall: String
+  avatarMedium: String
+  avatarBig: String
 }
 
 input UserUpdateOneRequiredInput {
@@ -764,48 +1037,49 @@ input UserWhereInput {
   email_not_starts_with: String
   email_ends_with: String
   email_not_ends_with: String
-  avatar_small: String
-  avatar_small_not: String
-  avatar_small_in: [String!]
-  avatar_small_not_in: [String!]
-  avatar_small_lt: String
-  avatar_small_lte: String
-  avatar_small_gt: String
-  avatar_small_gte: String
-  avatar_small_contains: String
-  avatar_small_not_contains: String
-  avatar_small_starts_with: String
-  avatar_small_not_starts_with: String
-  avatar_small_ends_with: String
-  avatar_small_not_ends_with: String
-  avatar_medium: String
-  avatar_medium_not: String
-  avatar_medium_in: [String!]
-  avatar_medium_not_in: [String!]
-  avatar_medium_lt: String
-  avatar_medium_lte: String
-  avatar_medium_gt: String
-  avatar_medium_gte: String
-  avatar_medium_contains: String
-  avatar_medium_not_contains: String
-  avatar_medium_starts_with: String
-  avatar_medium_not_starts_with: String
-  avatar_medium_ends_with: String
-  avatar_medium_not_ends_with: String
-  avatar_big: String
-  avatar_big_not: String
-  avatar_big_in: [String!]
-  avatar_big_not_in: [String!]
-  avatar_big_lt: String
-  avatar_big_lte: String
-  avatar_big_gt: String
-  avatar_big_gte: String
-  avatar_big_contains: String
-  avatar_big_not_contains: String
-  avatar_big_starts_with: String
-  avatar_big_not_starts_with: String
-  avatar_big_ends_with: String
-  avatar_big_not_ends_with: String
+  shoppingList: TodoistProjectWhereInput
+  avatarSmall: String
+  avatarSmall_not: String
+  avatarSmall_in: [String!]
+  avatarSmall_not_in: [String!]
+  avatarSmall_lt: String
+  avatarSmall_lte: String
+  avatarSmall_gt: String
+  avatarSmall_gte: String
+  avatarSmall_contains: String
+  avatarSmall_not_contains: String
+  avatarSmall_starts_with: String
+  avatarSmall_not_starts_with: String
+  avatarSmall_ends_with: String
+  avatarSmall_not_ends_with: String
+  avatarMedium: String
+  avatarMedium_not: String
+  avatarMedium_in: [String!]
+  avatarMedium_not_in: [String!]
+  avatarMedium_lt: String
+  avatarMedium_lte: String
+  avatarMedium_gt: String
+  avatarMedium_gte: String
+  avatarMedium_contains: String
+  avatarMedium_not_contains: String
+  avatarMedium_starts_with: String
+  avatarMedium_not_starts_with: String
+  avatarMedium_ends_with: String
+  avatarMedium_not_ends_with: String
+  avatarBig: String
+  avatarBig_not: String
+  avatarBig_in: [String!]
+  avatarBig_not_in: [String!]
+  avatarBig_lt: String
+  avatarBig_lte: String
+  avatarBig_gt: String
+  avatarBig_gte: String
+  avatarBig_contains: String
+  avatarBig_not_contains: String
+  avatarBig_starts_with: String
+  avatarBig_not_starts_with: String
+  avatarBig_ends_with: String
+  avatarBig_not_ends_with: String
   createdAt: DateTime
   createdAt_not: DateTime
   createdAt_in: [DateTime!]

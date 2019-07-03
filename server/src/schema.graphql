@@ -33,6 +33,7 @@ type Query {
     first: Int
     last: Int
   ): [Recipe]! @authenticated
+  usersProjectsFromTodoist: [TodoistProject] @authenticated
 }
 
 type Mutation {

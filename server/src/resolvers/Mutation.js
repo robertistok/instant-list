@@ -13,12 +13,14 @@ const Mutation = {
     const { accessToken } = await todoist.request.post.oauth({ code, state });
 
     const { user: todoistUser } = await todoist.request.post.sync({ resource_types: ["user"] });
+
     const userProps = {
       email: todoistUser.email,
       todoistAccessToken: accessToken,
-      avatar_small: todoistUser.avatar_small,
-      avatar_medium: todoistUser.avatar_medium,
-      avatar_big: todoistUser.avatar_big,
+      todoistId: todoistUser.id,
+      avatarSmall: todoistUser.avatar_small,
+      avatarMedium: todoistUser.avatar_medium,
+      avatarBig: todoistUser.avatar_big,
       name: todoistUser.full_name
     };
 
