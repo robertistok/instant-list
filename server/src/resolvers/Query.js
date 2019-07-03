@@ -25,6 +25,11 @@ const Query = {
 
   async ownRecipes(parent, args, ctx, info) {
     return ctx.db.query.recipes({ where: { user: { id: ctx.request.userId } } }, info);
+  },
+
+  async usersProjectsFromTodoist(parent, args, ctx) {
+    const { projects } = await ctx.todoist.request.post.sync({ resource_types: ["projects"] });
+    return projects;
   }
 };
 
