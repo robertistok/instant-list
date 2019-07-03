@@ -4,6 +4,7 @@ const Mutation = require("./resolvers/Mutation");
 const Query = require("./resolvers/Query");
 const { AuthDirective } = require("./resolvers/directives");
 const db = require("./db");
+const todoist = require("./lib/todoist");
 
 // Create the GraphQL Yoga Server
 
@@ -20,7 +21,11 @@ function createServer() {
     resolverValidationOptions: {
       requireResolversForResolveType: false
     },
-    context: req => ({ ...req, db })
+
+    context: req => {
+      const { user } = req.request;
+      return { ...req, db, todoist: todoist({ accessToken: user.todoistAccessToken }) };
+    }
   });
 }
 

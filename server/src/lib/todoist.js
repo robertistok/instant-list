@@ -48,7 +48,9 @@ const Todoist = ({ clientId, clientSecret, ...rest }) => {
   return { request };
 };
 
-module.exports = Todoist({
-  clientId: TODOIST_CLIENT_ID,
-  clientSecret: TODOIST_CLIENT_SECRET
-});
+module.exports = ({ accessToken }) =>
+  Todoist({
+    accessToken,
+    clientId: TODOIST_CLIENT_ID,
+    clientSecret: TODOIST_CLIENT_SECRET
+  });
