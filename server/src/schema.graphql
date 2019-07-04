@@ -44,6 +44,7 @@ type Mutation {
     update: RecipeUpdateInputWithoutUser!
   ): Recipe! @authenticated
   createUser(data: UserCreateInput!): User!
+  deleteRecipe(where: RecipeWhereUniqueInput!): Recipe
   signOut(where: UserWhereUniqueInput!): SuccessMessage! @authenticated
   upsertUser(
     where: UserWhereUniqueInput!

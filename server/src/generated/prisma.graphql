@@ -22,7 +22,7 @@ scalar DateTime
 
 type Ingredient {
   id: ID!
-  recipe: Recipe!
+  recipe: Recipe
   name: String!
   quantity: Float
   measurementUnit: MEASUREMENT_UNIT
@@ -38,7 +38,7 @@ type IngredientConnection {
 
 input IngredientCreateInput {
   id: ID
-  recipe: RecipeCreateOneWithoutIngredientsInput!
+  recipe: RecipeCreateOneWithoutIngredientsInput
   name: String!
   quantity: Float
   measurementUnit: MEASUREMENT_UNIT
@@ -166,7 +166,7 @@ input IngredientSubscriptionWhereInput {
 }
 
 input IngredientUpdateInput {
-  recipe: RecipeUpdateOneRequiredWithoutIngredientsInput
+  recipe: RecipeUpdateOneWithoutIngredientsInput
   name: String
   quantity: Float
   measurementUnit: MEASUREMENT_UNIT
@@ -466,10 +466,12 @@ input RecipeUpdateManyMutationInput {
   servings: Int
 }
 
-input RecipeUpdateOneRequiredWithoutIngredientsInput {
+input RecipeUpdateOneWithoutIngredientsInput {
   create: RecipeCreateWithoutIngredientsInput
   update: RecipeUpdateWithoutIngredientsDataInput
   upsert: RecipeUpsertWithoutIngredientsInput
+  delete: Boolean
+  disconnect: Boolean
   connect: RecipeWhereUniqueInput
 }
 
