@@ -1,4 +1,4 @@
-import Settings from "../components/Settings";
+import Settings from "../components/Settings/Settings";
 import PleaseSignIn from "../components/PleaseSignIn";
 
 const SettingsPage = () => {
