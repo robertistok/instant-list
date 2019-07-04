@@ -4,12 +4,16 @@ const { TODOIST_CLIENT_ID, TODOIST_CLIENT_SECRET } = require("../config");
 
 const Todoist = ({ clientId, clientSecret, ...rest }) => {
   let { accessToken } = rest;
+  const headers = {
+    ...(accessToken && { Authorization: `Bearer ${accessToken}` })
+  };
 
   if (!clientId) {
     throw new Error("A clientId must be specified when instantiating the WunderList class");
   }
 
   const BASE_URL = "https://todoist.com/api/v8";
+  const REST_API = "https://beta.todoist.com/API/v8";
 
   const request = {
     post: {
@@ -25,6 +29,7 @@ const Todoist = ({ clientId, clientSecret, ...rest }) => {
         }).catch(console.log);
 
         accessToken = data.access_token;
+        headers.Authorization = `Bearer ${accessToken}`;
 
         return { accessToken: data.access_token };
       },
@@ -41,7 +46,8 @@ const Todoist = ({ clientId, clientSecret, ...rest }) => {
     },
 
     get: {
-      // user: () => axios({ method: "get", url: `${BASE_URL}/user`, headers })
+      projects: () => axios({ method: "get", url: `${REST_API}/projects`, headers }),
+      project: ({ id }) => axios({ method: "get", url: `${REST_API}/projects/${id}`, headers })
     }
   };
 
