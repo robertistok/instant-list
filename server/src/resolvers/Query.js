@@ -1,4 +1,5 @@
 // const { forwardTo } = require("prisma-binding");
+const { NotAllowedError } = require("../lib/errors");
 
 const Query = {
   async me(parent, args, ctx, info) {
@@ -17,7 +18,7 @@ const Query = {
     const ownsRecipe = recipe.user.id === ctx.request.userId;
 
     if (!ownsRecipe) {
-      throw new Error("You can't see this");
+      throw new NotAllowedError();
     }
 
     return recipe;

@@ -1,8 +1,8 @@
 const { forwardTo } = require("prisma-binding");
 
 const todoist = require("../lib/todoist");
-
 const { setToken, removeToken } = require("../lib/jwt");
+const { NotAllowedError, NotFoundError } = require("../lib/errors");
 
 const Mutation = {
   upsertUser: forwardTo("db"),
@@ -57,7 +57,7 @@ const Mutation = {
     const { id } = args.where;
 
     if (id !== userId) {
-      throw new Error("You cannot do that!");
+      throw new NotAllowedError();
     }
 
     // remove access token from db
@@ -73,6 +73,21 @@ const Mutation = {
     removeToken({ res: ctx.response, tokenName: "token" });
 
     return { message: "Goodbye!" };
+  },
+
+  async deleteRecipe(parent, args, ctx, info) {
+    const { where } = args;
+    const recipe = await ctx.db.query.recipe({ where }, `{ id, user { id }}`);
+
+    if (!recipe) {
+      throw new NotFoundError(`Recipe with ${where.id} not found`);
+    }
+
+    if (recipe.user.id !== ctx.request.userId) {
+      throw new NotAllowedError();
+    }
+
+    return ctx.db.mutation.deleteRecipe({ where }, info);
   }
 };
 
