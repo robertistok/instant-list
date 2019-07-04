@@ -1,5 +1,6 @@
 /* eslint-disable no-alert */
-import { useQuery } from "react-apollo-hooks";
+import { useQuery, useMutation } from "react-apollo-hooks";
+import Router from "next/router";
 import { animated } from "react-spring";
 import gql from "graphql-tag";
 import { Box, Button, Heading, Text } from "grommet";
@@ -7,6 +8,7 @@ import { Add } from "grommet-icons";
 
 import Loader from "./common/Loader";
 import RecipeLink from "./links/RecipeLink";
+import { OWN_RECIPES_QUERY } from "./Recipes";
 
 import { useListAnimation } from "../hooks/animations";
 
@@ -31,6 +33,14 @@ export const RECIPE_QUERY = gql`
   }
 `;
 
+export const DELETE_RECIPE_MUTATION = gql`
+  mutation DELETE_RECIPE_MUTATIOn($where: RecipeWhereUniqueInput!) {
+    deleteRecipe(where: $where) {
+      id
+    }
+  }
+`;
+
 const Recipe = ({ router }) => {
   const { id: recipeId } = router.query;
   const {
@@ -38,6 +48,12 @@ const Recipe = ({ router }) => {
     loading
   } = useQuery(RECIPE_QUERY, {
     variables: { where: { id: recipeId } }
+  });
+  const deleteRecipe = useMutation(DELETE_RECIPE_MUTATION, {
+    variables: { where: { id: recipeId } },
+    update: () => Router.push("/"),
+    refetchQueries: [{ query: OWN_RECIPES_QUERY }],
+    awaitRefetchQueries: true
   });
 
   const ingredientsTrail = useListAnimation(recipe && recipe.ingredients.length);
@@ -47,9 +63,12 @@ const Recipe = ({ router }) => {
     return <Loader />;
   }
 
-  // TODO
   const handleDelete = () => {
     const confirmedResponse = window.confirm("Are you sure you want to delete this recipe?");
+
+    if (confirmedResponse) {
+      deleteRecipe();
+    }
   };
 
   return (

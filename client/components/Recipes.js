@@ -6,7 +6,7 @@ import RecipeCard from "./RecipeCard";
 
 import Loader from "./common/Loader";
 
-const OWN_RECIPES_QUERY = gql`
+export const OWN_RECIPES_QUERY = gql`
   query OWN_RECIPES_QUERY {
     ownRecipes {
       id
