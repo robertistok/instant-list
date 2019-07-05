@@ -8,14 +8,16 @@ enum MEASUREMENT_UNIT {
 }
 
 type TodoistProject {
-  localId: ID! @id
-  id: Float!
+  id: ID! @id
+  todoistId: Float!
   name: String!
   color: Int!
   parentId: Int
   childOrder: Int
   collapsed: Int!
   shared: Boolean
+  inboxProject: Boolean
+  teamInbox: Boolean
   isDeleted: Int!
   isArchived: Int!
   isFavorite: Int!

@@ -580,14 +580,16 @@ type Subscription {
 }
 
 type TodoistProject {
-  localId: ID!
-  id: Float!
+  id: ID!
+  todoistId: Float!
   name: String!
   color: Int!
   parentId: Int
   childOrder: Int
   collapsed: Int!
   shared: Boolean
+  inboxProject: Boolean
+  teamInbox: Boolean
   isDeleted: Int!
   isArchived: Int!
   isFavorite: Int!
@@ -600,13 +602,16 @@ type TodoistProjectConnection {
 }
 
 input TodoistProjectCreateInput {
-  localId: ID
+  id: ID
+  todoistId: Float!
   name: String!
   color: Int!
   parentId: Int
   childOrder: Int
   collapsed: Int!
   shared: Boolean
+  inboxProject: Boolean
+  teamInbox: Boolean
   isDeleted: Int!
   isArchived: Int!
   isFavorite: Int!
@@ -623,10 +628,10 @@ type TodoistProjectEdge {
 }
 
 enum TodoistProjectOrderByInput {
-  localId_ASC
-  localId_DESC
   id_ASC
   id_DESC
+  todoistId_ASC
+  todoistId_DESC
   name_ASC
   name_DESC
   color_ASC
@@ -639,6 +644,10 @@ enum TodoistProjectOrderByInput {
   collapsed_DESC
   shared_ASC
   shared_DESC
+  inboxProject_ASC
+  inboxProject_DESC
+  teamInbox_ASC
+  teamInbox_DESC
   isDeleted_ASC
   isDeleted_DESC
   isArchived_ASC
@@ -648,14 +657,16 @@ enum TodoistProjectOrderByInput {
 }
 
 type TodoistProjectPreviousValues {
-  localId: ID!
-  id: Float!
+  id: ID!
+  todoistId: Float!
   name: String!
   color: Int!
   parentId: Int
   childOrder: Int
   collapsed: Int!
   shared: Boolean
+  inboxProject: Boolean
+  teamInbox: Boolean
   isDeleted: Int!
   isArchived: Int!
   isFavorite: Int!
@@ -680,36 +691,45 @@ input TodoistProjectSubscriptionWhereInput {
 }
 
 input TodoistProjectUpdateDataInput {
+  todoistId: Float
   name: String
   color: Int
   parentId: Int
   childOrder: Int
   collapsed: Int
   shared: Boolean
+  inboxProject: Boolean
+  teamInbox: Boolean
   isDeleted: Int
   isArchived: Int
   isFavorite: Int
 }
 
 input TodoistProjectUpdateInput {
+  todoistId: Float
   name: String
   color: Int
   parentId: Int
   childOrder: Int
   collapsed: Int
   shared: Boolean
+  inboxProject: Boolean
+  teamInbox: Boolean
   isDeleted: Int
   isArchived: Int
   isFavorite: Int
 }
 
 input TodoistProjectUpdateManyMutationInput {
+  todoistId: Float
   name: String
   color: Int
   parentId: Int
   childOrder: Int
   collapsed: Int
   shared: Boolean
+  inboxProject: Boolean
+  teamInbox: Boolean
   isDeleted: Int
   isArchived: Int
   isFavorite: Int
@@ -730,28 +750,28 @@ input TodoistProjectUpsertNestedInput {
 }
 
 input TodoistProjectWhereInput {
-  localId: ID
-  localId_not: ID
-  localId_in: [ID!]
-  localId_not_in: [ID!]
-  localId_lt: ID
-  localId_lte: ID
-  localId_gt: ID
-  localId_gte: ID
-  localId_contains: ID
-  localId_not_contains: ID
-  localId_starts_with: ID
-  localId_not_starts_with: ID
-  localId_ends_with: ID
-  localId_not_ends_with: ID
-  id: Float
-  id_not: Float
-  id_in: [Float!]
-  id_not_in: [Float!]
-  id_lt: Float
-  id_lte: Float
-  id_gt: Float
-  id_gte: Float
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  todoistId: Float
+  todoistId_not: Float
+  todoistId_in: [Float!]
+  todoistId_not_in: [Float!]
+  todoistId_lt: Float
+  todoistId_lte: Float
+  todoistId_gt: Float
+  todoistId_gte: Float
   name: String
   name_not: String
   name_in: [String!]
@@ -800,6 +820,10 @@ input TodoistProjectWhereInput {
   collapsed_gte: Int
   shared: Boolean
   shared_not: Boolean
+  inboxProject: Boolean
+  inboxProject_not: Boolean
+  teamInbox: Boolean
+  teamInbox_not: Boolean
   isDeleted: Int
   isDeleted_not: Int
   isDeleted_in: [Int!]
@@ -830,8 +854,7 @@ input TodoistProjectWhereInput {
 }
 
 input TodoistProjectWhereUniqueInput {
-  localId: ID
-  id: Float
+  id: ID
 }
 
 type User {

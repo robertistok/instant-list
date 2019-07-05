@@ -2,6 +2,10 @@
 
 directive @authenticated on FIELD | FIELD_DEFINITION
 
+enum LIST_TYPE {
+  Shopping
+}
+
 input RecipeCreateInputWithoutUser {
   title: String!
   description: String!
@@ -37,6 +41,7 @@ type Query {
 }
 
 type Mutation {
+  assignListToCurrentUser(projectId: Float!, listType: LIST_TYPE!): User @authenticated
   authWithTodoist(code: String!, state: String!): User
   upsertRecipe(
     where: RecipeWhereUniqueInput!
