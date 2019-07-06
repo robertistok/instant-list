@@ -47,7 +47,11 @@ const Todoist = ({ clientId, clientSecret, ...rest }) => {
 
     get: {
       projects: () => axios({ method: "get", url: `${REST_API}/projects`, headers }),
-      project: ({ id }) => axios({ method: "get", url: `${REST_API}/projects/${id}`, headers })
+      project: async ({ id }) => {
+        const { projects } = await request.post.sync({ resource_types: ["projects"] });
+
+        return projects.find(project => project.id === id);
+      }
     }
   };
 
