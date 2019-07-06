@@ -1,4 +1,6 @@
 // const { forwardTo } = require("prisma-binding");
+const camelcaseKeys = require("camelcase-keys");
+
 const { NotAllowedError } = require("../lib/errors");
 
 const Query = {
@@ -30,7 +32,7 @@ const Query = {
 
   async usersProjectsFromTodoist(parent, args, ctx) {
     const { projects } = await ctx.todoist.request.post.sync({ resource_types: ["projects"] });
-    return projects;
+    return projects.map(project => ({ ...camelcaseKeys(project), todoistId: project.id }));
   }
 };
 
