@@ -1,10 +1,11 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import styled from "styled-components";
 import { useQuery, useMutation } from "react-apollo-hooks";
 import gql from "graphql-tag";
 import { Box, Heading, Select } from "grommet";
 
 import Loader from "../common/Loader";
+import useUser, { queries } from "../../hooks/user";
 
 import { TODOIST_COLORS } from "../../lib/constants";
 
@@ -18,9 +19,9 @@ export const USERS_PROJECTS_FROM_TODOIST_QUERY = gql`
   }
 `;
 
-export const USER_WITH_SHOPPINGLIST_QUERY = gql`
-  query USER_SETTINGS_QUERY {
-    me {
+export const ASSIGN_SHOPPING_LIST_TO_USER_MUTATION = gql`
+  mutation ASSIGN_SHOPPING_LIST_TO_USER_MUTATION($projectId: Float!, $listType: LIST_TYPE!) {
+    assignListToCurrentUser(projectId: $projectId, listType: $listType) {
       id
       shoppingList {
         id
@@ -30,29 +31,39 @@ export const USER_WITH_SHOPPINGLIST_QUERY = gql`
   }
 `;
 
-export const ASSIGN_SHOPPING_LIST_TO_USER_MUTATION = gql`
-  mutation ASSIGN_SHOPPING_LIST_TO_USER_MUTATION($projectId: Float!, $listType: LIST_TYPE!) {
-    assignListToCurrentUser(projectId: $projectId, listType: $listType) {
-      id
-    }
-  }
-`;
-
 const Settings = () => {
   const {
     data: userProjectsFromTodoistQueryData = {},
     loading: userProjectsFromTodoistQueryLoading
   } = useQuery(USERS_PROJECTS_FROM_TODOIST_QUERY);
-  // const { data, loading: userWithShoppingListQueryLoading } = useQuery(USER_WITH_SHOPPINGLIST_QUERY);
-  const assignListToCurrentUser = useMutation(ASSIGN_SHOPPING_LIST_TO_USER_MUTATION);
+  const assignListToCurrentUser = useMutation(ASSIGN_SHOPPING_LIST_TO_USER_MUTATION, {
+    refetchQueries: [{ query: queries.CURRENT_USER_QUERY }]
+  });
+  const { data, loading: currentUserQueryLoading } = useUser();
+
+  const [shoppingList, setShoppingList] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    const { me } = data;
+
+    if (me && me.shoppingList && me.shoppingList.name) {
+      setShoppingList(me.shoppingList);
+      setLoading(false);
+    }
+  }, [data]);
 
   const handleSelectChange = event => {
-    assignListToCurrentUser({
-      variables: { projectId: Number(event.option.value), listType: "Shopping" }
-    });
+    const selectedProjectId = Number(event.option.value);
+    if (shoppingList.todoistId !== selectedProjectId) {
+      assignListToCurrentUser({
+        variables: { projectId: selectedProjectId, listType: "Shopping" }
+      });
+      setLoading(true);
+    }
   };
 
-  if (userProjectsFromTodoistQueryLoading) {
+  if (userProjectsFromTodoistQueryLoading || currentUserQueryLoading || loading) {
     return <Loader showMessage />;
   }
 
@@ -73,6 +84,7 @@ const Settings = () => {
       <Select
         labelKey="label"
         valueKey="value"
+        value={shoppingList.name}
         options={selectOptions}
         onChange={handleSelectChange}
       >

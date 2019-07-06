@@ -1,4 +1,5 @@
 const { forwardTo } = require("prisma-binding");
+const camelcaseKeys = require("camelcase-keys");
 
 const todoist = require("../lib/todoist");
 const { setToken, removeToken } = require("../lib/jwt");
@@ -88,6 +89,35 @@ const Mutation = {
     }
 
     return ctx.db.mutation.deleteRecipe({ where }, info);
+  },
+
+  async assignListToCurrentUser(parent, args, ctx, info) {
+    const { projectId, listType } = args;
+    const { userId } = ctx.request;
+
+    const selectedProject = await ctx.todoist.request.get.project({ id: projectId });
+
+    if (!selectedProject) {
+      throw new NotFoundError("Project not found..");
+    }
+
+    const projectToInsert = {
+      todoistId: selectedProject.id,
+      ...camelcaseKeys(selectedProject)
+    };
+    delete projectToInsert.id; // it's going to be auto generated
+
+    if (listType === "Shopping") {
+      return ctx.db.mutation.updateUser(
+        {
+          where: { id: userId },
+          data: { shoppingList: { upsert: { update: projectToInsert, create: projectToInsert } } }
+        },
+        info
+      );
+    }
+
+    return null;
   }
 };
 
