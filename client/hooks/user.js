@@ -8,11 +8,16 @@ const CURRENT_USER_QUERY = gql`
       id
       email
       name
+      shoppingList {
+        id
+        name
+        todoistId
+      }
     }
   }
 `;
 
-export const useUser = () => {
+const useUser = () => {
   const data = useQuery(CURRENT_USER_QUERY);
 
   return data;
@@ -20,3 +25,4 @@ export const useUser = () => {
 
 export const queries = { CURRENT_USER_QUERY };
 export const mutations = {};
+export default useUser;

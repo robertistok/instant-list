@@ -3,7 +3,7 @@ import styled from "styled-components";
 import TodoistAuth from "./TodoistAuth";
 import Loader from "./common/Loader";
 
-import { useUser } from "../hooks/user";
+import useUser from "../hooks/user";
 
 const PleaseSignIn = props => {
   const { data, loading } = useUser();

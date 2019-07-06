@@ -6,7 +6,7 @@ import Meta from "./Meta";
 import Header from "./Header";
 import Loader from "./common/Loader";
 
-import { useUser } from "../hooks/user";
+import useUser from "../hooks/user";
 
 export const colors = {
   wunderlistRed: "#DB4C3F",

@@ -8,7 +8,7 @@ import { LinkPrevious, Configure, Home, ChapterAdd } from "grommet-icons";
 import NavButton from "./common/NavButton";
 import SignOutButton from "./SignOutButton";
 
-import { useUser } from "../hooks/user";
+import useUser from "../hooks/user";
 
 Router.onRouteChangeStart = () => {
   NProgress.start();
