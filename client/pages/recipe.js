@@ -1,6 +1,6 @@
 import { withRouter } from "next/router";
 
-import Recipe from "../components/Recipe";
+import Recipe from "../components/Recipe/Recipe";
 import PleaseSignIn from "../components/PleaseSignIn";
 
 const RecipePage = ({ router }) => {

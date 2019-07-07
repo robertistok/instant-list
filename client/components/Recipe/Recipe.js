@@ -4,13 +4,13 @@ import Router from "next/router";
 import { animated } from "react-spring";
 import gql from "graphql-tag";
 import { Box, Button, Heading, Text } from "grommet";
-import { Add } from "grommet-icons";
 
-import Loader from "./common/Loader";
-import RecipeLink from "./links/RecipeLink";
-import { OWN_RECIPES_QUERY } from "./Recipes";
+import Ingredient from "./Ingredient";
+import Loader from "../common/Loader";
+import RecipeLink from "../links/RecipeLink";
+import { OWN_RECIPES_QUERY } from "../Recipes";
 
-import { useListAnimation } from "../hooks/animations";
+import { useListAnimation } from "../../hooks/animations";
 
 export const RECIPE_QUERY = gql`
   query RECIPE_QUERY($where: RecipeWhereUniqueInput!) {
@@ -104,19 +104,13 @@ const Recipe = ({ router }) => {
 
       <Heading level="3">Ingredients</Heading>
       <Box a11yTitle="Ingredients container" gap="medium">
-        {ingredientsTrail.map((props, index) => {
-          const { id, name, measurementUnit, quantity } = recipe.ingredients[index];
-
-          return (
-            <AnimatedBox align="center" as="li" direction="row" gap="small" style={props} key={id}>
-              <Button hoverIndicator icon={<Add />} plain />
-              <Text key={id}>
-                {`${quantity || ""} ${(measurementUnit && measurementUnit.toLowerCase()) || ""}
-                    ${name}`}
-              </Text>
-            </AnimatedBox>
-          );
-        })}
+        {ingredientsTrail.map((style, index) => (
+          <Ingredient
+            key={recipe.ingredients[index].id}
+            style={style}
+            {...recipe.ingredients[index]}
+          />
+        ))}
       </Box>
 
       <Box a11yTitle="Recipe action buttons" direction="row" gap="medium" margin="40px 0px">
