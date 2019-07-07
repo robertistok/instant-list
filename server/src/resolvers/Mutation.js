@@ -1,7 +1,6 @@
 const { forwardTo } = require("prisma-binding");
 const camelcaseKeys = require("camelcase-keys");
 
-const todoist = require("../lib/todoist");
 const { setToken, removeToken } = require("../lib/jwt");
 const { NotAllowedError, NotFoundError } = require("../lib/errors");
 
@@ -11,9 +10,9 @@ const Mutation = {
   async authWithTodoist(parent, args, ctx, info) {
     const { code, state } = args;
 
-    const { accessToken } = await todoist.request.post.oauth({ code, state });
+    const { accessToken } = await ctx.todoist.request.post.oauth({ code, state });
 
-    const { user: todoistUser } = await todoist.request.post.sync({ resource_types: ["user"] });
+    const { user: todoistUser } = await ctx.todoist.request.post.sync({ resource_types: ["user"] });
 
     const userProps = {
       email: todoistUser.email,
@@ -73,7 +72,7 @@ const Mutation = {
     // clear the cookies
     removeToken({ res: ctx.response, tokenName: "token" });
 
-    return { message: "Goodbye!" };
+    return { message: "Goodbye!", status: 200 };
   },
 
   async deleteRecipe(parent, args, ctx, info) {
@@ -118,6 +117,14 @@ const Mutation = {
     }
 
     return null;
+  },
+
+  async createTodoistTask(parent, args, ctx) {
+    const { data } = args;
+
+    await ctx.todoist.rest.post.tasks({ data });
+
+    return { message: "Success", status: 200 };
   }
 };
 
