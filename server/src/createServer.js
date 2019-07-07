@@ -24,7 +24,11 @@ function createServer() {
 
     context: req => {
       const { user } = req.request;
-      return { ...req, db, todoist: todoist({ accessToken: user.todoistAccessToken }) };
+      return {
+        ...req,
+        db,
+        todoist: todoist({ accessToken: user ? user.todoistAccessToken : undefined })
+      };
     }
   });
 }
