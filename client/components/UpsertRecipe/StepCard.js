@@ -17,9 +17,14 @@ const StepCard = React.memo(
     stepNumber,
     totalSteps
   }) => {
-    const [stepId, setStepId] = useState(stepNumber);
+    const [stepId, setStepId] = useState();
     const prevTotalSteps = usePrevious(totalSteps);
     useEffect(() => setStepId(nanoid()), [prevTotalSteps > totalSteps]);
+
+    // investigate, looks like a hack..
+    if (!stepId) {
+      return null;
+    }
 
     return (
       <ResponsiveContext.Consumer>
