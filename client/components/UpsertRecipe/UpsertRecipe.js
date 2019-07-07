@@ -20,7 +20,6 @@ const UpsertRecipe = ({
   addStep,
   deleteIngredient,
   deleteStep,
-  description,
   handleUpdateState,
   handleUpdateStep,
   handleUpdateIngredient,
@@ -28,7 +27,7 @@ const UpsertRecipe = ({
   recipe,
   type
 }) => {
-  const { ingredients, servings = "", steps } = recipe;
+  const { description, ingredients, servings = "", steps } = recipe;
   const isEditComponent = type === UPSERT_COMPONENT_TYPES.EDIT;
   const componentTitle = isEditComponent ? "Edit your recipe" : "Create new recipe";
 
