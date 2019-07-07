@@ -23,8 +23,22 @@ input RecipeUpdateInputWithoutUser {
   servings: Int
 }
 
-type SuccessMessage {
-  message: String
+input CreateTodoistTaskInput {
+  content: String!
+  projectId: Float
+  parent: Int
+  order: Int
+  labelIds: [Int]
+  priority: Int
+  dueString: String
+  dueDate: String
+  dueDateTime: String
+  dueLang: String
+}
+
+type StatusMessage {
+  message: String!
+  status: Int
 }
 
 type Query {
@@ -43,6 +57,7 @@ type Query {
 type Mutation {
   assignListToCurrentUser(projectId: Float!, listType: LIST_TYPE!): User @authenticated
   authWithTodoist(code: String!, state: String!): User
+  createTodoistTask(data: CreateTodoistTaskInput!): StatusMessage! @authenticated
   upsertRecipe(
     where: RecipeWhereUniqueInput!
     create: RecipeCreateInputWithoutUser!
@@ -50,7 +65,7 @@ type Mutation {
   ): Recipe! @authenticated
   createUser(data: UserCreateInput!): User!
   deleteRecipe(where: RecipeWhereUniqueInput!): Recipe
-  signOut(where: UserWhereUniqueInput!): SuccessMessage! @authenticated
+  signOut(where: UserWhereUniqueInput!): StatusMessage! @authenticated
   upsertUser(
     where: UserWhereUniqueInput!
     create: UserCreateInput!
