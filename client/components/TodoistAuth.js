@@ -10,7 +10,7 @@ const TodoistAuth = () => {
       reverse
       label="Sign in with Todosit"
       icon={<List />}
-      href={`https://todoist.com/oauth/authorize?client_id=${TODOIST_CLIENT_ID}&scope=data:read,data:delete&state=${TODOIST_RANDOM}`}
+      href={`https://todoist.com/oauth/authorize?client_id=${TODOIST_CLIENT_ID}&scope=data:read_write,data:delete&state=${TODOIST_RANDOM}`}
     />
   );
 };
