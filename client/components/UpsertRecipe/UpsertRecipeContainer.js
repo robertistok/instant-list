@@ -1,11 +1,12 @@
 import gql from "graphql-tag";
+import Router from "next/router";
 import { useState } from "react";
 import { useMutation } from "react-apollo-hooks";
 
 import UpsertRecipe from "./UpsertRecipe";
 
 import { useUpsertRecipeState } from "../../state/recipe";
-import { RECIPE_QUERY } from "../Recipe";
+import { RECIPE_QUERY } from "../Recipe/Recipe";
 
 const UPSERT_RECIPE_MUTATION = gql`
   mutation UPSERT_RECIPE_MUTATION(
@@ -110,7 +111,8 @@ const UpsertRecipeContainer = ({ recipe, type }) => {
               }))
           }
         }
-      }
+      },
+      update: () => Router.push(`/`)
     });
   };
 

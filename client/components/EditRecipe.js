@@ -5,7 +5,7 @@ import UpsertRecipe from "./UpsertRecipe/UpsertRecipeContainer";
 import Loader from "./common/Loader";
 import ForOhFor from "./common/ForOhFor";
 
-import { RECIPE_QUERY } from "./Recipe";
+import { RECIPE_QUERY } from "./Recipe/Recipe";
 
 import { UPSERT_COMPONENT_TYPES } from "../lib/constants";
 
