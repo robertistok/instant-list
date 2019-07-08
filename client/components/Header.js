@@ -55,7 +55,7 @@ const Header = () => {
 const StyledHeader = styled.header`
   padding: 0px 20px;
   display: flex;
-  background-color: ${({ theme }) => theme.global.colors.wunderlistBlue};
+  background-color: ${({ theme }) => theme.global.colors.brand};
   min-height: ${({ theme }) => theme.global.minHeaderHeight};
 
   .left-align {

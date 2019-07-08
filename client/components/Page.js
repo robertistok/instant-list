@@ -9,14 +9,10 @@ import Loader from "./common/Loader";
 import useUser from "../hooks/user";
 
 export const colors = {
-  wunderlistRed: "#DB4C3F",
-  wunderlistBlue: "#2B88D9",
-  brand: "#2B88D9",
-  wunderlistGreen: "#65B01B",
-  wunderlistYellow: "#E6B035",
+  todoistRed: "#db4035",
+  brand: "#db4c3f",
   black: "#393939",
   darkGray: "#444444",
-  wunderlistGray: "#5B5B5B",
   gray: "#737273",
   lightGray: "#A3A3A3",
   ultralightGray: "#F5F5F5",
