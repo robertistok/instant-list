@@ -17,41 +17,37 @@ const Todoist = ({ clientId, clientSecret, ...props }) => {
   const REST_API = "https://api.todoist.com/rest/v1";
 
   const sync = {
-    post: {
-      oauth: async ({ code }) => {
-        const { data } = await axios({
-          method: "post",
-          url: `https://todoist.com/oauth/access_token`,
-          data: {
-            code,
-            client_id: clientId,
-            client_secret: clientSecret
-          }
-        }).catch(console.log);
+    oauth: async ({ code }) => {
+      const { data } = await axios({
+        method: "post",
+        url: `https://todoist.com/oauth/access_token`,
+        data: {
+          code,
+          client_id: clientId,
+          client_secret: clientSecret
+        }
+      }).catch(console.log);
 
-        accessToken = data.access_token;
-        headers.Authorization = `Bearer ${accessToken}`;
+      accessToken = data.access_token;
+      headers.Authorization = `Bearer ${accessToken}`;
 
-        return { accessToken: data.access_token };
-      },
-
-      sync: async ({ resource_types = ["all"], sync_token = "*" }) => {
-        const { data } = await axios({
-          method: "post",
-          url: `${BASE_URL}/sync`,
-          data: { token: accessToken, resource_types, sync_token }
-        }).catch(console.log);
-
-        return data;
-      }
+      return { accessToken: data.access_token };
     },
 
-    get: {
-      project: async ({ id }) => {
-        const { projects } = await request.post.sync({ resource_types: ["projects"] });
+    root: async ({ resource_types = ["all"], sync_token = "*" }) => {
+      const { data } = await axios({
+        method: "post",
+        url: `${BASE_URL}/sync`,
+        data: { token: accessToken, resource_types, sync_token }
+      }).catch(console.log);
 
-        return projects.find(project => project.id === id);
-      }
+      return data;
+    },
+
+    project: async ({ id }) => {
+      const { projects } = await sync.root({ resource_types: ["projects"] });
+
+      return projects.find(project => project.id === id);
     }
   };
 

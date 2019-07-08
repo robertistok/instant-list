@@ -30,7 +30,7 @@ const Query = {
   },
 
   async usersProjectsFromTodoist(parent, args, ctx) {
-    const { projects } = await ctx.todoist.request.post.sync({ resource_types: ["projects"] });
+    const { projects } = await ctx.todoist.sync.root({ resource_types: ["projects"] });
     return projects.map(project => ({ ...camelcaseKeys(project), todoistId: project.id }));
   }
 };
