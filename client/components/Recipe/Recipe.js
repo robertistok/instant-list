@@ -7,6 +7,7 @@ import { Box, Button, Heading, Text } from "grommet";
 
 import Ingredient from "./Ingredient";
 import Loader from "../common/Loader";
+import ForOhFor from "../common/ForOhFor";
 import RecipeLink from "../links/RecipeLink";
 import { OWN_RECIPES_QUERY } from "../Recipes";
 
@@ -63,6 +64,10 @@ const Recipe = ({ router }) => {
     return <Loader />;
   }
 
+  if (!recipe) {
+    return <ForOhFor message="Recipe not found..." />;
+  }
+
   const handleDelete = () => {
     const confirmedResponse = window.confirm("Are you sure you want to delete this recipe?");
 
@@ -117,7 +122,7 @@ const Recipe = ({ router }) => {
         <RecipeLink id={recipeId} path="/edit-recipe">
           <Button label="Edit" primary />
         </RecipeLink>
-        <Button color="wunderlistRed" label="Delete" onClick={handleDelete} primary />
+        <Button color="todoistRed" label="Delete" onClick={handleDelete} />
       </Box>
     </div>
   );

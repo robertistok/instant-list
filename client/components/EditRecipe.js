@@ -22,7 +22,7 @@ const Recipe = ({ router }) => {
   }
 
   if (!recipe) {
-    return <ForOhFor />;
+    return <ForOhFor message="Recipe not found..." />;
   }
 
   return <UpsertRecipe recipe={recipe} type={UPSERT_COMPONENT_TYPES.EDIT} />;

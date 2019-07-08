@@ -1,7 +1,7 @@
 import React from "react";
 
-const ForOhFor = () => {
-  return <div>Not found...</div>;
+const ForOhFor = ({ message = "Not found..." }) => {
+  return <span>{message}</span>;
 };
 
 export default ForOhFor;
