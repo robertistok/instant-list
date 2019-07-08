@@ -18,7 +18,6 @@ const Query = {
     const recipe = await ctx.db.query.recipe(args, info);
 
     const ownsRecipe = recipe.user.id === ctx.request.userId;
-
     if (!ownsRecipe) {
       throw new NotAllowedError();
     }

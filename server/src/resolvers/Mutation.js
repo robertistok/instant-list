@@ -10,9 +10,8 @@ const Mutation = {
   async authWithTodoist(parent, args, ctx, info) {
     const { code, state } = args;
 
-    const { accessToken } = await ctx.todoist.request.post.oauth({ code, state });
-
-    const { user: todoistUser } = await ctx.todoist.request.post.sync({ resource_types: ["user"] });
+    const { accessToken } = await ctx.todoist.sync.post.oauth({ code, state });
+    const { user: todoistUser } = await ctx.todoist.sync.post.sync({ resource_types: ["user"] });
 
     const userProps = {
       email: todoistUser.email,
@@ -94,7 +93,7 @@ const Mutation = {
     const { projectId, listType } = args;
     const { userId } = ctx.request;
 
-    const selectedProject = await ctx.todoist.request.get.project({ id: projectId });
+    const selectedProject = await ctx.todoist.sync.get.project({ id: projectId });
 
     if (!selectedProject) {
       throw new NotFoundError("Project not found..");

@@ -1,6 +1,6 @@
 const axios = require("axios");
 
-const {snakeCaseKeys} = require("./utils")
+const { snakeCaseKeys } = require("./utils");
 const { TODOIST_CLIENT_ID, TODOIST_CLIENT_SECRET } = require("../config");
 
 const Todoist = ({ clientId, clientSecret, ...props }) => {
@@ -16,7 +16,7 @@ const Todoist = ({ clientId, clientSecret, ...props }) => {
   const BASE_URL = "https://todoist.com/api/v8";
   const REST_API = "https://api.todoist.com/rest/v1";
 
-  const request = {
+  const sync = {
     post: {
       oauth: async ({ code }) => {
         const { data } = await axios({
@@ -74,7 +74,7 @@ const Todoist = ({ clientId, clientSecret, ...props }) => {
     }
   };
 
-  return { request, rest, sync: request };
+  return { rest, sync };
 };
 
 module.exports = ({ accessToken }) =>
