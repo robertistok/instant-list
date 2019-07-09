@@ -8,9 +8,9 @@ import { Box, Button, Heading, Text } from "grommet";
 import Ingredient from "./Ingredient";
 import Loader from "../common/Loader";
 import ForOhFor from "../common/ForOhFor";
-import RecipeLink from "../links/RecipeLink";
-import { OWN_RECIPES_QUERY } from "../Recipes";
+import Link from "../common/Link";
 
+import { OWN_RECIPES_QUERY } from "../Recipes";
 import { useListAnimation } from "../../hooks/animations";
 
 export const RECIPE_QUERY = gql`
@@ -42,16 +42,15 @@ export const DELETE_RECIPE_MUTATION = gql`
   }
 `;
 
-const Recipe = ({ router }) => {
-  const { id: recipeId } = router.query;
+const Recipe = ({ id }) => {
   const {
     data: { recipe },
     loading
   } = useQuery(RECIPE_QUERY, {
-    variables: { where: { id: recipeId } }
+    variables: { where: { id } }
   });
   const deleteRecipe = useMutation(DELETE_RECIPE_MUTATION, {
-    variables: { where: { id: recipeId } },
+    variables: { where: { id } },
     update: () => Router.push("/"),
     refetchQueries: [{ query: OWN_RECIPES_QUERY }],
     awaitRefetchQueries: true
@@ -119,9 +118,9 @@ const Recipe = ({ router }) => {
       </Box>
 
       <Box a11yTitle="Recipe action buttons" direction="row" gap="medium" margin="40px 0px">
-        <RecipeLink id={recipeId} path="/edit-recipe">
+        <Link href={`/edit-recipe/${id}`}>
           <Button label="Edit" primary />
-        </RecipeLink>
+        </Link>
         <Button color="todoistRed" label="Delete" onClick={handleDelete} />
       </Box>
     </div>

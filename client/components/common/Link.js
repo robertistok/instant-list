@@ -1,8 +1,8 @@
 import Link from "next/link";
 import styled from "styled-components";
 
-const RecipeLink = ({ path = "/recipe", id, children }) => (
-  <Link href={`${path}?id=${id}`} as={`${path}/${id}`} passHref>
+const LocalLink = ({ href, children }) => (
+  <Link href={href} passHref>
     <StyledLink>{children}</StyledLink>
   </Link>
 );
@@ -13,4 +13,4 @@ const StyledLink = styled.a`
   }
 `;
 
-export default RecipeLink;
+export default LocalLink;

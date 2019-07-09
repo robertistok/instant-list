@@ -1,10 +1,10 @@
 import { Box, Heading, Text } from "grommet";
 
-import RecipeLink from "./links/RecipeLink";
+import Link from "./common/Link";
 
 const RecipeCard = ({ description, id, title }) => {
   return (
-    <RecipeLink id={id}>
+    <Link href={`/recipe/${id}`}>
       <Box background="ultralightGray" pad="small">
         <Heading a11yTitle={`Recipe titled ${title}`} level="4">
           {title}
@@ -12,7 +12,7 @@ const RecipeCard = ({ description, id, title }) => {
 
         <Text>{description}</Text>
       </Box>
-    </RecipeLink>
+    </Link>
   );
 };
 
