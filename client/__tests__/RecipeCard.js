@@ -1,4 +1,5 @@
-import { shallow } from "enzyme";
+import { shallow, mount } from "enzyme";
+import toJSON from "enzyme-to-json";
 
 import RecipeCardComponent from "../components/RecipeCard";
 
@@ -14,10 +15,9 @@ describe("<RecipeCard />", () => {
     expect(Description.children().text()).toBe(mockedRecipe.description);
   });
 
-  it("renders the <RecipeLink /> component with the proper id", () => {
-    const wrapper = shallow(<RecipeCardComponent {...mockedRecipe} />);
-    const RecipeLink = wrapper.find(`RecipeLink`);
+  it("renders the <Link /> component with the proper href", () => {
+    const wrapper = mount(<RecipeCardComponent {...mockedRecipe} />);
 
-    expect(RecipeLink.props()).toEqual(expect.objectContaining({ id: mockedRecipe.id }));
+    expect(toJSON(wrapper.find("Link"))).toMatchSnapshot();
   });
 });
