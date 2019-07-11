@@ -1,10 +1,10 @@
-import { useEffect } from "react";
 import NProgress from "nprogress";
+import { useEffect } from "react";
 
-type Props = {
-  showMessage: boolean;
-  message: string;
-};
+interface Props {
+  showMessage?: boolean;
+  message?: string;
+}
 
 const Loader: React.FunctionComponent<Props> = ({ showMessage = false, message }) => {
   useEffect(() => {
