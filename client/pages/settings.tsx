@@ -1,7 +1,9 @@
-import Settings from "../components/Settings/Settings";
 import PleaseSignIn from "../components/PleaseSignIn";
+import Settings from "../components/Settings/Settings";
 
-const SettingsPage = () => {
+interface Props {}
+
+const SettingsPage: React.FunctionComponent<Props> = () => {
   return (
     <PleaseSignIn>
       <Settings />
