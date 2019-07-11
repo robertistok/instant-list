@@ -1,7 +1,9 @@
 import NewRecipe from "../components/NewRecipe";
 import PleaseSignIn from "../components/PleaseSignIn";
 
-const NewRecipePage = () => {
+interface Props {}
+
+const NewRecipePage: React.FunctionComponent<Props> = () => {
   return (
     <PleaseSignIn>
       <NewRecipe />
