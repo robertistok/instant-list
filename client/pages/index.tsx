@@ -1,7 +1,9 @@
-import Recipes from "../components/Recipes";
 import PleaseSignIn from "../components/PleaseSignIn";
+import Recipes from "../components/Recipes";
 
-const Home = () => {
+interface Props {}
+
+const Home: React.FunctionComponent<Props> = () => {
   return (
     <PleaseSignIn>
       <Recipes />
