@@ -5,6 +5,8 @@ import { ParsedUrlQuery } from "querystring";
 import EditRecipe from "../../components/EditRecipe";
 import PleaseSignIn from "../../components/PleaseSignIn";
 
+interface Props {}
+
 const EditRecipePage: React.FunctionComponent<Props> = () => {
   const router: BaseRouter = useRouter();
   const { rid }: ParsedUrlQuery = router.query;
