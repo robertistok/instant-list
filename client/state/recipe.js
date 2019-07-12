@@ -7,6 +7,7 @@ export const useUpsertRecipeState = recipe => {
   const defaultIngredientState = { name: "", quantity: null, measurementUnit: null };
 
   const initialState = {
+    id: nanoid(),
     title: "",
     description: "",
     servings: null,

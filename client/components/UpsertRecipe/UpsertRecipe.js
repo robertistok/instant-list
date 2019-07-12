@@ -13,8 +13,6 @@ import {
 import IngredientCard from "./IngredientCard";
 import StepCard from "./StepCard";
 
-import { UPSERT_COMPONENT_TYPES } from "../../lib/constants";
-
 const UpsertRecipe = ({
   addIngredient,
   addStep,
@@ -24,11 +22,10 @@ const UpsertRecipe = ({
   handleUpdateStep,
   handleUpdateIngredient,
   handleSave,
-  recipe,
-  type
+  isEditComponent,
+  recipe
 }) => {
   const { description, ingredients, servings = "", steps } = recipe;
-  const isEditComponent = type === UPSERT_COMPONENT_TYPES.EDIT;
   const componentTitle = isEditComponent ? "Edit your recipe" : "Create new recipe";
 
   return (

@@ -1,12 +1,13 @@
 import gql from "graphql-tag";
 import Router from "next/router";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useMutation } from "react-apollo-hooks";
 
 import UpsertRecipe from "./UpsertRecipe";
 
 import { useUpsertRecipeState } from "../../state/recipe";
 import { RECIPE_QUERY } from "../Recipe/Recipe";
+import { UPSERT_COMPONENT_TYPES } from "../../lib/constants";
 
 const UPSERT_RECIPE_MUTATION = gql`
   mutation UPSERT_RECIPE_MUTATION(
@@ -39,6 +40,12 @@ const UpsertRecipeContainer = ({ recipe, type }) => {
       { query: RECIPE_QUERY, variables: { where: { id: data.upsertRecipe.id } } }
     ]
   });
+
+  useEffect(() => {
+    if (type === UPSERT_COMPONENT_TYPES.CREATE) {
+      sessionStorage.setItem("recipe", JSON.stringify(state));
+    }
+  }, [state]);
 
   const handleAddIngredient = () => addIngredient();
 
@@ -126,6 +133,7 @@ const UpsertRecipeContainer = ({ recipe, type }) => {
       handleUpdateStep={handleUpdateStep}
       handleUpdateIngredient={handleUpdateIngredient}
       handleSave={handleSave}
+      isEditComponent={type === UPSERT_COMPONENT_TYPES.EDIT}
       recipe={state}
       type={type}
     />
