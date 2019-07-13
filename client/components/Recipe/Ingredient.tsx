@@ -32,17 +32,17 @@ const Ingredient: React.FunctionComponent<Props> = ({
   name,
   id,
   measurementUnit,
-  style,
+  style
 }) => {
   const textToDisplay = `${quantity || ""} ${formatMeasurementUnit(measurementUnit)} ${name}`;
 
   const { data } = useUser();
 
   const createTodoistTask = useMutation(CREATE_TODOIST_TASK_MUTATION, {
-    variables: { data: { content: textToDisplay, projectId: data.me.shoppingList.todoistId } },
+    variables: { data: { content: textToDisplay, projectId: data.me.shoppingList.todoistId } }
   });
 
-  const handleAddIngredient: void = () => {
+  const handleAddIngredient = (): void => {
     createTodoistTask();
   };
 
