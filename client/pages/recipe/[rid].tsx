@@ -9,7 +9,7 @@ interface Props {}
 
 const RecipePage: React.FunctionComponent<Props> = () => {
   const router: BaseRouter = useRouter();
-  const { rid }: ParsedUrlQuery = router.query;
+  const { rid }: { rid?: string } = router.query;
 
   return (
     <PleaseSignIn>

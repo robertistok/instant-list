@@ -42,7 +42,11 @@ export const DELETE_RECIPE_MUTATION = gql`
   }
 `;
 
-const Recipe = ({ id }) => {
+interface Props {
+  id: string;
+}
+
+const Recipe: React.FunctionComponent<Props> = ({ id }) => {
   const {
     data: { recipe },
     loading
@@ -67,8 +71,8 @@ const Recipe = ({ id }) => {
     return <ForOhFor message="Recipe not found..." />;
   }
 
-  const handleDelete = () => {
-    const confirmedResponse = window.confirm("Are you sure you want to delete this recipe?");
+  const handleDelete = (): void => {
+    const confirmedResponse: boolean = window.confirm("Are you sure you want to delete this recipe?");
 
     if (confirmedResponse) {
       deleteRecipe();
