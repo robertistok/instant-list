@@ -1,5 +1,6 @@
 /* eslint-disable no-alert */
 import { useQuery, useMutation } from "react-apollo-hooks";
+import styled from "styled-components";
 import Router from "next/router";
 import { animated } from "react-spring";
 import gql from "graphql-tag";
@@ -72,7 +73,9 @@ const Recipe: React.FunctionComponent<Props> = ({ id }) => {
   }
 
   const handleDelete = (): void => {
-    const confirmedResponse: boolean = window.confirm("Are you sure you want to delete this recipe?");
+    const confirmedResponse: boolean = window.confirm(
+      "Are you sure you want to delete this recipe?"
+    );
 
     if (confirmedResponse) {
       deleteRecipe();
@@ -80,7 +83,7 @@ const Recipe: React.FunctionComponent<Props> = ({ id }) => {
   };
 
   return (
-    <div>
+    <Root>
       <Heading level="2">{recipe.title}</Heading>
 
       <Text a11yTitle="Description">{recipe.description}</Text>
@@ -127,9 +130,14 @@ const Recipe: React.FunctionComponent<Props> = ({ id }) => {
         </Link>
         <Button color="todoistRed" label="Delete" onClick={handleDelete} />
       </Box>
-    </div>
+    </Root>
   );
 };
+
+const Root = styled(Box)`
+  max-width: 768px;
+  margin: auto;
+`;
 
 const AnimatedBox = animated(Box);
 
