@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import React from "react";
 
 import {
   Box,
@@ -14,96 +15,98 @@ import { Add, Trash } from "grommet-icons";
 
 const MEASUREMENT_UNITS = ["Gram", "Kilogram", "Liter", "Mililiter", "Teaspoon", "Tablespoon"];
 
-const IngredientCard = ({
-  addIngredient,
-  deleteIngredient,
-  ingredientNumber,
-  isFirstIngredient,
-  isLastIngredient,
-  handleInputChange,
-  measurementUnit = "",
-  name,
-  quantity = "",
-  id
-}) => {
-  return (
-    <ResponsiveContext.Consumer>
-      {size => {
-        const isMedium = ["medium", "small"].includes(size);
+const IngredientCard = React.memo(
+  ({
+    addIngredient,
+    deleteIngredient,
+    ingredientNumber,
+    isFirstIngredient,
+    isLastIngredient,
+    handleInputChange,
+    measurementUnit = "",
+    name,
+    quantity = "",
+    id
+  }) => {
+    return (
+      <ResponsiveContext.Consumer>
+        {size => {
+          const isMedium = ["medium", "small"].includes(size);
 
-        return (
-          <StyledGrid
-            a11yTitle={`Ingredient number ${ingredientNumber}`}
-            gap={isMedium ? "xsmall" : "medium"}
-          >
-            <Heading className="info" level="4" margin="small">
-              {isMedium ? `Nr. ${ingredientNumber}` : `${ingredientNumber}.`}
-            </Heading>
-
-            <FormField
-              a11yTitle="Description for your new recipe"
-              className="name"
-              component={TextInput}
-              name={`name-${id}`}
-              onChange={handleInputChange}
-              placeholder="Name"
-              required
-              value={name}
-            />
-
-            <FormField
-              a11yTitle="Enter the quantity"
-              className="quantity"
-              component={TextInput}
-              name={`quantity-${id}`}
-              onChange={handleInputChange}
-              placeholder="Quantity"
-              type="number"
-              value={quantity}
-            />
-
-            <FormField
-              a11yTitle="Select the measurement unit for this ingredient"
-              className="measurement-unit"
-              component={Select}
-              name={`measurementUnit-${id}`}
-              onChange={handleInputChange}
-              options={MEASUREMENT_UNITS}
-              placeholder="Measure"
-              value={measurementUnit}
-            />
-
-            <Box
-              a11yTitle="Delete/add new ingedient button"
-              align="center"
-              className="action-buttons"
-              direction="row"
-              justify={isMedium ? "end" : "end"}
-              gap="small"
+          return (
+            <StyledGrid
+              a11yTitle={`Ingredient number ${ingredientNumber}`}
+              gap={isMedium ? "xsmall" : "medium"}
             >
-              {isLastIngredient && (
-                <Button
-                  a11yTitle="Add new ingedient button"
-                  label="New"
-                  icon={<Add />}
-                  onClick={addIngredient}
-                />
-              )}
-              {!isFirstIngredient && (
-                <Button
-                  a11yTitle={`Delete ingedient ${ingredientNumber} button`}
-                  label="Delete"
-                  icon={<Trash />}
-                  onClick={deleteIngredient}
-                />
-              )}
-            </Box>
-          </StyledGrid>
-        );
-      }}
-    </ResponsiveContext.Consumer>
-  );
-};
+              <Heading className="info" level="4" margin="small">
+                {isMedium ? `Nr. ${ingredientNumber}` : `${ingredientNumber}.`}
+              </Heading>
+
+              <FormField
+                a11yTitle="Description for your new recipe"
+                className="name"
+                component={TextInput}
+                name={`name-${id}`}
+                onChange={handleInputChange}
+                placeholder="Name"
+                required
+                value={name}
+              />
+
+              <FormField
+                a11yTitle="Enter the quantity"
+                className="quantity"
+                component={TextInput}
+                name={`quantity-${id}`}
+                onChange={handleInputChange}
+                placeholder="Quantity"
+                type="number"
+                value={quantity}
+              />
+
+              <FormField
+                a11yTitle="Select the measurement unit for this ingredient"
+                className="measurement-unit"
+                component={Select}
+                name={`measurementUnit-${id}`}
+                onChange={handleInputChange}
+                options={MEASUREMENT_UNITS}
+                placeholder="Measure"
+                value={measurementUnit}
+              />
+
+              <Box
+                a11yTitle="Delete/add new ingedient button"
+                align="center"
+                className="action-buttons"
+                direction="row"
+                justify={isMedium ? "end" : "end"}
+                gap="small"
+              >
+                {isLastIngredient && (
+                  <Button
+                    a11yTitle="Add new ingedient button"
+                    label="New"
+                    icon={<Add />}
+                    onClick={addIngredient}
+                  />
+                )}
+                {!isFirstIngredient && (
+                  <Button
+                    a11yTitle={`Delete ingedient ${ingredientNumber} button`}
+                    label="Delete"
+                    icon={<Trash />}
+                    onClick={deleteIngredient}
+                  />
+                )}
+              </Box>
+            </StyledGrid>
+          );
+        }}
+      </ResponsiveContext.Consumer>
+    );
+  }
+);
 
 const StyledGrid = styled(Grid)`
   grid-template-columns: 2% 26% 13% 17% auto;
