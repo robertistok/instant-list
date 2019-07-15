@@ -22,7 +22,10 @@
     "prettier/prettier": ["error"],
     "react/react-in-jsx-scope": "off",
     "react/jsx-filename-extension": "off",
-    "react/prop-types": "off"
+    "react/prop-types": "off",
+    "react/display-name": "off",
+    "@typescript-eslint/camelcase": "off",
+    "@typescript-eslint/no-var-requires": "off"
   },
   "settings": {
     "import/resolver": {
