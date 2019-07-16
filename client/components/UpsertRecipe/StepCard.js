@@ -1,4 +1,4 @@
-import React, { useEffect, useState, ChangeEvent } from "react";
+import React, { useEffect, useState } from "react";
 import nanoid from "nanoid";
 import styled from "styled-components";
 import { Box, Button, FormField, Grid, Heading, ResponsiveContext, TextArea } from "grommet";
@@ -6,19 +6,7 @@ import { Add, Trash } from "grommet-icons";
 
 import { usePrevious } from "../../hooks/utils";
 
-interface Props {
-  addStep: any;
-  deleteStep: any;
-  description: string;
-  handleInputChange(event: ChangeEvent<HTMLInputElement>): void;
-  isFirstStep: boolean;
-  isLastStep: boolean;
-  stepNumber: number;
-  totalSteps: number;
-}
-
-// TODO formfield resize investigation -- // resize="vertical"
-const StepCard: React.FunctionComponent<Props> = React.memo(
+const StepCard = React.memo(
   ({
     addStep,
     deleteStep,
@@ -30,7 +18,7 @@ const StepCard: React.FunctionComponent<Props> = React.memo(
     totalSteps
   }) => {
     const [stepId, setStepId] = useState();
-    const prevTotalSteps: any = usePrevious(totalSteps || 0);
+    const prevTotalSteps = usePrevious(totalSteps || 0);
     useEffect(() => setStepId(nanoid()), [prevTotalSteps > totalSteps]);
 
     // investigate, looks like a hack..
@@ -54,7 +42,7 @@ const StepCard: React.FunctionComponent<Props> = React.memo(
                 name={`step-${stepId}`}
                 onChange={handleInputChange}
                 placeholder={`Write step ${stepNumber}`}
-                required
+                resize="vertical"
                 value={description}
               />
 
