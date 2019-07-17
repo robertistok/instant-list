@@ -1,12 +1,12 @@
 import NProgress from "nprogress";
 import { useEffect } from "react";
 
-interface Props {
+export interface LoaderProps {
   showMessage?: boolean;
   message?: string;
 }
 
-const Loader: React.FunctionComponent<Props> = ({ showMessage = false, message }) => {
+const Loader: React.FunctionComponent<LoaderProps> = ({ showMessage = false, message }) => {
   useEffect(() => {
     NProgress.start();
     return () => {
