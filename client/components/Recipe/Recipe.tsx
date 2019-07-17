@@ -119,6 +119,7 @@ const Recipe: React.FunctionComponent<Props> = ({ id }) => {
           <Ingredient
             key={recipe.ingredients[index].id}
             style={style}
+            recipeTitle={recipe.title}
             {...recipe.ingredients[index]}
           />
         ))}

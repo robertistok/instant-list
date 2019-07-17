@@ -1,12 +1,13 @@
 /* eslint-disable no-alert */
 import gql from "graphql-tag";
 import { Box, Button, Text } from "grommet";
-import { Add } from "grommet-icons";
+import { Add, InProgress } from "grommet-icons";
 import { animated } from "react-spring";
 
-import { useMutation } from "react-apollo-hooks";
+import Loader from "../common/Loader";
 import useUser from "../../hooks/user";
-// import { useMutation } from "../../hooks/apolloHooksWrappers";
+import { useMutation } from "../../hooks/apolloHooksWrappers";
+import { abbrString } from "../../lib/utils";
 
 const CREATE_TODOIST_TASK_MUTATION = gql`
   mutation CREATE_TODOIST_TASK_MUTATION($data: CreateTodoistTaskInput!) {
@@ -19,27 +20,34 @@ const CREATE_TODOIST_TASK_MUTATION = gql`
 
 const formatMeasurementUnit = (mu: string): string => (mu ? mu.toLowerCase() : "");
 
-interface Props {
+interface IngredientProps {
   quantity: number;
   name: string;
   id: string;
   measurementUnit: string;
   style: any;
+  recipeTitle: string;
 }
 
-const Ingredient: React.FunctionComponent<Props> = ({
+const Ingredient: React.FunctionComponent<IngredientProps> = ({
   quantity,
   name,
   id,
   measurementUnit,
-  style
+  style,
+  recipeTitle
 }) => {
   const textToDisplay = `${quantity || ""} ${formatMeasurementUnit(measurementUnit)} ${name}`;
 
   const { data } = useUser();
 
-  const createTodoistTask = useMutation(CREATE_TODOIST_TASK_MUTATION, {
-    variables: { data: { content: textToDisplay, projectId: data.me.shoppingList.todoistId } }
+  const [createTodoistTask, { loading }] = useMutation(CREATE_TODOIST_TASK_MUTATION, {
+    variables: {
+      data: {
+        content: `${textToDisplay} - ${abbrString(recipeTitle)}`,
+        projectId: data.me.shoppingList.todoistId
+      }
+    }
   });
 
   const handleAddIngredient = (): void => {
@@ -47,10 +55,19 @@ const Ingredient: React.FunctionComponent<Props> = ({
   };
 
   return (
-    <AnimatedBox align="center" as="li" direction="row" gap="small" style={style} key={id}>
-      <Button hoverIndicator={true} icon={<Add />} onClick={handleAddIngredient} plain={true} />
-      <Text key={id}>{textToDisplay}</Text>
-    </AnimatedBox>
+    <>
+      {loading && <Loader />}
+      <AnimatedBox align="center" as="li" direction="row" gap="small" style={style} key={id}>
+        <Button
+          disabled={loading}
+          hoverIndicator={true}
+          icon={loading ? <InProgress /> : <Add />}
+          onClick={handleAddIngredient}
+          plain={true}
+        />
+        <Text key={id}>{textToDisplay}</Text>
+      </AnimatedBox>
+    </>
   );
 };
 
