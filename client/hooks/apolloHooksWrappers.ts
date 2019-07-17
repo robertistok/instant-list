@@ -55,5 +55,3 @@ export const useMutation = <TData, TVariables = OperationVariables, TCache = obj
     }
   ];
 };
-
-// export default "test";
