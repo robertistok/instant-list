@@ -15,7 +15,12 @@ const SIGN_OUT_MUTATION = gql`
   }
 `;
 
-const SignOutButton = ({ userId, ...rest }) => {
+type SignOutButtonProps = {
+  userId: string;
+  tooltipLabel: string;
+};
+
+const SignOutButton: React.FunctionComponent<SignOutButtonProps> = ({ userId, tooltipLabel }) => {
   const [signOut, { loading }] = useMutation(SIGN_OUT_MUTATION);
 
   const handleSignOut = () => {
@@ -30,7 +35,11 @@ const SignOutButton = ({ userId, ...rest }) => {
   }
 
   return (
-    <NavButton icon={<Logout color="white" />} margin="xsmall" onClick={handleSignOut} {...rest} />
+    <NavButton
+      icon={<Logout color="white" />}
+      onClick={handleSignOut}
+      tooltipLabel={tooltipLabel}
+    />
   );
 };
 
