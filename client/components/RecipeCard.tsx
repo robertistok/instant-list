@@ -2,7 +2,13 @@ import { Box, Heading, Text } from "grommet";
 
 import Link from "./common/Link";
 
-const RecipeCard = ({ description, id, title }) => {
+interface RecipeCardProps {
+  description: string;
+  id: string;
+  title: string;
+}
+
+const RecipeCard: React.FunctionComponent<RecipeCardProps> = ({ description, id, title }) => {
   return (
     <Link href={`/recipe/${id}`}>
       <Box background="ultralightGray" pad="small">
