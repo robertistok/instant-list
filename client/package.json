@@ -12,6 +12,7 @@
   "author": "robertistok",
   "license": "ISC",
   "dependencies": {
+    "@types/styled-components": "^4.1.18",
     "@zeit/next-css": "^1.0.1",
     "apollo-boost": "^0.4.2",
     "babel-plugin-styled-components": "^1.10.2",
