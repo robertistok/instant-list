@@ -1,4 +1,5 @@
 import { Box, Heading, Text } from "grommet";
+import styled from "styled-components";
 
 import Link from "./common/Link";
 
@@ -11,15 +12,23 @@ interface RecipeCardProps {
 const RecipeCard: React.FunctionComponent<RecipeCardProps> = ({ description, id, title }) => {
   return (
     <Link href={`/recipe/${id}`}>
-      <Box background="ultralightGray" pad="small">
+      <StyledBox background="ultralightGray" pad="small">
         <Heading a11yTitle={`Recipe titled ${title}`} level="4">
           {title}
         </Heading>
 
         <Text>{description}</Text>
-      </Box>
+      </StyledBox>
     </Link>
   );
 };
+
+const StyledBox = styled(Box)`
+  box-shadow: 1px 1px 4px;
+
+  :hover {
+    transform: scale(1.01);
+  }
+`;
 
 export default RecipeCard;
