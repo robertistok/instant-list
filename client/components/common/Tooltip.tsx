@@ -2,7 +2,28 @@ import React, { useState, useRef } from "react";
 
 import { Box, Drop } from "grommet";
 
-const Tooltip = ({ children, label, align = { top: "bottom" } }) => {
+interface TooltipProps {
+  label: string;
+  align: {
+    top?: "top" | "bottom";
+    bottom?: "top" | "bottom";
+    right?: "left" | "right";
+    left?: "left" | "right";
+  };
+  children: React.FunctionComponent<ChildrenProps>;
+}
+
+interface ChildrenProps {
+  ref: React.MutableRefObject<any>;
+  onMouseEnter: () => void;
+  onMouseLeave: () => void;
+}
+
+const Tooltip: React.FunctionComponent<TooltipProps> = ({
+  children,
+  label,
+  align = { top: "bottom" }
+}) => {
   const ref = useRef(null);
   const [over, setOver] = useState(false);
 
