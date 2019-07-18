@@ -4,7 +4,7 @@ import { Box, Drop } from "grommet";
 
 interface TooltipProps {
   label: string;
-  align: {
+  align?: {
     top?: "top" | "bottom";
     bottom?: "top" | "bottom";
     right?: "left" | "right";
