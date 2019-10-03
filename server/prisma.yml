@@ -1,5 +1,6 @@
-endpoint: https://eu1.prisma.sh/robertistok94-3a0a6e/instant-list/dev
+endpoint: ${env:PRISMA_ENDPOINT}
 datamodel: datamodel.graphql
+secret: ${env:PRISMA_SECRET}
 
 generate:
   - generator: graphql-schema
