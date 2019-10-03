@@ -41,7 +41,7 @@ server.start(
   {
     cors: {
       credentials: true,
-      origin: FRONTEND_URL
+      origin: ["http://localhost:3000", FRONTEND_URL]
     }
   },
   deets => {
