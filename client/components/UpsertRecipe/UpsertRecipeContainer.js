@@ -1,6 +1,6 @@
 import gql from "graphql-tag";
 import Router from "next/router";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useMutation } from "@apollo/react-hooks";
 
 import UpsertRecipe from "./UpsertRecipe";
@@ -41,12 +41,6 @@ const UpsertRecipeContainer = ({ recipe, type }) => {
     ]
   });
 
-  useEffect(() => {
-    if (type === UPSERT_COMPONENT_TYPES.CREATE) {
-      sessionStorage.setItem("recipe", JSON.stringify(state));
-    }
-  }, [state]);
-
   const handleAddIngredient = () => addIngredient();
 
   const handleDeleteIngredient = listElementId => () => {
@@ -74,7 +68,11 @@ const UpsertRecipeContainer = ({ recipe, type }) => {
     const { option, target } = event;
     const nameWithoutIndex = target.name.split("-")[0];
 
-    const value = option || (!Number.isNaN(target.value) && Number(target.value)) || target.value;
+    const value =
+      option ||
+      (!Number.isNaN(target.value) && Number(target.value)) ||
+      (Boolean(target.value) && target.value) ||
+      null;
 
     updateIngredient({ listElementId, name: nameWithoutIndex, value });
   };
@@ -93,11 +91,13 @@ const UpsertRecipeContainer = ({ recipe, type }) => {
           __typename: undefined,
           steps: { set: state.steps },
           ingredients: {
-            create: state.ingredients.map(({ id, ...ingredient }) => ({
-              ...ingredient,
-              __typename: undefined,
-              id: id.includes("new") ? undefined : id // remove the id if it's a new recipe
-            }))
+            create: state.ingredients
+              .filter(({ id }) => id.includes("new"))
+              .map(({ ...ingredient }) => ({
+                ...ingredient,
+                __typename: undefined,
+                id: undefined
+              }))
           }
         },
         update: {

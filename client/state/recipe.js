@@ -7,12 +7,12 @@ export const useUpsertRecipeState = recipe => {
   const defaultIngredientState = { name: "", quantity: null, measurementUnit: null };
 
   const initialState = {
-    id: nanoid(),
+    id: `new-${nanoid()}`,
     title: "",
     description: "",
     servings: null,
     steps: [""],
-    ingredients: [{ id: nanoid(), ...defaultIngredientState }]
+    ingredients: [{ id: `new-${nanoid()}`, ...defaultIngredientState }]
   };
 
   const reducer = (state, { type, payload }) => {
@@ -40,7 +40,7 @@ export const useUpsertRecipeState = recipe => {
       case "addIngredient": {
         return {
           ...state,
-          ingredients: [...state.ingredients, { id: nanoid(), ...defaultIngredientState }]
+          ingredients: [...state.ingredients, { id: `new-${nanoid()}`, ...defaultIngredientState }]
         };
       }
       case "deleteIngredient": {
@@ -58,7 +58,6 @@ export const useUpsertRecipeState = recipe => {
         };
       }
       case "deleteStep": {
-        console.log(payload);
         return {
           ...state,
           steps: state.steps.filter((ingredient, index) => index !== payload.listElementId)
