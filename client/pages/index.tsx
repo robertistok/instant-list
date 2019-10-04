@@ -13,7 +13,7 @@ const Home: React.FunctionComponent<Props> = (): React.ReactElement => {
 
   useEffect(() => {
     if (data.me && !data.me.shoppingList) {
-      alert("You must select a shopping list before continuing");
+      alert("You must select a shopping list before continuing!");
       Router.push("/settings");
     }
   }, [data]);
