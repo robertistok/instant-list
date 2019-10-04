@@ -1,6 +1,6 @@
 import gql from "graphql-tag";
 import { Box, Grid, Heading, ResponsiveContext } from "grommet";
-import { useQuery } from "react-apollo-hooks";
+import { useQuery } from "@apollo/react-hooks";
 
 import RecipeCard from "./RecipeCard";
 
@@ -21,7 +21,7 @@ interface Props {}
 const Recipes: React.FunctionComponent<Props> = () => {
   const {
     data: { ownRecipes = [] },
-    loading,
+    loading
   } = useQuery(OWN_RECIPES_QUERY);
 
   if (loading) {
@@ -30,7 +30,7 @@ const Recipes: React.FunctionComponent<Props> = () => {
 
   return (
     <ResponsiveContext.Consumer>
-      {(size) => {
+      {size => {
         const isSmall = size === "small";
         return (
           <Box>
@@ -38,7 +38,7 @@ const Recipes: React.FunctionComponent<Props> = () => {
               Recipes
             </Heading>
             <Grid columns={isSmall ? "100%" : "400px"} gap="medium">
-              {ownRecipes.map((recipe) => (
+              {ownRecipes.map(recipe => (
                 <RecipeCard key={recipe.id} {...recipe} />
               ))}
             </Grid>

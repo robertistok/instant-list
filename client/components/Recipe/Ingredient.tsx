@@ -1,12 +1,12 @@
 /* eslint-disable no-alert */
 import gql from "graphql-tag";
 import { Box, Button, Text } from "grommet";
+import { useMutation } from "@apollo/react-hooks";
 import { Add, InProgress } from "grommet-icons";
 import { animated } from "react-spring";
 
 import Loader from "../common/Loader";
 import useUser from "../../hooks/user";
-import { useMutation } from "../../hooks/apolloHooksWrappers";
 import { abbrString } from "../../lib/utils";
 
 const CREATE_TODOIST_TASK_MUTATION = gql`

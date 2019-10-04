@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components";
-import { useQuery, useMutation } from "react-apollo-hooks";
+import { useQuery, useMutation } from "@apollo/react-hooks";
 import gql from "graphql-tag";
 import { Box, Heading, Select } from "grommet";
 
@@ -36,12 +36,12 @@ const Settings = () => {
     data: userProjectsFromTodoistQueryData = {},
     loading: userProjectsFromTodoistQueryLoading
   } = useQuery(USERS_PROJECTS_FROM_TODOIST_QUERY);
-  const assignListToCurrentUser = useMutation(ASSIGN_SHOPPING_LIST_TO_USER_MUTATION, {
+  const [assignListToCurrentUser] = useMutation(ASSIGN_SHOPPING_LIST_TO_USER_MUTATION, {
     refetchQueries: [{ query: queries.CURRENT_USER_QUERY }]
   });
   const { data, loading: currentUserQueryLoading } = useUser();
 
-  const [shoppingList, setShoppingList] = useState("");
+  const [shoppingList, setShoppingList] = useState({});
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
@@ -78,15 +78,19 @@ const Settings = () => {
   return (
     <Box as="section">
       <Heading a11yTitle="Page title" level={4}>
-        Select the project you&apos;d like to save your shopping list
+        {data.me.shoppingList
+          ? "Selected shopping list"
+          : "Select your shopping list before moving forward"}
       </Heading>
 
       <Select
+        a11yTitle="Shopping list selection"
         labelKey="label"
         valueKey="value"
         value={shoppingList.name}
         options={selectOptions}
         onChange={handleSelectChange}
+        placeholder="Your project to save your shopping list"
       >
         {({ label, color }) => (
           <StyledOption

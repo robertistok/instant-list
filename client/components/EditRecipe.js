@@ -1,5 +1,5 @@
 /* eslint-disable no-alert */
-import { useQuery } from "react-apollo-hooks";
+import { useQuery } from "@apollo/react-hooks";
 
 import UpsertRecipe from "./UpsertRecipe/UpsertRecipeContainer";
 import Loader from "./common/Loader";

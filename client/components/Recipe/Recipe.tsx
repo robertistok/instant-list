@@ -1,5 +1,5 @@
 /* eslint-disable no-alert */
-import { useQuery, useMutation } from "react-apollo-hooks";
+import { useQuery, useMutation } from "@apollo/react-hooks";
 import styled from "styled-components";
 import Router from "next/router";
 import { animated } from "react-spring";
@@ -54,7 +54,7 @@ const Recipe: React.FunctionComponent<Props> = ({ id }) => {
   } = useQuery(RECIPE_QUERY, {
     variables: { where: { id } }
   });
-  const deleteRecipe = useMutation(DELETE_RECIPE_MUTATION, {
+  const [deleteRecipe] = useMutation(DELETE_RECIPE_MUTATION, {
     variables: { where: { id } },
     update: () => Router.push("/"),
     refetchQueries: [{ query: OWN_RECIPES_QUERY }],

@@ -3,7 +3,7 @@ import PleaseSignIn from "../components/PleaseSignIn";
 
 interface Props {}
 
-const NewRecipePage: React.FunctionComponent<Props> = () => {
+const NewRecipePage: React.FunctionComponent<Props> = (): React.ReactElement => {
   return (
     <PleaseSignIn>
       <NewRecipe />

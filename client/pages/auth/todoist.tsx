@@ -1,8 +1,8 @@
 import gql from "graphql-tag";
-import { BaseRouter } from "next-server/dist/lib/router/router";
+import { NextRouter } from "next/router";
 import Router, { useRouter } from "next/router";
 import { useEffect } from "react";
-import { useMutation } from "react-apollo-hooks";
+import { useMutation } from "@apollo/react-hooks";
 
 import { queries } from "../../hooks/user";
 
@@ -16,16 +16,17 @@ const AUTH_WITH_TODOIST_MUTATION = gql`
 
 interface Props {}
 
-const TodoistAuth: React.FunctionComponent<Props> = () => {
-  const authWithTodoist = useMutation(AUTH_WITH_TODOIST_MUTATION);
-  const router: BaseRouter = useRouter();
+const TodoistAuth: React.FunctionComponent<Props> = (): React.ReactElement => {
+  const [authWithTodoist] = useMutation(AUTH_WITH_TODOIST_MUTATION, {
+    onCompleted: () => Router.push("/")
+  });
+  const router: NextRouter = useRouter();
 
   useEffect(() => {
     authWithTodoist({
       variables: { code: router.query.code, state: router.query.state },
       refetchQueries: [{ query: queries.CURRENT_USER_QUERY }],
-      awaitRefetchQueries: true,
-      update: () => Router.push("/"),
+      awaitRefetchQueries: true
     });
   }, []);
 

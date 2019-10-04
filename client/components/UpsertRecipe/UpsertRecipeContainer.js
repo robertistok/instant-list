@@ -1,7 +1,7 @@
 import gql from "graphql-tag";
 import Router from "next/router";
 import { useState, useEffect } from "react";
-import { useMutation } from "react-apollo-hooks";
+import { useMutation } from "@apollo/react-hooks";
 
 import UpsertRecipe from "./UpsertRecipe";
 
@@ -35,7 +35,7 @@ const UpsertRecipeContainer = ({ recipe, type }) => {
     }
   ] = useUpsertRecipeState(recipe);
   const [ingredientsToDelete, setIngredientsToDelete] = useState([]);
-  const upsertRecipe = useMutation(UPSERT_RECIPE_MUTATION, {
+  const [upsertRecipe] = useMutation(UPSERT_RECIPE_MUTATION, {
     refetchQueries: ({ data }) => [
       { query: RECIPE_QUERY, variables: { where: { id: data.upsertRecipe.id } } }
     ]
