@@ -10,10 +10,7 @@ import { RECIPE_QUERY } from "./Recipe/Recipe";
 import { UPSERT_COMPONENT_TYPES } from "../lib/constants";
 
 const Recipe = ({ id }) => {
-  const {
-    data: { recipe },
-    loading
-  } = useQuery(RECIPE_QUERY, {
+  const { data: { recipe } = { recipe: undefined }, loading } = useQuery(RECIPE_QUERY, {
     variables: { where: { id } }
   });
 

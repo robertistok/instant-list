@@ -48,10 +48,7 @@ interface Props {
 }
 
 const Recipe: React.FunctionComponent<Props> = ({ id }): React.ReactElement => {
-  const {
-    data: { recipe },
-    loading
-  } = useQuery(RECIPE_QUERY, {
+  const { data: { recipe } = { recipe: undefined }, loading } = useQuery(RECIPE_QUERY, {
     variables: { where: { id } }
   });
   const [deleteRecipe] = useMutation(DELETE_RECIPE_MUTATION, {

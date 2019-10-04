@@ -33,7 +33,7 @@ export const ASSIGN_SHOPPING_LIST_TO_USER_MUTATION = gql`
 
 const Settings = () => {
   const {
-    data: userProjectsFromTodoistQueryData = {},
+    data: { usersProjectsFromTodoist } = { usersProjectsFromTodoist: [] },
     loading: userProjectsFromTodoistQueryLoading
   } = useQuery(USERS_PROJECTS_FROM_TODOIST_QUERY);
   const [assignListToCurrentUser] = useMutation(ASSIGN_SHOPPING_LIST_TO_USER_MUTATION, {
@@ -66,8 +66,6 @@ const Settings = () => {
   if (userProjectsFromTodoistQueryLoading || currentUserQueryLoading || loading) {
     return <Loader showMessage />;
   }
-
-  const { usersProjectsFromTodoist = [] } = userProjectsFromTodoistQueryData;
 
   const selectOptions = usersProjectsFromTodoist.map(option => ({
     label: option.name,
