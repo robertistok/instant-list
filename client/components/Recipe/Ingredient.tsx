@@ -36,7 +36,7 @@ const Ingredient: React.FunctionComponent<IngredientProps> = ({
   measurementUnit,
   style,
   recipeTitle
-}) => {
+}): React.ReactElement => {
   const textToDisplay = `${quantity || ""} ${formatMeasurementUnit(measurementUnit)} ${name}`;
 
   const { data } = useUser();

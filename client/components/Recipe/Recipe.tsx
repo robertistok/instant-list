@@ -47,7 +47,7 @@ interface Props {
   id: string;
 }
 
-const Recipe: React.FunctionComponent<Props> = ({ id }) => {
+const Recipe: React.FunctionComponent<Props> = ({ id }): React.ReactElement => {
   const {
     data: { recipe },
     loading

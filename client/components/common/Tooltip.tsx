@@ -23,7 +23,7 @@ const Tooltip: React.FunctionComponent<TooltipProps> = ({
   children,
   label,
   align = { top: "bottom" }
-}) => {
+}): React.ReactElement => {
   const ref = useRef(null);
   const [over, setOver] = useState(false);
 

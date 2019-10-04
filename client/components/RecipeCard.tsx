@@ -9,7 +9,11 @@ interface RecipeCardProps {
   title: string;
 }
 
-const RecipeCard: React.FunctionComponent<RecipeCardProps> = ({ description, id, title }) => {
+const RecipeCard: React.FunctionComponent<RecipeCardProps> = ({
+  description,
+  id,
+  title
+}): React.ReactElement => {
   return (
     <Link href={`/recipe/${id}`}>
       <StyledBox background="ultralightGray" pad="small">

@@ -3,7 +3,7 @@ import Settings from "../components/Settings/Settings";
 
 interface Props {}
 
-const SettingsPage: React.FunctionComponent<Props> = () => {
+const SettingsPage: React.FunctionComponent<Props> = (): React.ReactElement => {
   return (
     <PleaseSignIn>
       <Settings />

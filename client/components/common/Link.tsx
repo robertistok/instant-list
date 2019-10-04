@@ -6,7 +6,10 @@ interface LocalLinkProps {
   children: React.ReactNode;
 }
 
-const LocalLink: React.FunctionComponent<LocalLinkProps> = ({ href, children }) => (
+const LocalLink: React.FunctionComponent<LocalLinkProps> = ({
+  href,
+  children
+}): React.ReactElement => (
   <Link href={href} passHref>
     <StyledLink>{children}</StyledLink>
   </Link>

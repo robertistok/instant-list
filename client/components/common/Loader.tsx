@@ -6,7 +6,10 @@ export interface LoaderProps {
   message?: string;
 }
 
-const Loader: React.FunctionComponent<LoaderProps> = ({ showMessage = false, message }) => {
+const Loader: React.FunctionComponent<LoaderProps> = ({
+  showMessage = false,
+  message
+}): React.ReactElement => {
   useEffect(() => {
     NProgress.start();
     return () => {

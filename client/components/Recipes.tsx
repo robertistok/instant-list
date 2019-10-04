@@ -18,7 +18,7 @@ export const OWN_RECIPES_QUERY = gql`
 
 interface Props {}
 
-const Recipes: React.FunctionComponent<Props> = () => {
+const Recipes: React.FunctionComponent<Props> = (): React.ReactElement => {
   const {
     data: { ownRecipes = [] },
     loading

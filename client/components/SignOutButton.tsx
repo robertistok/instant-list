@@ -22,7 +22,10 @@ type SignOutButtonProps = {
   tooltipLabel: string;
 };
 
-const SignOutButton: React.FunctionComponent<SignOutButtonProps> = ({ userId, tooltipLabel }) => {
+const SignOutButton: React.FunctionComponent<SignOutButtonProps> = ({
+  userId,
+  tooltipLabel
+}): React.ReactElement => {
   const [signOut, { loading }] = useMutation(SIGN_OUT_MUTATION, {
     onCompleted: () => Router.push("/"),
     awaitRefetchQueries: true,
