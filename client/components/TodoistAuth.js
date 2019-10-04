@@ -1,7 +1,10 @@
+import getConfig from "next/config";
 import { Button } from "grommet";
 import { List } from "grommet-icons";
 
-import { TODOIST_CLIENT_ID, TODOIST_RANDOM } from "../config";
+const {
+  publicRuntimeConfig: { TODOIST_CLIENT_ID, TODOIST_RANDOM }
+} = getConfig();
 
 const TodoistAuth = () => {
   return (

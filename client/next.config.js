@@ -1,4 +1,9 @@
 const withPlugins = require("next-compose-plugins");
 const withCSS = require("@zeit/next-css");
+const publicRuntimeConfig = require("./config");
 
-module.exports = withPlugins([withCSS]);
+const nextConfig = {
+  publicRuntimeConfig
+};
+
+module.exports = withPlugins([withCSS], nextConfig);
