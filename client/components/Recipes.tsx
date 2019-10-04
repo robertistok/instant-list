@@ -1,9 +1,9 @@
 import gql from "graphql-tag";
 import { Box, Grid, Heading, ResponsiveContext } from "grommet";
 import { useQuery } from "@apollo/react-hooks";
+import Link from "next/link";
 
 import RecipeCard from "./RecipeCard";
-
 import Loader from "./common/Loader";
 
 export const OWN_RECIPES_QUERY = gql`
@@ -35,9 +35,16 @@ const Recipes: React.FunctionComponent<Props> = (): React.ReactElement => {
               Recipes
             </Heading>
             <Grid columns={isSmall ? "100%" : "400px"} gap="medium">
-              {ownRecipes.map(recipe => (
-                <RecipeCard key={recipe.id} {...recipe} />
-              ))}
+              {ownRecipes.length ? (
+                ownRecipes.map(recipe => <RecipeCard key={recipe.id} {...recipe} />)
+              ) : (
+                <Box>
+                  <Heading level="4">No recipes found...</Heading>
+                  <Link href="/new-recipe">
+                    <a>Add a recipe</a>
+                  </Link>
+                </Box>
+              )}
             </Grid>
           </Box>
         );
