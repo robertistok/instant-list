@@ -37,7 +37,6 @@ type IngredientConnection {
 }
 
 input IngredientCreateInput {
-  id: ID
   recipe: RecipeCreateOneWithoutIngredientsInput
   name: String!
   quantity: Float
@@ -50,7 +49,6 @@ input IngredientCreateManyWithoutRecipeInput {
 }
 
 input IngredientCreateWithoutRecipeInput {
-  id: ID
   name: String!
   quantity: Float
   measurementUnit: MEASUREMENT_UNIT
@@ -375,7 +373,6 @@ type RecipeConnection {
 }
 
 input RecipeCreateInput {
-  id: ID
   user: UserCreateOneInput!
   title: String!
   description: String!
@@ -394,7 +391,6 @@ input RecipeCreatestepsInput {
 }
 
 input RecipeCreateWithoutIngredientsInput {
-  id: ID
   user: UserCreateOneInput!
   title: String!
   description: String!
@@ -584,7 +580,7 @@ type TodoistProject {
   todoistId: Float!
   name: String!
   color: Int!
-  parentId: Int
+  parentId: Float
   childOrder: Int
   collapsed: Int!
   shared: Boolean
@@ -602,11 +598,10 @@ type TodoistProjectConnection {
 }
 
 input TodoistProjectCreateInput {
-  id: ID
   todoistId: Float!
   name: String!
   color: Int!
-  parentId: Int
+  parentId: Float
   childOrder: Int
   collapsed: Int!
   shared: Boolean
@@ -654,6 +649,10 @@ enum TodoistProjectOrderByInput {
   isArchived_DESC
   isFavorite_ASC
   isFavorite_DESC
+  createdAt_ASC
+  createdAt_DESC
+  updatedAt_ASC
+  updatedAt_DESC
 }
 
 type TodoistProjectPreviousValues {
@@ -661,7 +660,7 @@ type TodoistProjectPreviousValues {
   todoistId: Float!
   name: String!
   color: Int!
-  parentId: Int
+  parentId: Float
   childOrder: Int
   collapsed: Int!
   shared: Boolean
@@ -694,7 +693,7 @@ input TodoistProjectUpdateDataInput {
   todoistId: Float
   name: String
   color: Int
-  parentId: Int
+  parentId: Float
   childOrder: Int
   collapsed: Int
   shared: Boolean
@@ -709,7 +708,7 @@ input TodoistProjectUpdateInput {
   todoistId: Float
   name: String
   color: Int
-  parentId: Int
+  parentId: Float
   childOrder: Int
   collapsed: Int
   shared: Boolean
@@ -724,7 +723,7 @@ input TodoistProjectUpdateManyMutationInput {
   todoistId: Float
   name: String
   color: Int
-  parentId: Int
+  parentId: Float
   childOrder: Int
   collapsed: Int
   shared: Boolean
@@ -794,14 +793,14 @@ input TodoistProjectWhereInput {
   color_lte: Int
   color_gt: Int
   color_gte: Int
-  parentId: Int
-  parentId_not: Int
-  parentId_in: [Int!]
-  parentId_not_in: [Int!]
-  parentId_lt: Int
-  parentId_lte: Int
-  parentId_gt: Int
-  parentId_gte: Int
+  parentId: Float
+  parentId_not: Float
+  parentId_in: [Float!]
+  parentId_not_in: [Float!]
+  parentId_lt: Float
+  parentId_lte: Float
+  parentId_gt: Float
+  parentId_gte: Float
   childOrder: Int
   childOrder_not: Int
   childOrder_in: [Int!]
@@ -878,7 +877,6 @@ type UserConnection {
 }
 
 input UserCreateInput {
-  id: ID
   todoistId: Int!
   todoistAccessToken: String
   name: String

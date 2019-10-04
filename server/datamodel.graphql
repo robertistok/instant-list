@@ -12,7 +12,7 @@ type TodoistProject {
   todoistId: Float!
   name: String!
   color: Int!
-  parentId: Int
+  parentId: Float
   childOrder: Int
   collapsed: Int!
   shared: Boolean
